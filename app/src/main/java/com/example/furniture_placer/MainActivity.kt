@@ -9,5 +9,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //PUSHINGGGGGG
+        //This is nice push right here!
     }
 }
