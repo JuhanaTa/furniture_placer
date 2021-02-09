@@ -28,7 +28,7 @@ class LoginScreen : AppCompatActivity() {
 
         // Configure Google Sign In inside onCreate mentod
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken("831014450850-l51jj5btem9bbldskjrm3eg0ob0du43q.apps.googleusercontent.com")
+            .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()// getting the value of gso inside the GoogleSigninClient
         mGoogleSignInClient= GoogleSignIn.getClient(this,gso)// initialize the firebaseAuth variable firebaseAuth= FirebaseAuth.getInstance()
