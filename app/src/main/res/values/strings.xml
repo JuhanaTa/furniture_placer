@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">furniture_placer</string>
+    <string name="logout">Logout</string>
+    <string name="ar_view">AR view</string>
 </resources>

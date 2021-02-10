@@ -35,5 +35,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        ArView.setOnClickListener {
+            val intent = Intent(this, ArFragmentView::class.java).apply {
+            }
+            startActivity(intent)
+        }
+
+
     }
 }
