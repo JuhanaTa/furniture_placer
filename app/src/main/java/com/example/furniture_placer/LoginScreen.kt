@@ -73,6 +73,9 @@ class LoginScreen : AppCompatActivity() {
         val credential= GoogleAuthProvider.getCredential(account.idToken,null)
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener {task->
             if(task.isSuccessful) {
+                if (firebaseAuth.currentUser != null)
+                    firebaseService().createPersonalStorage(firebaseAuth.currentUser!!)
+
                 SavedPreference.setEmail(this,account.email.toString())
                 SavedPreference.setUsername(this,account.displayName.toString())
                 val intent = Intent(this, MainActivity::class.java)
