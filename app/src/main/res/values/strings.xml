@@ -2,4 +2,7 @@
     <string name="app_name">furniture_placer</string>
     <string name="logout">Logout</string>
     <string name="ar_view">AR view</string>
+    <string name="addModelText">add model</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
