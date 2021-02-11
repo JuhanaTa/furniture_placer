@@ -5,4 +5,13 @@
     <string name="addModelText">add model</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="newRoomDesc">add new room</string>
+    <string name="logOutDesc">logout</string>
+    <string name="newModelFabText">new</string>
+    <string name="historyFabText">History</string>
+    <string name="searchNewModelFab">search new model</string>
+    <string name="deleteModelFab">delete model</string>
+    <string name="addModelFab">add model</string>
+    <string name="openMenuDesc">open model menu</string>
+    <string name="searchHistoryModelFab">search new model from history</string>
 </resources>
