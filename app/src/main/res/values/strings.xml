@@ -14,4 +14,6 @@
     <string name="addModelFab">add model</string>
     <string name="openMenuDesc">open model menu</string>
     <string name="searchHistoryModelFab">search new model from history</string>
+    <string name="roomNameField">Room</string>
+    <string name="createRoomBtnText">Create Room</string>
 </resources>

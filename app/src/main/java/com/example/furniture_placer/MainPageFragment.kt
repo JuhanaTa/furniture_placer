@@ -19,7 +19,7 @@ class MainPageFragment : Fragment() {
 
     lateinit var mGoogleSignInClient: GoogleSignInClient
     lateinit var recyclerView: RecyclerView
-
+    private lateinit var communicator: Communicator
     private val auth by lazy {
         FirebaseAuth.getInstance()
     }
@@ -28,6 +28,7 @@ class MainPageFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_main_page, container, false)
+        communicator = activity as Communicator
 
         recyclerView = view.findViewById(R.id.rv_rooms)
         recyclerView.layoutManager = LinearLayoutManager(view.context)
@@ -52,9 +53,7 @@ class MainPageFragment : Fragment() {
         }
 
         view.addNewRoomBtn.setOnClickListener {
-            val intent = Intent(activity, ArFragmentView::class.java).apply {
-            }
-            startActivity(intent)
+            communicator.nextFragment()
         }
 
         return view
