@@ -2,11 +2,16 @@ package com.example.furniture_placer
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity(), Communicator {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        GlobalScope.launch(Dispatchers.Main) {
+        }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 

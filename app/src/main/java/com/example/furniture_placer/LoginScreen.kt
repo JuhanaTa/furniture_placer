@@ -74,7 +74,7 @@ class LoginScreen : AppCompatActivity() {
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener {task->
             if(task.isSuccessful) {
                 if (firebaseAuth.currentUser != null)
-                    firebaseService().createPersonalStorage(firebaseAuth.currentUser!!)
+                    FirebaseService().createPersonalStorage(firebaseAuth.currentUser!!)
 
                 SavedPreference.setEmail(this,account.email.toString())
                 SavedPreference.setUsername(this,account.displayName.toString())
