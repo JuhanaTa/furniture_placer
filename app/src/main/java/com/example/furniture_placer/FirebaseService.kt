@@ -34,7 +34,12 @@ class firebaseService {
                     // Add a new document with a generated ID
                     db.collection("users")
                         .document(user.uid).set(userData)
-                        .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
+                        .addOnSuccessListener {
+                            Log.d(
+                                TAG,
+                                "DocumentSnapshot successfully written!"
+                            )
+                        }
                         .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
                 }
             }
@@ -43,7 +48,7 @@ class firebaseService {
             }
     }
 
-    suspend fun createRoom(name:String) : Room{
+    suspend fun createRoom(name: String): Room {
         val user = firebaseAuth.currentUser
             ?: return Room(name = name)
         var uid = user.uid
@@ -54,10 +59,10 @@ class firebaseService {
             "itemCount" to 0
         )
         val doc = db.collection("users").document(uid).collection("rooms").add(roomData).await()
-        return Room(name = name,id = doc.id,itemCount = 0)
+        return Room(name = name, id = doc.id, itemCount = 0)
     }
 
-    suspend fun getUserRooms() : List<Room?> {
+    suspend fun getUserRooms(): List<Room?> {
         val user = firebaseAuth.currentUser
             ?: return mutableListOf<Room>()
 
@@ -65,7 +70,7 @@ class firebaseService {
 
         val query = db.collection("users").document(uid).collection("rooms").get().await()
 
-        return query.documents.map{doc ->  doc.toObject<Room>()}
+        return query.documents.map { doc -> doc.toObject<Room>() }
     }
 
 }
