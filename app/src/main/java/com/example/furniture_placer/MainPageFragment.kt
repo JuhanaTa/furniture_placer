@@ -60,7 +60,11 @@ class MainPageFragment : Fragment() {
         }
 
         view.addNewRoomBtn.setOnClickListener {
-            communicator.nextFragment()
+            communicator.openDialog()
+
+           /* var dialog = CreateRoomFragment()
+
+            dialog.show(supporFragmentManager)*/
         }
 
         return view
