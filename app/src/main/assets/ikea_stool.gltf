@@ -1,0 +1,211 @@
+{
+    "asset" : {
+        "generator" : "Khronos glTF Blender I/O v1.4.40",
+        "version" : "2.0"
+    },
+    "scene" : 0,
+    "scenes" : [
+        {
+            "name" : "Scene",
+            "nodes" : [
+                0,
+                1,
+                2
+            ]
+        }
+    ],
+    "nodes" : [
+        {
+            "name" : "Light",
+            "rotation" : [
+                0.16907575726509094,
+                0.7558803558349609,
+                -0.27217137813568115,
+                0.570947527885437
+            ],
+            "translation" : [
+                4.076245307922363,
+                5.903861999511719,
+                -1.0054539442062378
+            ]
+        },
+        {
+            "name" : "Camera",
+            "rotation" : [
+                0.483536034822464,
+                0.33687159419059753,
+                -0.20870360732078552,
+                0.7804827094078064
+            ],
+            "translation" : [
+                7.358891487121582,
+                4.958309173583984,
+                6.925790786743164
+            ]
+        },
+        {
+            "mesh" : 0,
+            "name" : "IKEA-Forsby_Small_Stool-3D",
+            "rotation" : [
+                0.7071068286895752,
+                0,
+                0,
+                0.7071067094802856
+            ],
+            "scale" : [
+                0.034640613943338394,
+                0.034640613943338394,
+                0.034640613943338394
+            ]
+        }
+    ],
+    "materials" : [
+        {
+            "doubleSided" : true,
+            "name" : "01___Default.002",
+            "pbrMetallicRoughness" : {
+                "baseColorFactor" : [
+                    0.6588000059127808,
+                    0.9020000100135803,
+                    0,
+                    1
+                ],
+                "metallicFactor" : 0,
+                "roughnessFactor" : 0.8085145950317383
+            }
+        },
+        {
+            "doubleSided" : true,
+            "name" : "02___Default.002",
+            "pbrMetallicRoughness" : {
+                "baseColorFactor" : [
+                    0.6705999970436096,
+                    0.6705999970436096,
+                    0.6705999970436096,
+                    1
+                ],
+                "metallicFactor" : 0,
+                "roughnessFactor" : 0.8945907354354858
+            }
+        }
+    ],
+    "meshes" : [
+        {
+            "name" : "IKEA-Forsby_Small_Stool-3D",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 0,
+                        "NORMAL" : 1
+                    },
+                    "indices" : 2,
+                    "material" : 0
+                },
+                {
+                    "attributes" : {
+                        "POSITION" : 3,
+                        "NORMAL" : 4
+                    },
+                    "indices" : 5,
+                    "material" : 1
+                }
+            ]
+        }
+    ],
+    "accessors" : [
+        {
+            "bufferView" : 0,
+            "componentType" : 5126,
+            "count" : 1250,
+            "max" : [
+                21.108200073242188,
+                21.245399475097656,
+                -40.08530044555664
+            ],
+            "min" : [
+                -19.37980079650879,
+                -19.24250030517578,
+                -43.83829879760742
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 1,
+            "componentType" : 5126,
+            "count" : 1250,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 2,
+            "componentType" : 5123,
+            "count" : 5802,
+            "type" : "SCALAR"
+        },
+        {
+            "bufferView" : 3,
+            "componentType" : 5126,
+            "count" : 3552,
+            "max" : [
+                27.326099395751953,
+                27.690799713134766,
+                -0.25130000710487366
+            ],
+            "min" : [
+                -25.70639991760254,
+                -25.341800689697266,
+                -43.76020050048828
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 4,
+            "componentType" : 5126,
+            "count" : 3552,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 5,
+            "componentType" : 5123,
+            "count" : 5424,
+            "type" : "SCALAR"
+        }
+    ],
+    "bufferViews" : [
+        {
+            "buffer" : 0,
+            "byteLength" : 15000,
+            "byteOffset" : 0
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 15000,
+            "byteOffset" : 15000
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 11604,
+            "byteOffset" : 30000
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 42624,
+            "byteOffset" : 41604
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 42624,
+            "byteOffset" : 84228
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 10848,
+            "byteOffset" : 126852
+        }
+    ],
+    "buffers" : [
+        {
+            "byteLength" : 137700,
+            "uri" : "ikea_stool.bin"
+        }
+    ]
+}

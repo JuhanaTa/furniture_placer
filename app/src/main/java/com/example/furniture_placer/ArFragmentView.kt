@@ -48,7 +48,7 @@ class ArFragmentView : AppCompatActivity() {
 
         arFrag = supportFragmentManager.findFragmentById(R.id.sceneform_fragment) as ArFragment
 
-        val uri = Uri.parse("https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/Duck/glTF/Duck.gltf")
+        val uri = Uri.parse("file:///android_asset/ikea_stool.gltf")
         //https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/Duck/glTF/Duck.gltf
 
         val renderableFuture = ModelRenderable.builder()
