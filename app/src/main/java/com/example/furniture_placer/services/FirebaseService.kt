@@ -1,14 +1,13 @@
-package com.example.furniture_placer
+package com.example.furniture_placer.services
 
 import android.content.ContentValues.TAG
 import android.util.Log
 import com.example.furniture_placer.data_models.Room
+import com.example.furniture_placer.data_models.roomToHash
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
-import com.google.firebase.inject.Deferred
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 import java.sql.Timestamp
@@ -62,7 +61,22 @@ class FirebaseService {
         return Room(name = name, id = doc.id, itemCount = 0)
     }
 
-    fun getUserRoomsCollection() : CollectionReference? {
+    fun updateRoom(room: Room) {
+        val user = firebaseAuth.currentUser ?: return
+        val uid = user.uid
+        val roomData = roomToHash(room)
+
+        db.collection("users").document(uid).collection("rooms").document("${room.id}")
+            .update(roomData).addOnSuccessListener {
+            Log.d(
+                TAG,
+                "room updated successfully!"
+            )
+        }
+            .addOnFailureListener { e -> Log.w(TAG, "Error updating room", e) }
+    }
+
+    fun getUserRoomsCollection(): CollectionReference? {
         val user = firebaseAuth.currentUser
             ?: return null
 
@@ -71,4 +85,7 @@ class FirebaseService {
         return db.collection("users").document(uid).collection("rooms")
     }
 
+    fun getCurrentUser(): FirebaseUser? {
+        return firebaseAuth.currentUser
+    }
 }
