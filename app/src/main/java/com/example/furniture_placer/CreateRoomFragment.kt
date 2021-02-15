@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import com.example.furniture_placer.services.FirebaseService
 import kotlinx.android.synthetic.main.fragment_create_room_dialog.*
 import kotlinx.android.synthetic.main.fragment_create_room_dialog.view.*
 import kotlinx.coroutines.Dispatchers
