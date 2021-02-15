@@ -17,7 +17,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.ktx.toObject
 import kotlinx.android.synthetic.main.fragment_main_page.view.*
 
 
@@ -41,7 +40,7 @@ class MainPageFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_main_page, container, false)
         communicator = activity as Communicator
 
-        recyclerView = view.findViewById(R.id.rv_rooms)
+        recyclerView = view.findViewById(R.id.rv_models)
         recyclerView.layoutManager = LinearLayoutManager(view.context)
         _roomsLiveData.observe(this, Observer { recyclerView.adapter = RoomAdapter(it) })
 

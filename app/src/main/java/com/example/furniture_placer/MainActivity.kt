@@ -30,8 +30,8 @@ class MainActivity : AppCompatActivity(), Communicator {
     }
 
     override fun openDialog() {
-        var dialog = CreateRoomFragment()
-        dialog.show(supportFragmentManager, "customDialog")
+        val dialog = CreateRoomFragment()
+        dialog.show(supportFragmentManager, "createRoomDialog")
 
     }
 
