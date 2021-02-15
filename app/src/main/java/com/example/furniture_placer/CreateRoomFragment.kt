@@ -15,12 +15,15 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class CreateRoomFragment : DialogFragment() {
-
+    private lateinit var communicator: Communicator
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         var rootView: View = inflater.inflate(R.layout.fragment_create_room_dialog, container, false)
         val firebase = FirebaseService()
+
+        communicator = activity as Communicator
+        rootView.roomPreviewImg.setOnClickListener { communicator.takePicture() }
 
         rootView.createRoomBtn.setOnClickListener {
             val roomName =  roomTextFieldInput.text
