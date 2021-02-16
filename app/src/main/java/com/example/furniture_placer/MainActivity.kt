@@ -12,6 +12,7 @@ import android.widget.ImageView
 import androidx.core.content.FileProvider
 import com.example.camera.CameraService.StorageService
 import com.example.furniture_placer.services.FirebaseService
+import com.google.android.gms.tasks.Task
 import kotlinx.android.synthetic.main.fragment_create_room_dialog.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -21,6 +22,7 @@ import java.io.File
 class MainActivity : AppCompatActivity(), Communicator {
     val REQUEST_IMAGE_CAPTURE = 1
     var mCurrentPhotoPath: String = ""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         GlobalScope.launch(Dispatchers.Main) {
@@ -42,10 +44,12 @@ class MainActivity : AppCompatActivity(), Communicator {
 
     }
 
-    override fun openDialog() {
+    override fun openDialog(image: ByteArray?) {
+        val bundle = Bundle()
+        bundle.putByteArray("imageByteArray",image)
         val dialog = CreateRoomFragment()
+        dialog.arguments = bundle
         dialog.show(supportFragmentManager, "createRoomDialog")
-
     }
 
     override fun takePicture() {
@@ -71,8 +75,11 @@ class MainActivity : AppCompatActivity(), Communicator {
         super.onActivityResult(requestCode, resultCode, recIntent)
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
             val imageBitmap = BitmapFactory.decodeFile(mCurrentPhotoPath)
-            StorageService().storePicture(imageBitmap, "${FirebaseService().getCurrentUser()?.uid}/roomName/previewImage.jpg")
-            roomPreviewImg?.setImageBitmap(imageBitmap)
+            GlobalScope.launch(Dispatchers.Main) {
+                StorageService().storePicture(imageBitmap, "${FirebaseService().getCurrentUser()?.uid}/roomName/previewImage.jpg")
+                val previewImageByteArray = StorageService().loadPicture("${FirebaseService().getCurrentUser()?.uid}/roomName/previewImage.jpg")
+                openDialog(previewImageByteArray)
+            }
         }
     }
 }

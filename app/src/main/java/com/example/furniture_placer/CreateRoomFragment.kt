@@ -1,6 +1,9 @@
 package com.example.furniture_placer
 
+import android.content.ContentValues
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -21,7 +24,11 @@ class CreateRoomFragment : DialogFragment() {
                               savedInstanceState: Bundle?): View? {
         var rootView: View = inflater.inflate(R.layout.fragment_create_room_dialog, container, false)
         val firebase = FirebaseService()
-
+        var image = arguments?.getByteArray("imageByteArray")
+        Log.d("FYI", "image URL ${image}")
+        if (image != null) {
+            rootView.roomPreviewImg.setImageBitmap(BitmapFactory.decodeByteArray(image, 0, image.size))
+        }
         communicator = activity as Communicator
         rootView.roomPreviewImg.setOnClickListener { communicator.takePicture() }
 
