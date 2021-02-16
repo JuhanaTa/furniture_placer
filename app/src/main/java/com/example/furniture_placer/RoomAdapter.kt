@@ -44,4 +44,6 @@ class RoomAdapter(
             Log.d("FYI", "item clicked")
         }
     }
+
+
 }

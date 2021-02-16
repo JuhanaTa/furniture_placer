@@ -7,11 +7,13 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.google.ar.core.Plane
 import com.google.ar.sceneform.AnchorNode
+import com.google.ar.sceneform.HitTestResult
 import com.google.ar.sceneform.assets.RenderableSource
 import com.google.ar.sceneform.rendering.ModelRenderable
 import com.google.ar.sceneform.ux.ArFragment
@@ -66,11 +68,9 @@ class ArFragmentView : AppCompatActivity(), ModelChangeCommunicator {
         //val uri = Uri.parse("file:///android_asset/models/ikea_stool.gltf")
         //https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/Duck/glTF/Duck.gltf
 
-
-
     }
 
-     fun setModel(){
+     private fun setModel(){
          Log.d("FYI", "setting Model ${uri}")
         val renderableFuture = ModelRenderable.builder()
             .setSource(this, RenderableSource.builder().setSource(this,
@@ -105,12 +105,15 @@ class ArFragmentView : AppCompatActivity(), ModelChangeCommunicator {
                 val trackable = hit.trackable
                 if (trackable is Plane) {
                     val anchor = hit!!.createAnchor()
-                    val anchorNode = AnchorNode(anchor)
+                    var anchorNode = AnchorNode(anchor)
                     anchorNode.setParent(arFrag.arSceneView.scene)
                     val mNode = TransformableNode(arFrag.transformationSystem)
                     mNode.setParent(anchorNode)
                     mNode.renderable = modelRenderable
                     mNode.select()
+                    mNode.setOnTapListener(){ hitTestResult: HitTestResult, motionEvent: MotionEvent ->
+
+                    }
                     break
                 }
             }
@@ -133,6 +136,8 @@ class ArFragmentView : AppCompatActivity(), ModelChangeCommunicator {
     }
 
     override fun changeModel(file: String) {
-        uri = Uri.parse(file)
+        uri = Uri.parse("file:///android_asset/models/${file}")
+        setModel()
     }
+
 }

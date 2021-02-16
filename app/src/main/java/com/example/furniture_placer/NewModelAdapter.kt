@@ -12,7 +12,8 @@ import kotlinx.android.synthetic.main.model_list_item.view.*
 import kotlinx.android.synthetic.main.room_list_item.view.*
 
 class NewModelAdapter(
-    private val models: ArrayList<OneModel>
+    private val models: ArrayList<OneModel>,
+    private val listener: OnItemClickListener
 ): RecyclerView.Adapter<NewModelAdapter.MyViewHolder>() {
 
 
@@ -45,8 +46,14 @@ class NewModelAdapter(
         }
 
         override fun onClick(v: View?) {
-            Log.d("FYI", "${itemView.modelName.text}")
-
+            val position: Int = adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                listener.onItemClick(position)
+            }
         }
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
     }
 }
