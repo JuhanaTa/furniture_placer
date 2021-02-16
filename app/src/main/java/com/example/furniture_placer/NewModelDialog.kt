@@ -11,6 +11,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_new_model_dialog.*
+import kotlinx.android.synthetic.main.fragment_new_model_dialog.view.*
 
 
 class NewModelDialog(modelList: ArrayList<OneModel>) : DialogFragment(), NewModelAdapter.OnItemClickListener {
@@ -26,6 +27,9 @@ class NewModelDialog(modelList: ArrayList<OneModel>) : DialogFragment(), NewMode
         val view = inflater.inflate(R.layout.fragment_new_model_dialog, container, false)
         communicator = activity as ModelChangeCommunicator
 
+        view.cancelBtn.setOnClickListener {
+            dismiss()
+        }
 
         recyclerView = view.findViewById(R.id.rv_models)
         recyclerView.layoutManager = LinearLayoutManager(view.context)
@@ -42,6 +46,7 @@ class NewModelDialog(modelList: ArrayList<OneModel>) : DialogFragment(), NewMode
         val clickedItem: OneModel = models[position]
         communicator.changeModel(clickedItem.modelName)
         Log.d("FYI", clickedItem.modelName)
+        dismiss()
     }
 
 
