@@ -5,6 +5,6 @@ import com.google.android.gms.tasks.Task
 
 interface Communicator {
     fun nextFragment()
-    fun openDialog(image: ByteArray?)
-    fun takePicture()
+    fun openDialog(image: ByteArray?, name : String)
+    fun takePicture(roomName: String)
 }

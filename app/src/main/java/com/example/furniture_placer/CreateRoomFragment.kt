@@ -24,13 +24,20 @@ class CreateRoomFragment : DialogFragment() {
                               savedInstanceState: Bundle?): View? {
         var rootView: View = inflater.inflate(R.layout.fragment_create_room_dialog, container, false)
         val firebase = FirebaseService()
-        var image = arguments?.getByteArray("imageByteArray")
+        val image = arguments?.getByteArray("imageByteArray")
+        val roomName = arguments?.getString("roomName")
+
         Log.d("FYI", "image URL ${image}")
         if (image != null) {
             rootView.roomPreviewImg.setImageBitmap(BitmapFactory.decodeByteArray(image, 0, image.size))
         }
+        rootView.roomTextFieldInput.setText(roomName)
+
         communicator = activity as Communicator
-        rootView.roomPreviewImg.setOnClickListener { communicator.takePicture() }
+        rootView.roomPreviewImg.setOnClickListener {
+            communicator.takePicture(roomTextFieldInput.text.toString())
+            dismiss()
+        }
 
         rootView.createRoomBtn.setOnClickListener {
             val roomName =  roomTextFieldInput.text

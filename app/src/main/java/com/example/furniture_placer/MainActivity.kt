@@ -2,6 +2,7 @@ package com.example.furniture_placer
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -17,11 +18,13 @@ import kotlinx.android.synthetic.main.fragment_create_room_dialog.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
 import java.io.File
 
 class MainActivity : AppCompatActivity(), Communicator {
     val REQUEST_IMAGE_CAPTURE = 1
     var mCurrentPhotoPath: String = ""
+    var roomName = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,15 +47,17 @@ class MainActivity : AppCompatActivity(), Communicator {
 
     }
 
-    override fun openDialog(image: ByteArray?) {
+    override fun openDialog(image: ByteArray?, name: String) {
         val bundle = Bundle()
         bundle.putByteArray("imageByteArray",image)
+        bundle.putString("roomName", name)
         val dialog = CreateRoomFragment()
         dialog.arguments = bundle
         dialog.show(supportFragmentManager, "createRoomDialog")
     }
 
-    override fun takePicture() {
+    override fun takePicture(name: String) {
+        roomName = name
         val fileName = "temp_photo"
         val imgPath = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         var imageFile: File? = null
@@ -77,8 +82,11 @@ class MainActivity : AppCompatActivity(), Communicator {
             val imageBitmap = BitmapFactory.decodeFile(mCurrentPhotoPath)
             GlobalScope.launch(Dispatchers.Main) {
                 StorageService().storePicture(imageBitmap, "${FirebaseService().getCurrentUser()?.uid}/roomName/previewImage.jpg")
-                val previewImageByteArray = StorageService().loadPicture("${FirebaseService().getCurrentUser()?.uid}/roomName/previewImage.jpg")
-                openDialog(previewImageByteArray)
+               // val previewImageByteArray = StorageService().loadPicture("${FirebaseService().getCurrentUser()?.uid}/roomName/previewImage.jpg")
+                val baos = ByteArrayOutputStream()
+                imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+                val data = baos.toByteArray()
+                openDialog(data, roomName)
             }
         }
     }
