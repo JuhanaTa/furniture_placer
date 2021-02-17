@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import com.example.camera.CameraService.StorageService
 import com.example.furniture_placer.interfaces.Communicator
 import com.example.furniture_placer.R
 import com.example.furniture_placer.services.FirebaseService
@@ -40,10 +41,16 @@ class CreateRoomFragment : DialogFragment() {
         }
 
         rootView.createRoomBtn.setOnClickListener {
-            val roomName =  roomTextFieldInput.text
+            val roomName = roomTextFieldInput.text
             if (roomName.toString() != "") {
                 GlobalScope.launch(Dispatchers.Main) {
-                    firebase.createRoom(roomName.toString())
+                    val room = firebase.createRoom(roomName.toString())
+                    if (image != null) {
+                        val imagePath = "${FirebaseService().getCurrentUser()?.uid}/${roomName}/previewImage.jpg"
+                        StorageService().storePicture(BitmapFactory.decodeByteArray(image, 0, image.size), imagePath)
+                        room.previewPhotoPath = imagePath
+                        firebase.updateRoom(room)
+                    }
                 }
                 Log.d("FYI", roomName.toString())
                 val intent = Intent(activity, ArFragmentView::class.java).apply {

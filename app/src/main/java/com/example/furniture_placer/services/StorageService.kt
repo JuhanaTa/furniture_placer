@@ -26,11 +26,12 @@ class StorageService : AppCompatActivity() {
             // Handle unsuccessful uploads
         }.addOnSuccessListener { taskSnapshot ->
             Log.w(ContentValues.TAG, "image uploaded ${uploadTask.isComplete}")
-            userPictureRef.downloadUrl
+            userPictureRef.downloadUrl.addOnCanceledListener {  }
+            Log.w("StorageService", "downloadURl: ${userPictureRef.downloadUrl}")
         }.addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val downloadUri = task.result
-                Log.w(ContentValues.TAG, "download url ${downloadUri.toString()}")
+                Log.w(ContentValues.TAG, "download url $downloadUri")
             }
         }
     }
@@ -40,5 +41,21 @@ class StorageService : AppCompatActivity() {
 
         val ONE_MEGABYTE: Long = 1024 * 1024
         return imageRef.getBytes(ONE_MEGABYTE).await()
+    }
+
+    suspend fun loadModel(path:String,fileName: String,context: Context){
+
+        val filesDir = context.filesDir
+        val savingFolder = File(filesDir, "models")
+        if(!savingFolder.exists())
+        savingFolder.mkdir()
+
+        val assetRef = storageRef.child("$path$fileName")
+        val localFile = File(savingFolder.absolutePath,"$fileName")
+
+
+        val getFileResult = assetRef.getFile(localFile).await()
+        val file = FileReader(localFile.absoluteFile.toString())
+        Log.w("StorageService", "downloadURl: ${localFile.toURI()}")
     }
 }
