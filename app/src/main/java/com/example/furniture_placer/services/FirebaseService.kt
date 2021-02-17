@@ -79,10 +79,13 @@ class FirebaseService {
     fun getUserRoomsCollection(): CollectionReference? {
         val user = firebaseAuth.currentUser
             ?: return null
-
         val uid = user.uid
-
         return db.collection("users").document(uid).collection("rooms")
+    }
+
+    suspend fun getFurnitures() {
+        val furnitureCollection = db.collection("furnitures")
+
     }
 
     fun getCurrentUser(): FirebaseUser? {
