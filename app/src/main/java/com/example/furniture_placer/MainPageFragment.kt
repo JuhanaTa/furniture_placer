@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.furniture_placer.data_models.Room
@@ -26,7 +27,7 @@ class MainPageFragment : Fragment() {
     lateinit var mGoogleSignInClient: GoogleSignInClient
     lateinit var recyclerView: RecyclerView
     private lateinit var communicator: Communicator
-    private  var _roomsLiveData: MutableLiveData<ArrayList<Room>> = MutableLiveData<ArrayList<Room>>()
+    //private  var _roomsLiveData: MutableLiveData<ArrayList<Room>> = MutableLiveData<ArrayList<Room>>()
     private val auth by lazy {
         FirebaseAuth.getInstance()
     }
@@ -35,15 +36,18 @@ class MainPageFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
 
         // call update listener
-        listenToRooms()
+        //listenToRooms()
 
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_main_page, container, false)
         communicator = activity as Communicator
 
-        recyclerView = view.findViewById(R.id.rv_models)
+        recyclerView = view.findViewById(R.id.rv_rooms)
         recyclerView.layoutManager = LinearLayoutManager(view.context)
-        _roomsLiveData.observe(this, Observer { recyclerView.adapter = RoomAdapter(it) })
+        val roomList = ArrayList<Room>()
+        recyclerView.adapter = RoomAdapter(roomList)
+
+        //_roomsLiveData.observe(this, Observer { recyclerView.adapter = RoomAdapter(it) })
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.request_id_token))
@@ -70,7 +74,16 @@ class MainPageFragment : Fragment() {
         return view
     }
 
-    private fun listenToRooms() {
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        val ump = ViewModelProviders.of(this).get(MainViewModel::class.java) //ViewModelProvider(this).get(MainViewModel::class.java)
+        ump.listenToRooms()
+        ump.getRooms().observe( this, Observer{
+            recyclerView.adapter = RoomAdapter(it)
+        })
+    }
+
+   /* private fun listenToRooms() {
         FirebaseService().getUserRoomsCollection()?.addSnapshotListener { value, e ->
             if (e != null) {
                 Log.w(ContentValues.TAG, "Listen failed.", e)
@@ -90,5 +103,5 @@ class MainPageFragment : Fragment() {
 
     internal var roomsLiveData:MutableLiveData<ArrayList<Room>>
         get() {return _roomsLiveData}
-        set(value) {_roomsLiveData = value}
+        set(value) {_roomsLiveData = value}*/
 }
