@@ -81,8 +81,6 @@ class MainActivity : AppCompatActivity(), Communicator {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
             val imageBitmap = BitmapFactory.decodeFile(mCurrentPhotoPath)
             GlobalScope.launch(Dispatchers.Main) {
-                StorageService().storePicture(imageBitmap, "${FirebaseService().getCurrentUser()?.uid}/roomName/previewImage.jpg")
-               // val previewImageByteArray = StorageService().loadPicture("${FirebaseService().getCurrentUser()?.uid}/roomName/previewImage.jpg")
                 val baos = ByteArrayOutputStream()
                 imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
                 val data = baos.toByteArray()

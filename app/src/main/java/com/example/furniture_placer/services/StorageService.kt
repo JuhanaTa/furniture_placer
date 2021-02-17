@@ -1,25 +1,16 @@
 package com.example.camera.CameraService
 
-import android.app.Activity
-import android.app.PendingIntent.getActivity
 import android.content.ContentValues
 import android.content.Context
-import android.content.Intent
 import android.graphics.Bitmap
-import android.net.Uri
-import android.os.Environment
-import android.provider.MediaStore
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat.startActivityForResult
-import com.example.furniture_placer.Communicator
-import com.google.android.gms.tasks.Task
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.tasks.await
 import java.io.ByteArrayOutputStream
 import java.io.File
-import java.lang.Error
+import java.io.FileReader
 
 
 class StorageService : AppCompatActivity() {
@@ -38,11 +29,12 @@ class StorageService : AppCompatActivity() {
             // Handle unsuccessful uploads
         }.addOnSuccessListener { taskSnapshot ->
             Log.w(ContentValues.TAG, "image uploaded ${uploadTask.isComplete}")
-            userPictureRef.downloadUrl
+            userPictureRef.downloadUrl.addOnCanceledListener {  }
+            Log.w("StorageService", "downloadURl: ${userPictureRef.downloadUrl}")
         }.addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val downloadUri = task.result
-                Log.w(ContentValues.TAG, "download url ${downloadUri.toString()}")
+                Log.w(ContentValues.TAG, "download url $downloadUri")
             }
         }
     }
@@ -52,5 +44,21 @@ class StorageService : AppCompatActivity() {
 
         val ONE_MEGABYTE: Long = 1024 * 1024
         return imageRef.getBytes(ONE_MEGABYTE).await()
+    }
+
+    suspend fun loadModel(path:String,fileName: String,context: Context){
+
+        val filesDir = context.filesDir
+        val savingFolder = File(filesDir, "models")
+        if(!savingFolder.exists())
+        savingFolder.mkdir()
+
+        val assetRef = storageRef.child("$path$fileName")
+        val localFile = File(savingFolder.absolutePath,"$fileName")
+
+
+        val getFileResult = assetRef.getFile(localFile).await()
+        val file = FileReader(localFile.absoluteFile.toString())
+        Log.w("StorageService", "downloadURl: ${localFile.toURI()}")
     }
 }
