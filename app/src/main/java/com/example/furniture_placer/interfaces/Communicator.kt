@@ -1,4 +1,4 @@
-package com.example.furniture_placer
+package com.example.furniture_placer.interfaces
 
 import android.net.Uri
 import com.google.android.gms.tasks.Task

@@ -9,19 +9,22 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.widget.ImageView
 import androidx.core.content.FileProvider
 import com.example.camera.CameraService.StorageService
+import com.example.furniture_placer.adapters.RoomAdapter
+import com.example.furniture_placer.fragments.CreateRoomFragment
+import com.example.furniture_placer.fragments.MainPageFragment
+import com.example.furniture_placer.fragments.RoomDetailFragment
+import com.example.furniture_placer.interfaces.Communicator
 import com.example.furniture_placer.services.FirebaseService
-import com.google.android.gms.tasks.Task
-import kotlinx.android.synthetic.main.fragment_create_room_dialog.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import java.io.File
 
-class MainActivity : AppCompatActivity(), Communicator, RoomAdapter.OnItemClickListener {
+class MainActivity : AppCompatActivity(),
+    Communicator, RoomAdapter.OnItemClickListener {
     val REQUEST_IMAGE_CAPTURE = 1
     var mCurrentPhotoPath: String = ""
     var roomName = ""
@@ -33,7 +36,8 @@ class MainActivity : AppCompatActivity(), Communicator, RoomAdapter.OnItemClickL
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val mainPage = MainPageFragment(this)
+        val mainPage =
+            MainPageFragment(this)
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, mainPage).commit()
 
     }
@@ -93,7 +97,8 @@ class MainActivity : AppCompatActivity(), Communicator, RoomAdapter.OnItemClickL
 
     override fun onItemClick(position: Int) {
 
-        val roomDetailFrag = RoomDetailFragment()
+        val roomDetailFrag =
+            RoomDetailFragment()
 
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.fragment_container, roomDetailFrag)

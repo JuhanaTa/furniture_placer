@@ -1,7 +1,5 @@
-package com.example.furniture_placer
+package com.example.furniture_placer.fragments
 
-import android.content.res.AssetManager
-import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,7 +8,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_new_model_dialog.*
+import com.example.furniture_placer.OneModel
+import com.example.furniture_placer.R
+import com.example.furniture_placer.adapters.NewModelAdapter
+import com.example.furniture_placer.interfaces.ModelChangeCommunicator
 import kotlinx.android.synthetic.main.fragment_new_model_dialog.view.*
 
 
@@ -37,7 +38,8 @@ class NewModelDialog(modelList: ArrayList<OneModel>) : DialogFragment(), NewMode
         modelList.add(OneModel("pöytä", 1))
         modelList.add(OneModel("kello", 2))
         modelList.add(OneModel("sohva", 3))*/
-        recyclerView.adapter = NewModelAdapter(models, this)
+        recyclerView.adapter =
+            NewModelAdapter(models, this)
 
         return  view
     }

@@ -1,4 +1,4 @@
-package com.example.furniture_placer
+package com.example.furniture_placer.fragments
 
 import android.content.res.AssetManager
 import android.content.res.Resources
@@ -9,8 +9,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
+import com.example.furniture_placer.interfaces.ModelChangeCommunicator
+import com.example.furniture_placer.OneModel
+import com.example.furniture_placer.R
 import com.google.ar.core.Plane
 import com.google.ar.sceneform.AnchorNode
 import com.google.ar.sceneform.HitTestResult
@@ -20,7 +21,8 @@ import com.google.ar.sceneform.ux.ArFragment
 import com.google.ar.sceneform.ux.TransformableNode
 import kotlinx.android.synthetic.main.activity_ar_fragment_view.*
 
-class ArFragmentView : AppCompatActivity(), ModelChangeCommunicator {
+class ArFragmentView : AppCompatActivity(),
+    ModelChangeCommunicator {
 
     private lateinit var arFrag: ArFragment
     private var modelRenderable: ModelRenderable? = null
@@ -43,7 +45,10 @@ class ArFragmentView : AppCompatActivity(), ModelChangeCommunicator {
                 newModelTxt.visibility = View.VISIBLE
 
                 newModelBtn.setOnClickListener {
-                    val dialog = NewModelDialog(models)
+                    val dialog =
+                        NewModelDialog(
+                            models
+                        )
                     dialog.show(supportFragmentManager, "chooseModelDialog")
                 }
                 isOpen = false

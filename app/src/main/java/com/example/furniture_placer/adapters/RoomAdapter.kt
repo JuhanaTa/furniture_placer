@@ -1,51 +1,49 @@
-package com.example.furniture_placer
+package com.example.furniture_placer.adapters
 
-import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_new_model_dialog.view.*
-import kotlinx.android.synthetic.main.model_list_item.view.*
+import com.example.furniture_placer.R
+import com.example.furniture_placer.data_models.Room
 import kotlinx.android.synthetic.main.room_list_item.view.*
 
-class NewModelAdapter(
-    private val models: ArrayList<OneModel>,
+class RoomAdapter(
+    private val rooms: ArrayList<Room>,
     private val listener: OnItemClickListener
-): RecyclerView.Adapter<NewModelAdapter.MyViewHolder>() {
-
-
+): RecyclerView.Adapter<RoomAdapter.MyViewHolder>() {
 
     override fun getItemViewType(position: Int): Int {
-        return R.layout.model_list_item
+        return R.layout.room_list_item
     }
 
     override fun getItemCount(): Int {
-        return models.size
+        return rooms.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.model_list_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.room_list_item, parent, false)
         return MyViewHolder(view)
     }
 
     override fun onBindViewHolder(vh: MyViewHolder, position: Int) {
-        val model: OneModel = models[position]
-        vh.view.modelName.text = "${model.modelName}"
+        val room: Room = rooms[position]
+        vh.view.roomName.text = "Room: ${room.name} and id of room:  ${room.id}"
     }
 
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
 
         View.OnClickListener {
-        val view: TextView = itemView.findViewById(R.id.modelName)
+        val view: TextView = itemView.findViewById(R.id.roomName)
         init {
             itemView.setOnClickListener(this)
         }
 
         override fun onClick(v: View?) {
+            Log.d("FYI", "item clicked")
             val position: Int = adapterPosition
             if (position != RecyclerView.NO_POSITION) {
                 listener.onItemClick(position)
@@ -56,4 +54,5 @@ class NewModelAdapter(
     interface OnItemClickListener {
         fun onItemClick(position: Int)
     }
+
 }

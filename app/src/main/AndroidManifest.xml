@@ -26,7 +26,7 @@
             </meta-data>
         </provider>
 
-        <activity android:name=".ArFragmentView" />
+        <activity android:name=".fragments.ArFragmentView" />
         <activity android:name=".LoginScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

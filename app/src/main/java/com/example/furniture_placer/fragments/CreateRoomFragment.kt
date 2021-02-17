@@ -1,8 +1,6 @@
-package com.example.furniture_placer
+package com.example.furniture_placer.fragments
 
-import android.content.ContentValues
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import com.example.furniture_placer.interfaces.Communicator
+import com.example.furniture_placer.R
 import com.example.furniture_placer.services.FirebaseService
 import kotlinx.android.synthetic.main.fragment_create_room_dialog.*
 import kotlinx.android.synthetic.main.fragment_create_room_dialog.view.*
