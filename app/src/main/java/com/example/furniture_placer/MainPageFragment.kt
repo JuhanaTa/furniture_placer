@@ -22,7 +22,7 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_main_page.view.*
 
 
-class MainPageFragment : Fragment() {
+class MainPageFragment(private val listener: RoomAdapter.OnItemClickListener) : Fragment() {
 
     lateinit var mGoogleSignInClient: GoogleSignInClient
     lateinit var recyclerView: RecyclerView
@@ -45,7 +45,7 @@ class MainPageFragment : Fragment() {
         recyclerView = view.findViewById(R.id.rv_rooms)
         recyclerView.layoutManager = LinearLayoutManager(view.context)
         val roomList = ArrayList<Room>()
-        recyclerView.adapter = RoomAdapter(roomList)
+        recyclerView.adapter = RoomAdapter(roomList, listener)
 
         //_roomsLiveData.observe(this, Observer { recyclerView.adapter = RoomAdapter(it) })
 
@@ -79,7 +79,7 @@ class MainPageFragment : Fragment() {
         val ump = ViewModelProviders.of(this).get(MainViewModel::class.java) //ViewModelProvider(this).get(MainViewModel::class.java)
         ump.listenToRooms()
         ump.getRooms().observe( this, Observer{
-            recyclerView.adapter = RoomAdapter(it)
+            recyclerView.adapter = RoomAdapter(it, listener)
         })
     }
 

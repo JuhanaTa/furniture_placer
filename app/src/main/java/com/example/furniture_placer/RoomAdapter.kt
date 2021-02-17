@@ -10,7 +10,8 @@ import com.example.furniture_placer.data_models.Room
 import kotlinx.android.synthetic.main.room_list_item.view.*
 
 class RoomAdapter(
-    private val rooms: ArrayList<Room>
+    private val rooms: ArrayList<Room>,
+    private val listener: OnItemClickListener
 ): RecyclerView.Adapter<RoomAdapter.MyViewHolder>() {
 
     override fun getItemViewType(position: Int): Int {
@@ -42,8 +43,15 @@ class RoomAdapter(
 
         override fun onClick(v: View?) {
             Log.d("FYI", "item clicked")
+            val position: Int = adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                listener.onItemClick(position)
+            }
         }
     }
 
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
+    }
 
 }

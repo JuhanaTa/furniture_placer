@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import java.io.File
 
-class MainActivity : AppCompatActivity(), Communicator {
+class MainActivity : AppCompatActivity(), Communicator, RoomAdapter.OnItemClickListener {
     val REQUEST_IMAGE_CAPTURE = 1
     var mCurrentPhotoPath: String = ""
     var roomName = ""
@@ -33,19 +33,19 @@ class MainActivity : AppCompatActivity(), Communicator {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val mainPage = MainPageFragment()
+        val mainPage = MainPageFragment(this)
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, mainPage).commit()
 
     }
 
-    override fun nextFragment() {
+    /*override fun nextFragment() {
         val transaction = this.supportFragmentManager.beginTransaction()
         val createRoomFrag = CreateRoomFragment()
         transaction.replace(R.id.fragment_container, createRoomFrag)
         transaction.addToBackStack(null)
         transaction.commit()
 
-    }
+    }*/
 
     override fun openDialog(image: ByteArray?, name: String) {
         val bundle = Bundle()
@@ -88,6 +88,17 @@ class MainActivity : AppCompatActivity(), Communicator {
                 val data = baos.toByteArray()
                 openDialog(data, roomName)
             }
+        }
+    }
+
+    override fun onItemClick(position: Int) {
+
+        val roomDetailFrag = RoomDetailFragment()
+
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.fragment_container, roomDetailFrag)
+            addToBackStack(null)
+            commit()
         }
     }
 }
