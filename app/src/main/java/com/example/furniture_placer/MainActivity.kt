@@ -10,13 +10,11 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import androidx.core.content.FileProvider
-import com.example.camera.CameraService.StorageService
 import com.example.furniture_placer.adapters.RoomAdapter
 import com.example.furniture_placer.fragments.CreateRoomFragment
 import com.example.furniture_placer.fragments.MainPageFragment
 import com.example.furniture_placer.fragments.RoomDetailFragment
 import com.example.furniture_placer.interfaces.Communicator
-import com.example.furniture_placer.services.FirebaseService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

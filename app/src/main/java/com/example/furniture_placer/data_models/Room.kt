@@ -8,7 +8,7 @@ data class Room (
     var id: String? = null,
     var previewPhotoPath: String? = null,
     var decoreationPhotoPaths: MutableList<String>? = null,
-    var itemCount: Int = 0)
+    var recentFurniture: MutableList<String>? = null)
 
 
 fun roomToHash(room: Room): HashMap<String, Any?> {
@@ -16,7 +16,7 @@ fun roomToHash(room: Room): HashMap<String, Any?> {
     return hashMapOf(
         "name" to room.name,
         "created" to room.created,
-        "itemCount" to room.itemCount,
+        "recentFurniture" to room.recentFurniture,
         "previewPhoto" to room.previewPhotoPath,
         "decoreationPhotos" to room.decoreationPhotoPaths
     )

@@ -7,10 +7,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.furniture_placer.OneModel
 import com.example.furniture_placer.R
+import com.example.furniture_placer.data_models.Furniture
 import kotlinx.android.synthetic.main.model_list_item.view.*
 
 class NewModelAdapter(
-    private val models: ArrayList<OneModel>,
+    private val models: ArrayList<Furniture>,
     private val listener: OnItemClickListener
 ): RecyclerView.Adapter<NewModelAdapter.MyViewHolder>() {
 
@@ -30,8 +31,8 @@ class NewModelAdapter(
     }
 
     override fun onBindViewHolder(vh: MyViewHolder, position: Int) {
-        val model: OneModel = models[position]
-        vh.view.modelName.text = "${model.modelName}"
+        val model: Furniture = models[position]
+        vh.view.modelName.text = "${model.name}"
     }
 
 

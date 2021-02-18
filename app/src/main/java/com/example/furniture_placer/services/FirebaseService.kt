@@ -2,10 +2,12 @@ package com.example.furniture_placer.services
 
 import android.content.ContentValues.TAG
 import android.util.Log
+import com.example.furniture_placer.data_models.Furniture
 import com.example.furniture_placer.data_models.Room
 import com.example.furniture_placer.data_models.roomToHash
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -58,7 +60,7 @@ class FirebaseService {
             "itemCount" to 0
         )
         val doc = db.collection("users").document(uid).collection("rooms").add(roomData).await()
-        return Room(name = name, id = doc.id, itemCount = 0)
+        return Room(name = name, id = doc.id)
     }
 
     fun updateRoom(room: Room) {
@@ -83,9 +85,18 @@ class FirebaseService {
         return db.collection("users").document(uid).collection("rooms")
     }
 
-    suspend fun getFurnitures() {
-        val furnitureCollection = db.collection("furnitures")
+    suspend fun getFurnitures() :List<Furniture?>{
+        val query = db.collection("furnitures").get().await()
+        val furnitures =  query.documents.map{doc ->
+            Furniture(
+                name = doc["name"] as String,
+                id = doc.id,
+                modelFiles = doc["modelFiles"] as ArrayList<String>?,
+                path = doc["path"] as String,
+                previewImagePath = doc["previewImagePath"] as String?
+            )}
 
+        return furnitures
     }
 
     fun getCurrentUser(): FirebaseUser? {

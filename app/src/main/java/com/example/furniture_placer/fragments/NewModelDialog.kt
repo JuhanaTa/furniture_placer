@@ -11,11 +11,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.furniture_placer.OneModel
 import com.example.furniture_placer.R
 import com.example.furniture_placer.adapters.NewModelAdapter
+import com.example.furniture_placer.data_models.Furniture
 import com.example.furniture_placer.interfaces.ModelChangeCommunicator
 import kotlinx.android.synthetic.main.fragment_new_model_dialog.view.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
-class NewModelDialog(modelList: ArrayList<OneModel>) : DialogFragment(), NewModelAdapter.OnItemClickListener {
+class NewModelDialog(modelList: ArrayList<Furniture>) : DialogFragment(), NewModelAdapter.OnItemClickListener {
 
 
     private val models = modelList
@@ -45,10 +49,13 @@ class NewModelDialog(modelList: ArrayList<OneModel>) : DialogFragment(), NewMode
     }
 
     override fun onItemClick(position: Int) {
-        val clickedItem: OneModel = models[position]
-        communicator.changeModel(clickedItem.modelName)
-        Log.d("FYI", clickedItem.modelName)
-        dismiss()
+        GlobalScope.launch(Dispatchers.Main) {
+            val clickedItem: Furniture = models[position]
+            communicator.changeModel(clickedItem)
+            Log.d("FYI", clickedItem.name)
+            dismiss()
+        }
+
     }
 
 

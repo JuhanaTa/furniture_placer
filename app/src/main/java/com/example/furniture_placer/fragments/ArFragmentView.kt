@@ -1,7 +1,5 @@
 package com.example.furniture_placer.fragments
 
-import android.content.res.AssetManager
-import android.content.res.Resources
 import android.graphics.Camera
 import android.graphics.Point
 import android.net.Uri
@@ -10,9 +8,12 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.example.furniture_placer.OneModel
+import androidx.core.net.toUri
+import com.example.camera.CameraService.StorageService
 import com.example.furniture_placer.R
 import com.example.furniture_placer.interfaces.ModelChangeCommunicator
+import com.example.furniture_placer.data_models.Furniture
+import com.example.furniture_placer.services.FirebaseService
 import com.google.ar.core.Plane
 import com.google.ar.sceneform.AnchorNode
 import com.google.ar.sceneform.HitTestResult
@@ -23,13 +24,17 @@ import com.google.ar.sceneform.rendering.ModelRenderable
 import com.google.ar.sceneform.ux.ArFragment
 import com.google.ar.sceneform.ux.TransformableNode
 import kotlinx.android.synthetic.main.activity_ar_fragment_view.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.io.File
 
 class ArFragmentView : AppCompatActivity(),
     ModelChangeCommunicator {
 
     private lateinit var arFrag: ArFragment
     private var modelRenderable: ModelRenderable? = null
-    private val models = arrayListOf<OneModel>()
+    private val models = arrayListOf<Furniture>()
     var uri = Uri.parse("file:///android_asset/models/ikea_stool.gltf")
     //private var communicator: Communicator
 
@@ -37,7 +42,7 @@ class ArFragmentView : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ar_fragment_view)
-        listFiles("models")
+        listFiles()
         setModel()
         openMenuBtn.setOnClickListener {
             Log.d("FYI", "menu button pressed")
@@ -90,7 +95,6 @@ class ArFragmentView : AppCompatActivity(),
         renderableFuture.thenAccept { modelRenderable = it }
         renderableFuture.exceptionally {// something went wrong notify
             Log.e("FYI", "renderableFuture error: ${it.localizedMessage}")
-
             null
         }
     }
@@ -151,24 +155,29 @@ class ArFragmentView : AppCompatActivity(),
         }
     }
 
-    private fun listFiles(dirFrom: String) {
-        val res: Resources = resources //if you are in an activity
-        val am: AssetManager = res.getAssets()
-        val fileList = am.list(dirFrom)
-
-        if (fileList != null) {
-            for (i in fileList.indices) {
-                Log.d("FYI", fileList[i])
-                if (fileList[i].takeLast(5) == ".gltf") {
-                    models.add(OneModel(fileList[i]))
-                }
+    private fun listFiles() {
+        GlobalScope.launch(Dispatchers.Main) {
+            val furnitures = FirebaseService().getFurnitures()
+            Log.d("ARF", "furnitures $furnitures")
+            furnitures.forEach { if(it != null){
+                models.add(it)}
             }
         }
     }
 
-    override fun changeModel(file: String) {
-        uri = Uri.parse("file:///android_asset/models/${file}")
-        setModel()
+    override suspend fun changeModel(furniture: Furniture) {
+        val file = File("${applicationContext.filesDir}/models/${furniture.modelFiles?.get(0)}")
+        if (file.exists()) {
+            //file exists
+            uri = file.toUri()
+            setModel()
+            return
+        }else{
+            val UriList = arrayListOf<Uri>()
+            furniture.modelFiles?.forEach { UriList.add(StorageService().loadModel(furniture.path, it,applicationContext)) }
+            uri = UriList[0]
+            setModel()
+        }
     }
 
 }
