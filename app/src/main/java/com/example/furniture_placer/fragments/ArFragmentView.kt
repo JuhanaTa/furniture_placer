@@ -2,19 +2,22 @@ package com.example.furniture_placer.fragments
 
 import android.content.res.AssetManager
 import android.content.res.Resources
+import android.graphics.Camera
 import android.graphics.Point
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import com.example.furniture_placer.interfaces.ModelChangeCommunicator
+import androidx.appcompat.app.AppCompatActivity
 import com.example.furniture_placer.OneModel
 import com.example.furniture_placer.R
+import com.example.furniture_placer.interfaces.ModelChangeCommunicator
 import com.google.ar.core.Plane
 import com.google.ar.sceneform.AnchorNode
 import com.google.ar.sceneform.HitTestResult
+import com.google.ar.sceneform.Node
+import com.google.ar.sceneform.Sun
 import com.google.ar.sceneform.assets.RenderableSource
 import com.google.ar.sceneform.rendering.ModelRenderable
 import com.google.ar.sceneform.ux.ArFragment
@@ -87,6 +90,7 @@ class ArFragmentView : AppCompatActivity(),
         renderableFuture.thenAccept { modelRenderable = it }
         renderableFuture.exceptionally {// something went wrong notify
             Log.e("FYI", "renderableFuture error: ${it.localizedMessage}")
+
             null
         }
     }
@@ -116,12 +120,34 @@ class ArFragmentView : AppCompatActivity(),
                     mNode.setParent(anchorNode)
                     mNode.renderable = modelRenderable
                     mNode.select()
+
                     mNode.setOnTapListener(){ hitTestResult: HitTestResult, motionEvent: MotionEvent ->
 
+                        deleteModelbtn.visibility = View.VISIBLE
+                        Log.d("FYI", "Listener added")
+
+                        deleteModelbtn.setOnClickListener {
+                            removeAnchorNode(anchorNode)
+                            Log.d("FYI", "Model removed")
+                            deleteModelbtn.visibility = View.GONE
+                        }
                     }
                     break
                 }
             }
+        }
+    }
+
+    private fun removeAnchorNode(nodeRemove: Node) {
+
+        //Remove an anchor node
+        if (nodeRemove is AnchorNode) {
+            if (nodeRemove.anchor != null) {
+                nodeRemove.anchor!!.detach()
+            }
+        }
+        if (nodeRemove !is Camera && nodeRemove !is Sun) {
+            nodeRemove.setParent(null)
         }
     }
 

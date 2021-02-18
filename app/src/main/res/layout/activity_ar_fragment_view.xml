@@ -86,14 +86,14 @@
             android:backgroundTint="@color/design_default_color_primary"
             android:contentDescription="@string/deleteModelFab"
             android:src="@drawable/ic_baseline_clear_24"
+            android:visibility="gone"
             app:backgroundTint="@color/purple_500"
             app:icon="@drawable/ic_baseline_clear_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:rippleColor="@color/design_default_color_primary_variant"
-            />
+            app:rippleColor="@color/design_default_color_primary_variant" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
