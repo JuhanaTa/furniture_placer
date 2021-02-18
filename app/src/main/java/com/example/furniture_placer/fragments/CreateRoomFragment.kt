@@ -9,14 +9,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.example.camera.CameraService.StorageService
-import com.example.furniture_placer.interfaces.Communicator
 import com.example.furniture_placer.R
+import com.example.furniture_placer.data_models.Room
+import com.example.furniture_placer.interfaces.Communicator
 import com.example.furniture_placer.services.FirebaseService
 import kotlinx.android.synthetic.main.fragment_create_room_dialog.*
 import kotlinx.android.synthetic.main.fragment_create_room_dialog.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.io.Serializable
 
 class CreateRoomFragment : DialogFragment() {
     private lateinit var communicator: Communicator
@@ -50,13 +52,14 @@ class CreateRoomFragment : DialogFragment() {
                         StorageService().storePicture(BitmapFactory.decodeByteArray(image, 0, image.size), imagePath)
                         room.previewPhotoPath = imagePath
                         firebase.updateRoom(room)
+
                     }
+                    val intent = Intent(activity, ArFragmentView::class.java).apply {
+                        putExtra("EDITED_ROOM",room)
+                    }
+                    startActivity(intent)
+                    dismiss()
                 }
-                Log.d("FYI", roomName.toString())
-                val intent = Intent(activity, ArFragmentView::class.java).apply {
-                }
-                startActivity(intent)
-                dismiss()
             } else {
                 Log.d("FYI", "empty field")
             }

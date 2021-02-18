@@ -13,6 +13,7 @@ import com.example.camera.CameraService.StorageService
 import com.example.furniture_placer.R
 import com.example.furniture_placer.interfaces.ModelChangeCommunicator
 import com.example.furniture_placer.data_models.Furniture
+import com.example.furniture_placer.data_models.Room
 import com.example.furniture_placer.services.FirebaseService
 import com.google.ar.core.Plane
 import com.google.ar.sceneform.AnchorNode
@@ -28,6 +29,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.File
+import java.io.Serializable
 
 class ArFragmentView : AppCompatActivity(),
     ModelChangeCommunicator {
@@ -36,11 +38,16 @@ class ArFragmentView : AppCompatActivity(),
     private var modelRenderable: ModelRenderable? = null
     private val models = arrayListOf<Furniture>()
     var uri = Uri.parse("file:///android_asset/models/ikea_stool.gltf")
+    private lateinit var editedRoom: Room
     //private var communicator: Communicator
 
     private var isOpen: Boolean = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val room = intent.getParcelableExtra<Room>("EDITED_ROOM")
+
+
         setContentView(R.layout.activity_ar_fragment_view)
         listFiles()
         setModel()
