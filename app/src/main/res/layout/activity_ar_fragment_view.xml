@@ -24,8 +24,8 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:backgroundTint="@color/purple_200"
-        android:visibility="gone"
         android:contentDescription="@string/searchHistoryModelFab"
+        android:visibility="gone"
         app:backgroundTint="@color/purple_200"
         app:layout_constraintBottom_toTopOf="@+id/coordinatorLayout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -104,8 +104,8 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="24dp"
         android:backgroundTint="@color/purple_200"
-        android:visibility="gone"
         android:contentDescription="@string/searchNewModelFab"
+        android:visibility="gone"
         app:backgroundTint="@color/purple_200"
         app:layout_constraintBottom_toTopOf="@+id/historyModelBtn"
         app:layout_constraintEnd_toEndOf="parent"
@@ -146,5 +146,39 @@
         app:layout_constraintBottom_toBottomOf="@+id/newModelBtn"
         app:layout_constraintEnd_toStartOf="@+id/newModelBtn"
         app:layout_constraintTop_toTopOf="@+id/newModelBtn" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/screenshotBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="@color/purple_200"
+        android:contentDescription="@string/searchNewModelFab"
+        android:visibility="gone"
+        app:backgroundTint="@color/purple_200"
+        app:layout_constraintBottom_toTopOf="@+id/newModelBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_baseline_camera" />
+
+    <TextView
+        android:id="@+id/screenshotTxt"
+        android:layout_width="95dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/fab_text_bg"
+        android:paddingStart="8dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="8dp"
+        android:text="@string/screenshotFabText"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/screenshotBtn"
+        app:layout_constraintEnd_toStartOf="@+id/screenshotBtn"
+        app:layout_constraintTop_toTopOf="@+id/screenshotBtn" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

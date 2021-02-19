@@ -1,27 +1,29 @@
 package com.example.furniture_placer.fragments
 
-import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Camera
 import android.graphics.Point
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.HandlerThread
+import android.os.Looper
 import android.util.Log
 import android.view.MotionEvent
+import android.view.PixelCopy
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
+import androidx.fragment.app.FragmentActivity
 import com.example.camera.CameraService.StorageService
 import com.example.furniture_placer.R
-import com.example.furniture_placer.interfaces.ModelChangeCommunicator
 import com.example.furniture_placer.data_models.Furniture
 import com.example.furniture_placer.data_models.Room
+import com.example.furniture_placer.interfaces.ModelChangeCommunicator
 import com.example.furniture_placer.services.FirebaseService
 import com.google.ar.core.Plane
-import com.google.ar.sceneform.AnchorNode
-import com.google.ar.sceneform.HitTestResult
-import com.google.ar.sceneform.Node
-import com.google.ar.sceneform.Sun
+import com.google.ar.sceneform.*
 import com.google.ar.sceneform.assets.RenderableSource
 import com.google.ar.sceneform.rendering.ModelRenderable
 import com.google.ar.sceneform.ux.ArFragment
@@ -30,8 +32,8 @@ import kotlinx.android.synthetic.main.activity_ar_fragment_view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.Serializable
 
 class ArFragmentView : AppCompatActivity(),
     ModelChangeCommunicator {
@@ -39,8 +41,9 @@ class ArFragmentView : AppCompatActivity(),
     private lateinit var arFrag: ArFragment
     private var modelRenderable: ModelRenderable? = null
     private val models = arrayListOf<Furniture>()
-    var uri = Uri.parse("file:///android_asset/models/ikea_stool.gltf")
+    var uri = Uri.parse("")
     private lateinit var editedRoom: Room
+    var id = 0
     //private var communicator: Communicator
 
     private var isOpen: Boolean = true
@@ -56,6 +59,9 @@ class ArFragmentView : AppCompatActivity(),
         setContentView(R.layout.activity_ar_fragment_view)
         listFiles()
         setModel()
+
+        arFrag = supportFragmentManager.findFragmentById(R.id.sceneform_fragment) as ArFragment
+
         openMenuBtn.setOnClickListener {
             Log.d("FYI", "menu button pressed")
             if (isOpen){
@@ -63,6 +69,8 @@ class ArFragmentView : AppCompatActivity(),
                 newModelBtn.visibility = View.VISIBLE
                 historyModelText.visibility = View.VISIBLE
                 newModelTxt.visibility = View.VISIBLE
+                screenshotBtn.visibility = View.VISIBLE
+                screenshotTxt.visibility = View.VISIBLE
 
                 newModelBtn.setOnClickListener {
                     val dialog =
@@ -77,18 +85,36 @@ class ArFragmentView : AppCompatActivity(),
                 newModelBtn.visibility = View.GONE
                 historyModelText.visibility = View.GONE
                 newModelTxt.visibility = View.GONE
+                screenshotBtn.visibility = View.GONE
+                screenshotTxt.visibility = View.GONE
 
                 newModelBtn.setOnClickListener(null)
                 isOpen = true
             }
         }
 
-        addModel.setOnClickListener {
-            Log.d("FYI", "new model added")
-            add3dObject()
+
+        screenshotBtn.setOnClickListener {
+            Log.d("FYI", "screenshot of ar view")
+            var mCurrentPhotoPath: String = ""
+            val view: ArSceneView = arFrag.arSceneView
+            val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+            PixelCopy.request(view, bitmap, { copyResult ->
+                if (copyResult == PixelCopy.SUCCESS) {
+
+                    val imagePath = "${FirebaseService().getCurrentUser()?.uid}/screenshots/previewImage.jpg"
+                    val baos = ByteArrayOutputStream()
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+                    val data = baos.toByteArray()
+                    StorageService().storePicture(BitmapFactory.decodeByteArray(data, 0, data.size), imagePath)
+                    Log.d("FYI", "saved image")
+
+                } else {
+                    Log.d("FYI", "Pixel copy did not succeed")
+                }
+            }, Handler(Looper.getMainLooper()))
         }
 
-        arFrag = supportFragmentManager.findFragmentById(R.id.sceneform_fragment) as ArFragment
 
         //val uri = Uri.parse("file:///android_asset/models/ikea_stool.gltf")
         //https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/Duck/glTF/Duck.gltf
@@ -96,6 +122,7 @@ class ArFragmentView : AppCompatActivity(),
     }
 
      private fun setModel(){
+         modelRenderable = null
          Log.d("FYI", "setting Model ${uri}")
         val renderableFuture = ModelRenderable.builder()
             .setSource(this, RenderableSource.builder().setSource(this,
@@ -103,8 +130,16 @@ class ArFragmentView : AppCompatActivity(),
                 .setScale(0.1f)// Scale the original to 20%
                 .setRecenterMode(RenderableSource.RecenterMode.ROOT)
                 .build())
-            .setRegistryId("CesiumMan").build()
+            .setRegistryId("id${id}").build()
         renderableFuture.thenAccept { modelRenderable = it }
+         renderableFuture.thenAccept{Log.d("FYI", "model renderable changed")
+
+             addModel.setOnClickListener {
+                 Log.d("FYI", "new model added")
+                 add3dObject()
+             }
+         }
+         id + 1
         renderableFuture.exceptionally {// something went wrong notify
             Log.e("FYI", "renderableFuture error: ${it.localizedMessage}")
             null

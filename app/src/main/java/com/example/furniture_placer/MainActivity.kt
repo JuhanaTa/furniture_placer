@@ -34,8 +34,7 @@ class MainActivity : AppCompatActivity(),
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        GlobalScope.launch(Dispatchers.Main) {
-        }
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         listenToRooms()
