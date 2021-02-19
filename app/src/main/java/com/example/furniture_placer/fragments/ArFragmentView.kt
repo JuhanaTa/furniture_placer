@@ -34,6 +34,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ArFragmentView : AppCompatActivity(),
     ModelChangeCommunicator {
@@ -101,12 +103,17 @@ class ArFragmentView : AppCompatActivity(),
             val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
             PixelCopy.request(view, bitmap, { copyResult ->
                 if (copyResult == PixelCopy.SUCCESS) {
+                    //time stamp
+                    val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd_HH:mm:ss")
+                    val currentDateAndTime: String = simpleDateFormat.format(Date())
 
-                    val imagePath = "${FirebaseService().getCurrentUser()?.uid}/screenshots/previewImage.jpg"
+                    val imagePath = "${FirebaseService().getCurrentUser()?.uid}/${editedRoom.name}/${currentDateAndTime}.jpg"
                     val baos = ByteArrayOutputStream()
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
                     val data = baos.toByteArray()
                     StorageService().storePicture(BitmapFactory.decodeByteArray(data, 0, data.size), imagePath)
+                    editedRoom.decoreationPhotoPaths?.add(imagePath)
+                    FirebaseService().updateRoom(editedRoom)
                     Log.d("FYI", "saved image")
 
                 } else {
