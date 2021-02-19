@@ -106,7 +106,7 @@ class ArFragmentView : AppCompatActivity(),
                     val baos = ByteArrayOutputStream()
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
                     val data = baos.toByteArray()
-                    StorageService().storePicture(BitmapFactory.decodeByteArray(data, 0, data.size), imagePath)
+                    //StorageService().storePicture(BitmapFactory.decodeByteArray(data, 0, data.size), imagePath)
                     Log.d("FYI", "saved image")
 
                 } else {

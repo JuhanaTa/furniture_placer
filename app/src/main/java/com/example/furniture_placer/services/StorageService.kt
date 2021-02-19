@@ -19,26 +19,15 @@ class StorageService : AppCompatActivity() {
     val storage = Firebase.storage
     val storageRef = storage.reference
 
-    fun storePicture(bitmap: Bitmap, path: String) {
+    suspend fun storePicture(bitmap: Bitmap, path: String) {
         val userPictureRef = storageRef.child(path)
 
         val baos = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
         val data = baos.toByteArray()
 
-        val uploadTask = userPictureRef.putBytes(data)
-        uploadTask.addOnFailureListener {
-            // Handle unsuccessful uploads
-        }.addOnSuccessListener { taskSnapshot ->
-            Log.w(ContentValues.TAG, "image uploaded ${uploadTask.isComplete}")
-            userPictureRef.downloadUrl.addOnCanceledListener {  }
-            Log.w("StorageService", "downloadURl: ${userPictureRef.downloadUrl}")
-        }.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val downloadUri = task.result
-                Log.w(ContentValues.TAG, "download url $downloadUri")
-            }
-        }
+        val uploadTask = userPictureRef.putBytes(data).await()
+
     }
 
     suspend fun loadPicture(path: String): ByteArray {

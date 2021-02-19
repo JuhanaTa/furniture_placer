@@ -12,6 +12,8 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import androidx.core.content.FileProvider
+import androidx.lifecycle.lifecycleScope
+import com.example.camera.CameraService.StorageService
 import com.example.furniture_placer.adapters.RoomAdapter
 import com.example.furniture_placer.data_models.Room
 import com.example.furniture_placer.fragments.CreateRoomFragment
@@ -88,7 +90,8 @@ class MainActivity : AppCompatActivity(),
             val imageBitmap = BitmapFactory.decodeFile(mCurrentPhotoPath)
             GlobalScope.launch(Dispatchers.Main) {
                 val baos = ByteArrayOutputStream()
-                imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+                val pImage = Bitmap.createScaledBitmap(imageBitmap, 1080, 1080, false)
+                pImage.compress(Bitmap.CompressFormat.JPEG, 50, baos)
                 val data = baos.toByteArray()
                 openDialog(data, roomName)
             }
@@ -109,6 +112,8 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
+
+
 private fun listenToRooms() {
  FirebaseService().getUserRoomsCollection()?.addSnapshotListener { value, e ->
      if (e != null) {
@@ -126,6 +131,8 @@ private fun listenToRooms() {
      roomList = rooms
  }
 }
+
+
 
 
 }
