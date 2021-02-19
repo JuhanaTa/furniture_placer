@@ -18,6 +18,7 @@ import androidx.core.net.toUri
 import androidx.fragment.app.FragmentActivity
 import com.example.camera.CameraService.StorageService
 import com.example.furniture_placer.R
+import com.example.furniture_placer.data_models.DecorationSnapshot
 import com.example.furniture_placer.data_models.Furniture
 import com.example.furniture_placer.data_models.Room
 import com.example.furniture_placer.interfaces.ModelChangeCommunicator
@@ -36,6 +37,7 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class ArFragmentView : AppCompatActivity(),
     ModelChangeCommunicator {
@@ -112,7 +114,9 @@ class ArFragmentView : AppCompatActivity(),
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
                     val data = baos.toByteArray()
                     StorageService().storePicture(BitmapFactory.decodeByteArray(data, 0, data.size), imagePath)
-                    editedRoom.decoreationPhotoPaths?.add(imagePath)
+                    val furnitureList = ArrayList<Furniture>()
+                    furnitureList.add(Furniture(name = "customItem",id = "customId",path = "/images/path/"))
+                    editedRoom.decorationSnapshots?.add(DecorationSnapshot(name = currentDateAndTime,photoPath = imagePath,itemsInScene = furnitureList))
                     FirebaseService().updateRoom(editedRoom)
                     Log.d("FYI", "saved image")
 

@@ -3,15 +3,16 @@ package com.example.furniture_placer.data_models
 import android.os.Parcelable
 import com.google.firebase.Timestamp
 import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
 
 @Parcelize
 data class Room (
-    val name: String? = null,
-    val created: Timestamp = Timestamp.now(),
-    var id: String? = null,
-    var previewPhotoPath: String? = null,
-    var decoreationPhotoPaths: ArrayList<String>? = ArrayList(),
-    var recentFurniture: ArrayList<String>? = ArrayList()) : Parcelable
+        val name: String? = null,
+        val created: Timestamp = Timestamp.now(),
+        var id: String? = null,
+        var previewPhotoPath: String? = null,
+        var decorationSnapshots: @RawValue ArrayList<DecorationSnapshot>? = ArrayList(),
+        var recentFurniture: ArrayList<String>? = ArrayList()) : Parcelable
 
 
 fun roomToHash(room: Room): HashMap<String, Any?> {
@@ -21,6 +22,6 @@ fun roomToHash(room: Room): HashMap<String, Any?> {
         "created" to room.created,
         "recentFurniture" to room.recentFurniture,
         "previewPhotoPath" to room.previewPhotoPath,
-        "decoreationPhotoPaths" to room.decoreationPhotoPaths
+        "decorationSnapshots" to room.decorationSnapshots
     )
 }
