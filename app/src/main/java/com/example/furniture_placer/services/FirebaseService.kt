@@ -54,11 +54,7 @@ class FirebaseService {
             ?: return Room(name = name)
         val uid = user.uid
 
-        val roomData = hashMapOf(
-            "name" to name,
-            "created" to Timestamp(System.currentTimeMillis()),
-            "itemCount" to 0
-        )
+        val roomData = roomToHash(Room(name=name))
         val doc = db.collection("users").document(uid).collection("rooms").add(roomData).await()
         return Room(name = name, id = doc.id)
     }

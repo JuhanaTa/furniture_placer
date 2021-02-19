@@ -1,6 +1,7 @@
 package com.example.furniture_placer
 
 import android.app.Activity
+import android.content.ContentValues
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -9,12 +10,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import androidx.core.content.FileProvider
 import com.example.furniture_placer.adapters.RoomAdapter
+import com.example.furniture_placer.data_models.Room
 import com.example.furniture_placer.fragments.CreateRoomFragment
 import com.example.furniture_placer.fragments.MainPageFragment
 import com.example.furniture_placer.fragments.RoomDetailFragment
 import com.example.furniture_placer.interfaces.Communicator
+import com.example.furniture_placer.services.FirebaseService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -26,6 +30,7 @@ class MainActivity : AppCompatActivity(),
     val REQUEST_IMAGE_CAPTURE = 1
     var mCurrentPhotoPath: String = ""
     var roomName = ""
+    var roomList : ArrayList<Room>? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +38,7 @@ class MainActivity : AppCompatActivity(),
         }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        listenToRooms()
         val mainPage =
             MainPageFragment(this)
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, mainPage).commit()
@@ -94,14 +99,34 @@ class MainActivity : AppCompatActivity(),
     override fun onItemClick(position: Int) {
 
         val roomDetailFrag =
-            RoomDetailFragment()
+                roomList?.get(position)?.let { RoomDetailFragment(it) }
 
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.fragment_container, roomDetailFrag)
+            if (roomDetailFrag != null) {
+                replace(R.id.fragment_container, roomDetailFrag)
+            }
             addToBackStack(null)
             commit()
         }
     }
+
+private fun listenToRooms() {
+ FirebaseService().getUserRoomsCollection()?.addSnapshotListener { value, e ->
+     if (e != null) {
+         Log.w("Firebase", "Listen failed.", e)
+         return@addSnapshotListener
+     }
+
+     val rooms = ArrayList<Room>()
+     value?.documents?.forEach{
+         val room = it.toObject(Room::class.java)
+         room?.id = it.id
+         rooms.add(room!!)
+     }
+
+     roomList = rooms
+ }
+}
 
 
 }

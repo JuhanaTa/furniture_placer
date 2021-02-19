@@ -11,12 +11,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.furniture_placer.OneRoomDetail
 import com.example.furniture_placer.R
 import com.example.furniture_placer.adapters.RoomDetailAdapter
+import com.example.furniture_placer.data_models.Room
 import kotlinx.android.synthetic.main.fragment_room_detail.view.*
 
 
-class RoomDetailFragment : Fragment() {
+class RoomDetailFragment(room: Room) : Fragment() {
 
     lateinit var recyclerView: RecyclerView
+    var myRoom = room
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,6 +29,7 @@ class RoomDetailFragment : Fragment() {
 
         view.modifyRoomBtn.setOnClickListener {
             val intent = Intent(activity, ArFragmentView::class.java).apply {
+                putExtra("EDITED_ROOM",myRoom)
             }
             startActivity(intent)
         }
@@ -34,17 +37,9 @@ class RoomDetailFragment : Fragment() {
         recyclerView = view.findViewById(R.id.rv_roomDetails)
         recyclerView.layoutManager = LinearLayoutManager(view.context)
 
-        val detailList = ArrayList<OneRoomDetail>()
-        detailList.add(OneRoomDetail("tuoli", 1))
-        detailList.add(OneRoomDetail("tuoli", 5))
-        detailList.add(OneRoomDetail("tuoli", 1))
-        detailList.add(OneRoomDetail("tuoli", 7))
-        detailList.add(OneRoomDetail("tuoli", 1))
-        detailList.add(OneRoomDetail("tuoli", 8))
-        detailList.add(OneRoomDetail("tuoli", 1))
-
+        val detailList = myRoom.recentFurniture
         recyclerView.adapter =
-            RoomDetailAdapter(detailList)
+                detailList?.let { RoomDetailAdapter(it) }
 
         return view
     }

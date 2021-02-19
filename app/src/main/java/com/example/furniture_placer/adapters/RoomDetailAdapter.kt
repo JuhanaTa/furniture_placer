@@ -6,12 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.furniture_placer.OneRoomDetail
 import com.example.furniture_placer.R
 import kotlinx.android.synthetic.main.room_detail_list_item.view.*
 
 class RoomDetailAdapter(
-    private val details: ArrayList<OneRoomDetail>
+    private val details: ArrayList<String>
 ): RecyclerView.Adapter<RoomDetailAdapter.MyViewHolder>() {
 
     override fun getItemViewType(position: Int): Int {
@@ -28,8 +27,8 @@ class RoomDetailAdapter(
     }
 
     override fun onBindViewHolder(vh: MyViewHolder, position: Int) {
-        val detail: OneRoomDetail = details[position]
-        vh.view.modelName.text = "detail: ${detail.name} "
+        val furnitureName: String = details[position]
+        vh.view.modelName.text = "$furnitureName "
     }
 
 

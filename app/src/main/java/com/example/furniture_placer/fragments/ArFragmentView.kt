@@ -1,5 +1,7 @@
 package com.example.furniture_placer.fragments
 
+import android.content.Intent
+import android.graphics.BitmapFactory
 import android.graphics.Camera
 import android.graphics.Point
 import android.net.Uri
@@ -46,6 +48,9 @@ class ArFragmentView : AppCompatActivity(),
         super.onCreate(savedInstanceState)
 
         val room = intent.getParcelableExtra<Room>("EDITED_ROOM")
+        if (room != null) {
+            editedRoom = room
+        }
 
 
         setContentView(R.layout.activity_ar_fragment_view)
@@ -178,12 +183,17 @@ class ArFragmentView : AppCompatActivity(),
             //file exists
             uri = file.toUri()
             setModel()
-            return
         }else{
             val UriList = arrayListOf<Uri>()
             furniture.modelFiles?.forEach { UriList.add(StorageService().loadModel(furniture.path, it,applicationContext)) }
             uri = UriList[0]
             setModel()
+        }
+        if(editedRoom.recentFurniture != null) {
+            if (!editedRoom.recentFurniture?.contains(furniture.name)!!) {
+                editedRoom.recentFurniture?.add(furniture.name)
+                FirebaseService().updateRoom(editedRoom)
+            }
         }
     }
 

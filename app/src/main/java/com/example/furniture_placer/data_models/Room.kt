@@ -10,8 +10,8 @@ data class Room (
     val created: Timestamp = Timestamp.now(),
     var id: String? = null,
     var previewPhotoPath: String? = null,
-    var decoreationPhotoPaths: MutableList<String>? = null,
-    var recentFurniture: ArrayList<String>? = null) : Parcelable
+    var decoreationPhotoPaths: ArrayList<String>? = ArrayList(),
+    var recentFurniture: ArrayList<String>? = ArrayList()) : Parcelable
 
 
 fun roomToHash(room: Room): HashMap<String, Any?> {
