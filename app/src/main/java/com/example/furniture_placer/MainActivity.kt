@@ -14,6 +14,7 @@ import android.util.Log
 import androidx.core.content.FileProvider
 import com.example.furniture_placer.adapters.RoomAdapter
 import com.example.furniture_placer.data_models.Room
+import com.example.furniture_placer.data_models.roomFromFirestore
 import com.example.furniture_placer.fragments.CreateRoomFragment
 import com.example.furniture_placer.fragments.MainPageFragment
 import com.example.furniture_placer.fragments.RoomDetailFragment
@@ -118,7 +119,7 @@ private fun listenToRooms() {
 
      val rooms = ArrayList<Room>()
      value?.documents?.forEach{
-         val room = it.toObject(Room::class.java)
+         val room = roomFromFirestore(it)
          room?.id = it.id
          rooms.add(room!!)
      }

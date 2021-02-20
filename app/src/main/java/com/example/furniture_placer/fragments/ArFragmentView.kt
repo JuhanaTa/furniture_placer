@@ -48,6 +48,8 @@ class ArFragmentView : AppCompatActivity(),
     var uri = Uri.parse("")
     private lateinit var editedRoom: Room
     var id = 0
+    var selectedFurniture: Furniture? = null
+    val addedItemsInScene : ArrayList<Furniture> = ArrayList<Furniture>()
     //private var communicator: Communicator
 
     private var isOpen: Boolean = true
@@ -97,7 +99,7 @@ class ArFragmentView : AppCompatActivity(),
             }
         }
 
-
+        //Screenshot button action, saves image to firebase and stores snapshot information to scene
         screenshotBtn.setOnClickListener {
             Log.d("FYI", "screenshot of ar view")
             var mCurrentPhotoPath: String = ""
@@ -114,9 +116,8 @@ class ArFragmentView : AppCompatActivity(),
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
                     val data = baos.toByteArray()
                     StorageService().storePicture(BitmapFactory.decodeByteArray(data, 0, data.size), imagePath)
-                    val furnitureList = ArrayList<Furniture>()
-                    furnitureList.add(Furniture(name = "customItem",id = "customId",path = "/images/path/"))
-                    editedRoom.decorationSnapshots?.add(DecorationSnapshot(name = currentDateAndTime,photoPath = imagePath,itemsInScene = furnitureList))
+                    val furnitures = addedItemsInScene
+                    editedRoom.decorationSnapshots?.add(DecorationSnapshot(name = currentDateAndTime,photoPath = imagePath,itemsInScene = furnitures))
                     FirebaseService().updateRoom(editedRoom)
                     Log.d("FYI", "saved image")
 
@@ -166,11 +167,12 @@ class ArFragmentView : AppCompatActivity(),
     }
 
     private fun add3dObject() {
-
         val frame = arFrag.arSceneView.arFrame
         if (frame != null && modelRenderable != null) {
             val pt = getScreenCenter()
             val hits = frame.hitTest(pt.x.toFloat(), pt.y.toFloat())
+            // Adding item in to sceneItems array
+            selectedFurniture?.let { addedItemsInScene.add(it) }
 
             for (hit in hits) {
                 val trackable = hit.trackable
@@ -189,6 +191,8 @@ class ArFragmentView : AppCompatActivity(),
                         Log.d("FYI", "Listener added")
 
                         deleteModelbtn.setOnClickListener {
+                            val itemType = selectedFurniture
+                            addedItemsInScene.remove(itemType)
                             removeAnchorNode(anchorNode)
                             Log.d("FYI", "Model removed")
                             deleteModelbtn.visibility = View.GONE
@@ -241,6 +245,7 @@ class ArFragmentView : AppCompatActivity(),
                 FirebaseService().updateRoom(editedRoom)
             }
         }
+        selectedFurniture = furniture
     }
 
 }

@@ -1,6 +1,8 @@
 package com.example.furniture_placer.data_models
 
 import android.os.Parcelable
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.DocumentSnapshot
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -11,3 +13,34 @@ data class Furniture (
         var previewImagePath: String? = null,
         var modelFiles: ArrayList<String>? = null
 ): Parcelable
+
+fun furnitureToHash(furniture: Furniture) : HashMap<String, Any?>{
+    return hashMapOf(
+            "name" to furniture.name,
+            "path" to furniture.path,
+            "id" to furniture.id,
+            "previewImagePath" to furniture.previewImagePath,
+            "modelFiles" to furniture.modelFiles
+    )
+}
+
+fun furnitureFromFirestore(doc: DocumentSnapshot) : Furniture{
+    return Furniture(
+            name = doc["name"] as String,
+            path = doc["path"] as String,
+            id = doc.id,
+            previewImagePath = doc["previewImagePath"] as String?,
+            modelFiles = doc["recentFurniture"] as ArrayList<String>?
+    )
+}
+
+
+fun furnitureFromHashMap(map: HashMap<String, Any?>) : Furniture{
+    return Furniture(
+            name = map["name"] as String,
+            path = map["path"] as String,
+            id = map["id"] as String,
+            previewImagePath = map["previewImagePath"] as String?,
+            modelFiles = map["recentFurniture"] as ArrayList<String>?
+    )
+}
