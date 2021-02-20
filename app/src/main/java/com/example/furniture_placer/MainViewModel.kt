@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.furniture_placer.data_models.Room
+import com.example.furniture_placer.data_models.roomFromFirestore
 import com.example.furniture_placer.services.FirebaseService
 
 class MainViewModel(application: Application): AndroidViewModel(application) {
@@ -24,7 +25,7 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
 
             val rooms = ArrayList<Room>()
             value?.documents?.forEach{
-                val room = it.toObject(Room::class.java)
+                val room = roomFromFirestore(it)
                 room?.id = it.id
                 rooms.add(room!!)
             }
