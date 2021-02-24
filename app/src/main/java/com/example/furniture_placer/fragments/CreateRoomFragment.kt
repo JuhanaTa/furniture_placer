@@ -46,10 +46,15 @@ class CreateRoomFragment : DialogFragment() {
             val roomName = roomTextFieldInput.text
             if (roomName.toString() != "") {
                 GlobalScope.launch(Dispatchers.Main) {
-                    val room = firebase.createRoom(roomName.toString())
+                    var room = Room()
+                    //val
                     if (image != null) {
                         val imagePath = "${FirebaseService().getCurrentUser()?.uid}/${roomName}/previewImage.jpg"
+                        //image stored in firebase before creating room
                         StorageService().storePicture(BitmapFactory.decodeByteArray(image, 0, image.size), imagePath)
+                        //room created after. If Room is created first Live data in MainPageFragment executes and does not find image.
+                        room = firebase.createRoom(roomName.toString())
+                        Log.d("FYI", "room image stored")
                         room.previewPhotoPath = imagePath
                         firebase.updateRoom(room)
 

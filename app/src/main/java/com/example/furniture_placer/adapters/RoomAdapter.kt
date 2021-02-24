@@ -52,12 +52,16 @@ class RoomAdapter(
             GlobalScope.launch(Dispatchers.Main) {
                 //val imageData = StorageService().loadPicture(imagePath)
                 //Log.d("FYI", "image loaded")
-                val imageData = loadImage(imagePath)
-                Log.d("asd", imageData.toString())
+                try {
+                    val imageData = loadImage(imagePath)
+                    Log.d("asd", imageData.toString())
 
-                vh.text.roomName.text = "Room: ${room.name}"
-                vh.id.roomId.text = "id: ${room.id}"
-                vh.image.roomImage.setImageBitmap(imageData)
+                    vh.text.roomName.text = "Room: ${room.name}"
+                    vh.id.roomId.text = "id: ${room.id}"
+                    vh.image.roomImage.setImageBitmap(imageData)
+                }catch (e:Exception){
+                    Log.d("ERROR", "image load failed, $e")
+                }
 
             }
 
@@ -65,6 +69,7 @@ class RoomAdapter(
     }
 
     private suspend fun loadImage(path: String): Bitmap{
+
         val imageData = StorageService().loadPicture(path)
         Log.d("FYI", "image loaded")
         val bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.size)

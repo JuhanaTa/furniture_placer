@@ -115,7 +115,11 @@ class ArFragmentView : AppCompatActivity(),
                     val baos = ByteArrayOutputStream()
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
                     val data = baos.toByteArray()
-                    StorageService().storePicture(BitmapFactory.decodeByteArray(data, 0, data.size), imagePath)
+
+                    GlobalScope.launch(Dispatchers.Main) {
+                        StorageService().storePicture(BitmapFactory.decodeByteArray(data, 0, data.size), imagePath)
+                    }
+
                     val furnitures = addedItemsInScene
                     editedRoom.decorationSnapshots?.add(DecorationSnapshot(name = currentDateAndTime,photoPath = imagePath,itemsInScene = furnitures))
                     FirebaseService().updateRoom(editedRoom)
