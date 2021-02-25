@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.furniture_placer.R
@@ -28,6 +29,10 @@ class RoomDetailAdapter(
 
     override fun onBindViewHolder(vh: MyViewHolder, position: Int) {
         val furnitureName: String = details[position]
+        if (furnitureName == "No furnitures added"){
+            vh.imageview.visibility = View.GONE
+        }
+
         vh.view.modelName.text = "$furnitureName "
     }
 
@@ -36,6 +41,7 @@ class RoomDetailAdapter(
 
         View.OnClickListener {
         val view: TextView = itemView.findViewById(R.id.modelName)
+        val imageview: ImageView = itemView.findViewById(R.id.modelImage)
         init {
             itemView.setOnClickListener(this)
         }

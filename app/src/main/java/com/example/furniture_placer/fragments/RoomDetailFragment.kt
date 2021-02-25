@@ -47,9 +47,6 @@ class RoomDetailFragment(room: Room) : Fragment() {
         recyclerViewSlider.setLayoutManager(layoutManagerSlider)
 
 
-
-
-
         for (item in myRoom.decorationSnapshots!!){
             listOfImages.add(OneImage(item.photoPath!!))
             Log.d("ROOM", item.photoPath!!)
@@ -65,6 +62,9 @@ class RoomDetailFragment(room: Room) : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(view.context)
 
         val detailList = myRoom.recentFurniture
+        if (detailList?.size == 0){
+            detailList.add("No furnitures added")
+        }
         recyclerView.adapter =
                 detailList?.let { RoomDetailAdapter(it) }
 

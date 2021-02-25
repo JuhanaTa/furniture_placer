@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity(),
             val imageBitmap = BitmapFactory.decodeFile(mCurrentPhotoPath)
             GlobalScope.launch(Dispatchers.Main) {
                 val baos = ByteArrayOutputStream()
-                val pImage = Bitmap.createScaledBitmap(imageBitmap, 1080, 1080, false)
+                val pImage = Bitmap.createScaledBitmap(imageBitmap, 1080, 1440, false)
                 pImage.compress(Bitmap.CompressFormat.JPEG, 50, baos)
                 val data = baos.toByteArray()
                 openDialog(data, roomName)

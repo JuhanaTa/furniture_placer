@@ -58,6 +58,8 @@ class RoomAdapter(
 
                     vh.text.roomName.text = "Room: ${room.name}"
                     vh.id.roomId.text = "id: ${room.id}"
+                    vh.modelCount.text = "${room.recentFurniture?.size} models in this room."
+
                     vh.image.roomImage.setImageBitmap(imageData)
                 }catch (e:Exception){
                     Log.d("ERROR", "image load failed, $e")
@@ -86,6 +88,7 @@ class RoomAdapter(
         View.OnClickListener {
         val text: TextView = itemView.findViewById(R.id.roomName)
         val image: ImageView = itemView.findViewById(R.id.roomImage)
+        val modelCount: TextView = itemView.findViewById(R.id.modelCount)
         val id: TextView = itemView.findViewById(R.id.roomId)
         init {
             itemView.setOnClickListener(this)
