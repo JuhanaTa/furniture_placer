@@ -69,7 +69,7 @@ class RoomAdapter(
     }
 
     private suspend fun loadImage(path: String): Bitmap{
-
+        Log.d("FYI", path)
         val imageData = StorageService().loadPicture(path)
         Log.d("FYI", "image loaded")
         val bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.size)

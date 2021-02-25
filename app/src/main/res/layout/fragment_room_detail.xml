@@ -41,16 +41,38 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <fragment
-            android:id="@+id/fragment"
-            android:name="com.example.furniture_placer.fragments.ImageSliderFragment"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card"
             android:layout_width="match_parent"
-            android:layout_height="300dp" />
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:cardElevation="4dp">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/sliderList"
+                android:layout_width="match_parent"
+                android:layout_height="300dp" />
+        </com.google.android.material.card.MaterialCardView>
 
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:cardElevation="4dp">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_roomDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+        </com.google.android.material.card.MaterialCardView>
+
+
     </LinearLayout>
 
 

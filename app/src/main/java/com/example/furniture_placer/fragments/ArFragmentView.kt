@@ -113,7 +113,8 @@ class ArFragmentView : AppCompatActivity(),
 
                     val imagePath = "${FirebaseService().getCurrentUser()?.uid}/${editedRoom.name}/${currentDateAndTime}.jpg"
                     val baos = ByteArrayOutputStream()
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+                    val resizedImage = Bitmap.createScaledBitmap(bitmap, 1080, 1920, false)
+                    resizedImage.compress(Bitmap.CompressFormat.JPEG, 50, baos)
                     val data = baos.toByteArray()
 
                     GlobalScope.launch(Dispatchers.Main) {
