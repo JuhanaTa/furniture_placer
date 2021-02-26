@@ -16,6 +16,7 @@ import com.example.furniture_placer.OneRoomDetail
 import com.example.furniture_placer.R
 import com.example.furniture_placer.adapters.ImageSliderAdapter
 import com.example.furniture_placer.adapters.RoomDetailAdapter
+import com.example.furniture_placer.adapters.ScreenshotModelAdapter
 import com.example.furniture_placer.data_models.Room
 import kotlinx.android.synthetic.main.fragment_room_detail.view.*
 
@@ -52,9 +53,13 @@ class RoomDetailFragment(room: Room) : Fragment() {
             Log.d("ROOM", item.photoPath!!)
         }
 
-        recyclerViewSlider.adapter = ImageSliderAdapter(listOfImages)
+        val roomList = myRoom
+
+        recyclerViewSlider.adapter =  ImageSliderAdapter(listOfImages, roomList)
         val snapHelper: SnapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(recyclerViewSlider)
+
+
 
         ///setup for model list
 

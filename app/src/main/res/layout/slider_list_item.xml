@@ -1,26 +1,22 @@
-
-<FrameLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:layout_margin="8dp">
-
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="#FFFFFF">
 
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="#FFFFFF"
             android:orientation="horizontal">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/roomCardImage"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginStart="4dp"
                     app:cardElevation="4dp">
 
 
@@ -32,30 +28,38 @@ android:layout_margin="8dp">
                             tools:srcCompat="@tools:sample/avatars" />
                 </com.google.android.material.card.MaterialCardView>
 
+
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:paddingLeft="5dp">
+                    android:background="#FFFFFF"
+                    android:orientation="vertical">
 
 
-                        <Button
-                            android:id="@+id/button4"
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="FullScreen" />
+                            android:paddingStart="5dp"
+                            android:text="Inside Image"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
 
-                        <Button
-                            android:id="@+id/button3"
-                            android:layout_width="match_parent"
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_screenshotModels"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Show models" />
+                            android:paddingStart="5dp" />
+
+
                 </LinearLayout>
 
 
-
         </LinearLayout>
+
 
 
 </FrameLayout>
