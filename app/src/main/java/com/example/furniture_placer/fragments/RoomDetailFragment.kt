@@ -18,6 +18,7 @@ import com.example.furniture_placer.adapters.ImageSliderAdapter
 import com.example.furniture_placer.adapters.RoomDetailAdapter
 import com.example.furniture_placer.adapters.ScreenshotModelAdapter
 import com.example.furniture_placer.data_models.Room
+import kotlinx.android.synthetic.main.activity_ar_fragment_view.*
 import kotlinx.android.synthetic.main.fragment_room_detail.view.*
 
 
@@ -27,6 +28,7 @@ class RoomDetailFragment(room: Room) : Fragment() {
     lateinit var recyclerViewSlider: RecyclerView
     var listOfImages = ArrayList<OneImage>()
     var myRoom = room
+    private var isOpen: Boolean = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,12 +37,32 @@ class RoomDetailFragment(room: Room) : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_room_detail, container, false)
 
-        view.modifyRoomBtn.setOnClickListener {
-            val intent = Intent(activity, ArFragmentView::class.java).apply {
-                putExtra("EDITED_ROOM",myRoom)
+        view.roomMenuBtn.setOnClickListener {
+            if (isOpen){
+                view.compareBtn.visibility = View.VISIBLE
+                view.compareText.visibility = View.VISIBLE
+                view.editRoomBtn.visibility = View.VISIBLE
+                view.editRoomText.visibility = View.VISIBLE
+
+                view.editRoomBtn.setOnClickListener {
+                    val intent = Intent(activity, ArFragmentView::class.java).apply {
+                        putExtra("EDITED_ROOM",myRoom)
+                    }
+                    startActivity(intent)
+                }
+
+                isOpen = false
+            } else {
+                view.compareBtn.visibility = View.GONE
+                view.compareText.visibility = View.GONE
+                view.editRoomBtn.visibility = View.GONE
+                view.editRoomText.visibility = View.GONE
+                view.editRoomBtn.setOnClickListener(null)
+                isOpen = true
             }
-            startActivity(intent)
+
         }
+
 
         /// Setup for image slider
         val layoutManagerSlider = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
@@ -63,7 +85,7 @@ class RoomDetailFragment(room: Room) : Fragment() {
 
         ///setup for model list
 
-        recyclerView = view.findViewById(R.id.rv_roomDetails)
+       /* recyclerView = view.findViewById(R.id.rv_roomDetails)
         recyclerView.layoutManager = LinearLayoutManager(view.context)
 
         val detailList = myRoom.recentFurniture
@@ -71,7 +93,7 @@ class RoomDetailFragment(room: Room) : Fragment() {
             detailList.add("No furnitures added")
         }
         recyclerView.adapter =
-                detailList?.let { RoomDetailAdapter(it) }
+                detailList?.let { RoomDetailAdapter(it) }*/
 
         return view
     }
