@@ -8,19 +8,37 @@
     tools:context=".fragments.RoomDetailFragment">
 
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/sliderList"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="@+id/coordinatorLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        android:orientation="vertical">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <com.mazenrashed.dotsindicator.DotsIndicator
+            android:id="@+id/dots_indicator"
+            android:paddingTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            app:dot_height="10dp"
+            app:dot_width="10dp"
+            app:first_dot_height="15dp"
+            app:first_dot_width="15dp"
+            app:first_selected_dot_resource="@drawable/ic_home_white_24dp"
+            app:first_unselected_dot_resource="@drawable/ic_home_gray_24dp"
+            app:margins_between_dots="17dp"
+            app:selected_dot_resource="@drawable/circle_white"
+            app:selected_dot_scale_factor="1.4"
+            app:unselected_dot_resource="@drawable/circle_gray">
+
+        </com.mazenrashed.dotsindicator.DotsIndicator>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/sliderList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"
@@ -107,6 +125,5 @@
         app:layout_constraintEnd_toStartOf="@+id/editRoomBtn"
         app:layout_constraintTop_toTopOf="@+id/editRoomBtn"
         app:layout_constraintVertical_bias="0.459" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

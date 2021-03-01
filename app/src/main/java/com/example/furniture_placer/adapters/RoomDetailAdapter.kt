@@ -25,6 +25,7 @@ class RoomDetailAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.room_detail_list_item, parent, false)
         return MyViewHolder(view)
+
     }
 
     override fun onBindViewHolder(vh: MyViewHolder, position: Int) {
@@ -35,7 +36,6 @@ class RoomDetailAdapter(
 
         vh.view.modelName.text = "$furnitureName "
     }
-
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
 
@@ -50,6 +50,8 @@ class RoomDetailAdapter(
             Log.d("FYI", "item clicked")
 
         }
+
+
     }
 
 
