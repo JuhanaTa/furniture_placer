@@ -1,5 +1,6 @@
 package com.example.furniture_placer.fragments
 
+import android.Manifest
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -7,6 +8,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.fragment.app.DialogFragment
 import com.example.camera.CameraService.StorageService
 import com.example.furniture_placer.R
@@ -23,6 +26,7 @@ import java.io.Serializable
 class CreateRoomFragment : DialogFragment() {
     private lateinit var communicator: Communicator
 
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         var rootView: View = inflater.inflate(R.layout.fragment_create_room_dialog, container, false)
@@ -38,8 +42,14 @@ class CreateRoomFragment : DialogFragment() {
 
         communicator = activity as Communicator
         rootView.roomPreviewImg.setOnClickListener {
-            communicator.takePicture(roomTextFieldInput.text.toString())
-            dismiss()
+            val returnInt = checkSelfPermission(context!!, Manifest.permission.CAMERA)
+            Log.d("FYI", "permission: ${returnInt}")
+            if (checkSelfPermission(context!!, Manifest.permission.CAMERA) == 0){
+                communicator.takePicture(roomTextFieldInput.text.toString())
+                dismiss()
+            } else {
+                Toast.makeText(context, "Permission to use camera is not granted", Toast.LENGTH_SHORT).show()
+            }
         }
 
         rootView.createRoomBtn.setOnClickListener {
