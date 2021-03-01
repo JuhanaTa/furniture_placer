@@ -25,7 +25,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/addNewRoomBtn"
+            android:id="@+id/menuBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
@@ -33,27 +33,9 @@
             android:layout_marginBottom="16dp"
             android:backgroundTint="@color/design_default_color_primary"
             android:contentDescription="@string/newRoomDesc"
-            android:src="@drawable/ic_baseline_add_24"
+            android:src="@drawable/ic_baseline_menu_24"
             app:backgroundTint="@color/purple_500"
-            app:icon="@drawable/ic_baseline_add_24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:rippleColor="@color/design_default_color_primary_variant" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/logOutBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|start"
-            android:layout_margin="16dp"
-            android:layout_marginBottom="16dp"
-            android:backgroundTint="@color/design_default_color_primary"
-            android:contentDescription="@string/logout"
-            android:src="@drawable/ic_baseline_logout_24"
-            app:backgroundTint="@color/purple_500"
-            app:icon="@drawable/ic_baseline_logout_24"
+            app:icon="@drawable/ic_baseline_menu_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -62,5 +44,69 @@
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/logOutBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="12dp"
+        android:backgroundTint="@color/purple_200"
+        android:contentDescription="@string/searchNewModelFab"
+        android:visibility="gone"
+        app:backgroundTint="@color/purple_200"
+        app:layout_constraintBottom_toTopOf="@+id/addNewRoomBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_baseline_logout_24" />
+
+    <TextView
+        android:id="@+id/logOutText"
+        android:layout_width="95dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/fab_text_bg"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp"
+        android:text="Logout"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/logOutBtn"
+        app:layout_constraintEnd_toStartOf="@+id/logOutBtn"
+        app:layout_constraintTop_toTopOf="@+id/logOutBtn" />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addNewRoomBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="@color/purple_200"
+        android:visibility="gone"
+        app:backgroundTint="@color/purple_200"
+        app:layout_constraintBottom_toTopOf="@+id/coordinatorLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_baseline_add_24" />
+
+    <TextView
+        android:id="@+id/addNewRoomText"
+        android:layout_width="95dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/fab_text_bg"
+        android:paddingStart="4dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="4dp"
+        android:paddingBottom="8dp"
+        android:text="Create Room"
+        android:textAlignment="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/addNewRoomBtn"
+        app:layout_constraintEnd_toStartOf="@+id/addNewRoomBtn"
+        app:layout_constraintTop_toTopOf="@+id/addNewRoomBtn"
+        app:layout_constraintVertical_bias="0.459" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

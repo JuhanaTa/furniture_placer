@@ -2,6 +2,7 @@ package com.example.furniture_placer.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_ar_fragment_view.*
+import kotlinx.android.synthetic.main.fragment_main_page.*
 import kotlinx.android.synthetic.main.fragment_main_page.view.*
 
 
@@ -26,6 +29,7 @@ class MainPageFragment(private val listener: RoomAdapter.OnItemClickListener) : 
     lateinit var mGoogleSignInClient: GoogleSignInClient
     lateinit var recyclerView: RecyclerView
     private lateinit var communicator: Communicator
+    private var isOpen: Boolean = true
     //private  var _roomsLiveData: MutableLiveData<ArrayList<Room>> = MutableLiveData<ArrayList<Room>>()
     private val auth by lazy {
         FirebaseAuth.getInstance()
@@ -34,11 +38,36 @@ class MainPageFragment(private val listener: RoomAdapter.OnItemClickListener) : 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        // call update listener
-        //listenToRooms()
 
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_main_page, container, false)
+
+        view.menuBtn.setOnClickListener {
+            Log.d("FYI", "menu button pressed")
+            if (isOpen){
+                view.logOutBtn.visibility = View.VISIBLE
+                view.logOutText.visibility = View.VISIBLE
+                view.addNewRoomBtn.visibility = View.VISIBLE
+                view.addNewRoomText.visibility = View.VISIBLE
+
+                view.addNewRoomBtn.setOnClickListener {
+                    communicator.openDialog(null, "")
+
+                }
+
+                isOpen = false
+            } else {
+                view.logOutBtn.visibility = View.GONE
+                view.logOutText.visibility = View.GONE
+                view.addNewRoomBtn.visibility = View.GONE
+                view.addNewRoomText.visibility = View.GONE
+
+                view.addNewRoomBtn.setOnClickListener(null)
+                isOpen = true
+            }
+        }
+
+
         communicator = activity as Communicator
 
         recyclerView = view.findViewById(R.id.rv_rooms)
@@ -63,13 +92,7 @@ class MainPageFragment(private val listener: RoomAdapter.OnItemClickListener) : 
             }
         }
 
-        view.addNewRoomBtn.setOnClickListener {
-            communicator.openDialog(null, "")
 
-           /* var dialog = CreateRoomFragment()
-
-            dialog.show(supporFragmentManager)*/
-        }
 
         return view
     }
