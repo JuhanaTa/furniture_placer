@@ -2,17 +2,21 @@ package com.example.furniture_placer
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
@@ -25,6 +29,10 @@ import com.example.furniture_placer.fragments.MainPageFragment
 import com.example.furniture_placer.fragments.RoomDetailFragment
 import com.example.furniture_placer.interfaces.Communicator
 import com.example.furniture_placer.services.FirebaseService
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -37,18 +45,19 @@ class MainActivity : AppCompatActivity(),
     var mCurrentPhotoPath: String = ""
     var roomName = ""
     var roomList : ArrayList<Room>? = null
-
+    val camera_RQ = 102
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-
         setContentView(R.layout.activity_main)
+
+        checkPermissions(android.Manifest.permission.CAMERA, "camera", camera_RQ)
         listenToRooms()
-        val mainPage =
-            MainPageFragment(this)
+        val mainPage = MainPageFragment(this)
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, mainPage).commit()
+
+        //checkPermissions(android.Manifest.permission.CAMERA, "camera", camera_RQ)
 
     }
 
@@ -68,6 +77,7 @@ class MainActivity : AppCompatActivity(),
         val dialog = CreateRoomFragment()
         dialog.arguments = bundle
         dialog.show(supportFragmentManager, "createRoomDialog")
+
     }
 
     override fun takePicture(name: String) {
@@ -138,7 +148,51 @@ private fun listenToRooms() {
  }
 }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        fun innerCheck(name: String) {
 
+
+            if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(applicationContext, "$name permission refused", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                Toast.makeText(applicationContext, "$name permission granted", Toast.LENGTH_SHORT).show()
+            }
+        }
+        when (requestCode){
+            camera_RQ -> innerCheck("camera")
+        }
+    }
+
+    fun checkPermissions(permission: String, name: String, requestCode: Int){
+        when{
+            ContextCompat.checkSelfPermission(applicationContext, permission) == PackageManager.PERMISSION_GRANTED -> {
+                Toast.makeText(applicationContext, "$name permission granted", Toast.LENGTH_SHORT).show()
+            }
+            shouldShowRequestPermissionRationale(permission) -> showPermissionDialogDialog(permission,name, requestCode)
+
+            else -> ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode)
+        }
+    }
+
+    private fun showPermissionDialogDialog(permission: String, name: String, requestCode: Int){
+        val builder = AlertDialog.Builder(this)
+
+        builder.apply {
+            setMessage("Permission to access $name is required in order to use this app")
+            setTitle("Permission required")
+            setPositiveButton("OK"){ dialog, which ->
+                ActivityCompat.requestPermissions(this@MainActivity, arrayOf(permission),requestCode)
+            }
+            val dialog = builder.create()
+            dialog.show()
+        }
+    }
 
 
 }

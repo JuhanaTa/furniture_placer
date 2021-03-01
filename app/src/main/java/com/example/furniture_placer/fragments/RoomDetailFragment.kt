@@ -82,12 +82,23 @@ class RoomDetailFragment(room: Room) : Fragment() {
 
         val roomList = myRoom
 
+        //dot navigation menu setup
         val dots = view.dots_indicator
         dots.initDots(roomList.decorationSnapshots!!.size)
         dots.setDotSelection(0)
 
+        //listener if user taps one of the dots
+        //scrolls to right position
+        dots.onSelectListener = {
+            Log.d("FYI", "page $it selected")
+            recyclerViewSlider.smoothScrollToPosition(it)
+        }
+        //adapter setup
         recyclerViewSlider.adapter =  ImageSliderAdapter(listOfImages, roomList)
 
+        //scroll listener
+        //when user scrolls layoutmanager is used to check what item position is visible
+        //dot position assigned with that position
         recyclerViewSlider.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)

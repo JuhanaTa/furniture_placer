@@ -22,6 +22,9 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_ar_fragment_view.*
 import kotlinx.android.synthetic.main.fragment_main_page.*
 import kotlinx.android.synthetic.main.fragment_main_page.view.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class MainPageFragment(private val listener: RoomAdapter.OnItemClickListener) : Fragment() {
@@ -30,6 +33,7 @@ class MainPageFragment(private val listener: RoomAdapter.OnItemClickListener) : 
     lateinit var recyclerView: RecyclerView
     private lateinit var communicator: Communicator
     private var isOpen: Boolean = true
+    val camera_RQ = 102
     //private  var _roomsLiveData: MutableLiveData<ArrayList<Room>> = MutableLiveData<ArrayList<Room>>()
     private val auth by lazy {
         FirebaseAuth.getInstance()
@@ -51,8 +55,8 @@ class MainPageFragment(private val listener: RoomAdapter.OnItemClickListener) : 
                 view.addNewRoomText.visibility = View.VISIBLE
 
                 view.addNewRoomBtn.setOnClickListener {
-                    communicator.openDialog(null, "")
 
+                        communicator.openDialog(null, "")
                 }
 
                 isOpen = false
@@ -106,6 +110,8 @@ class MainPageFragment(private val listener: RoomAdapter.OnItemClickListener) : 
                 RoomAdapter(it, listener)
         })
     }
+
+
 
    /* private fun listenToRooms() {
         FirebaseService().getUserRoomsCollection()?.addSnapshotListener { value, e ->
