@@ -30,6 +30,28 @@ class StorageService : AppCompatActivity() {
 
     }
 
+    fun storePictureSync(bitmap: Bitmap, path: String) {
+        val userPictureRef = storageRef.child(path)
+
+        val baos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        val data = baos.toByteArray()
+
+        val uploadTask = userPictureRef.putBytes(data)
+        uploadTask.addOnFailureListener {
+            // Handle unsuccessful uploads
+        }.addOnSuccessListener { taskSnapshot ->
+            Log.w(ContentValues.TAG, "image uploaded ${uploadTask.isComplete}")
+            userPictureRef.downloadUrl.addOnCanceledListener {  }
+            Log.w("StorageService", "downloadURl: ${userPictureRef.downloadUrl}")
+        }.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val downloadUri = task.result
+                Log.w(ContentValues.TAG, "download url $downloadUri")
+            }
+        }
+    }
+
     suspend fun loadPicture(path: String): ByteArray {
         val imageRef = storageRef.child(path)
 
