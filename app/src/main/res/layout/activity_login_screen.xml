@@ -42,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Google Login"
+                android:text="Login with Google"
                 android:textAlignment="center"
                 android:textSize="32sp" />
 
@@ -67,13 +67,14 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="start"
-                        android:layout_marginEnd="5dp"/>
+                        android:layout_marginEnd="5dp"
+                        app:srcCompat="@drawable/ic_baseline_login_24"/>
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Sign in with Google"
+                        android:text="Sign In"
                         android:textAlignment="center"
                         android:textSize="16sp"
                         android:textColor="@android:color/white"/>
