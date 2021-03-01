@@ -3,22 +3,18 @@ package com.example.furniture_placer.fragments
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 import com.example.furniture_placer.OneImage
-import com.example.furniture_placer.OneRoomDetail
 import com.example.furniture_placer.R
 import com.example.furniture_placer.adapters.ImageSliderAdapter
-import com.example.furniture_placer.adapters.RoomDetailAdapter
-import com.example.furniture_placer.adapters.ScreenshotModelAdapter
 import com.example.furniture_placer.data_models.Room
-import kotlinx.android.synthetic.main.activity_ar_fragment_view.*
 import kotlinx.android.synthetic.main.fragment_room_detail.view.*
 
 
@@ -77,7 +73,21 @@ class RoomDetailFragment(room: Room) : Fragment() {
 
         val roomList = myRoom
 
+        val dots = view.dots_indicator
+        dots.initDots(roomList.decorationSnapshots!!.size)
+        dots.setDotSelection(0)
+
         recyclerViewSlider.adapter =  ImageSliderAdapter(listOfImages, roomList)
+
+        recyclerViewSlider.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                Log.d("FYI", "scrolled")
+                val pos = layoutManagerSlider.findFirstVisibleItemPosition()
+                dots.setDotSelection(pos)
+            }
+        })
+
         val snapHelper: SnapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(recyclerViewSlider)
 
