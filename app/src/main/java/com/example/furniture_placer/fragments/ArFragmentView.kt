@@ -139,7 +139,6 @@ class ArFragmentView : AppCompatActivity(),
     }
 
      private fun setModel(){
-         modelRenderable = null
          Log.d("FYI", "setting Model ${uri}")
         val renderableFuture = ModelRenderable.builder()
             .setSource(this, RenderableSource.builder().setSource(this,
@@ -157,6 +156,7 @@ class ArFragmentView : AppCompatActivity(),
              }
          }
          id + 1
+         Log.d("MODEL", "model is now changed")
         renderableFuture.exceptionally {// something went wrong notify
             Log.e("FYI", "renderableFuture error: ${it.localizedMessage}")
             null
@@ -174,6 +174,7 @@ class ArFragmentView : AppCompatActivity(),
     private fun add3dObject() {
         val frame = arFrag.arSceneView.arFrame
         if (frame != null && modelRenderable != null) {
+            Log.d("MODEL", modelRenderable.toString())
             val pt = getScreenCenter()
             val hits = frame.hitTest(pt.x.toFloat(), pt.y.toFloat())
             // Adding item in to sceneItems array
@@ -237,11 +238,13 @@ class ArFragmentView : AppCompatActivity(),
         if (file.exists()) {
             //file exists
             uri = file.toUri()
+            modelRenderable = null
             setModel()
         }else{
             val UriList = arrayListOf<Uri>()
             furniture.modelFiles?.forEach { UriList.add(StorageService().loadModel(furniture.path, it,applicationContext)) }
             uri = UriList[0]
+            modelRenderable = null
             setModel()
         }
         if(editedRoom.recentFurniture != null) {
