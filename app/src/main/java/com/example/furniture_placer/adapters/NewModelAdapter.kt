@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.furniture_placer.OneModel
 import com.example.furniture_placer.R
 import com.example.furniture_placer.data_models.Furniture
 import kotlinx.android.synthetic.main.model_list_item.view.*
