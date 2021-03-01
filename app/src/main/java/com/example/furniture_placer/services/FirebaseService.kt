@@ -89,6 +89,7 @@ class FirebaseService {
                 id = doc.id,
                 modelFiles = doc["modelFiles"] as ArrayList<String>?,
                 path = doc["path"] as String,
+                price = doc["price"] as String,
                 previewImagePath = doc["previewImagePath"] as String?
             )}
 

@@ -11,14 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
+import com.example.furniture_placer.DecorationSnapshotComparision
 import com.example.furniture_placer.OneImage
-import com.example.furniture_placer.OneRoomDetail
 import com.example.furniture_placer.R
 import com.example.furniture_placer.adapters.ImageSliderAdapter
-import com.example.furniture_placer.adapters.RoomDetailAdapter
-import com.example.furniture_placer.adapters.ScreenshotModelAdapter
 import com.example.furniture_placer.data_models.Room
-import kotlinx.android.synthetic.main.activity_ar_fragment_view.*
 import kotlinx.android.synthetic.main.fragment_room_detail.view.*
 
 
@@ -51,6 +48,13 @@ class RoomDetailFragment(room: Room) : Fragment() {
                     startActivity(intent)
                 }
 
+                view.compareBtn.setOnClickListener{
+                    val intent = Intent(activity, DecorationSnapshotComparision::class.java).apply {
+                        putExtra("EDITED_ROOM",myRoom)
+                    }
+                    startActivity(intent)
+                }
+
                 isOpen = false
             } else {
                 view.compareBtn.visibility = View.GONE
@@ -58,6 +62,7 @@ class RoomDetailFragment(room: Room) : Fragment() {
                 view.editRoomBtn.visibility = View.GONE
                 view.editRoomText.visibility = View.GONE
                 view.editRoomBtn.setOnClickListener(null)
+                view.compareBtn.setOnClickListener(null)
                 isOpen = true
             }
 
