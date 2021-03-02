@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.fragment_room_detail.view.*
 class RoomDetailFragment(room: Room) : Fragment() {
 
     lateinit var recyclerViewSlider: RecyclerView
-    var myRoom = room
+    private val myRoom = room
     private var isOpen: Boolean = true
 
     override fun onCreateView(
@@ -42,8 +42,10 @@ class RoomDetailFragment(room: Room) : Fragment() {
                 view.editRoomText.visibility = View.VISIBLE
 
                 view.editRoomBtn.setOnClickListener {
+                    val roomToEdit: Room = myRoom
+                    roomToEdit.decorationSnapshots?.removeAt(0)
                     val intent = Intent(activity, ArFragmentView::class.java).apply {
-                        putExtra("EDITED_ROOM",myRoom)
+                        putExtra("EDITED_ROOM",roomToEdit)
                     }
                     startActivity(intent)
                 }
@@ -77,20 +79,17 @@ class RoomDetailFragment(room: Room) : Fragment() {
 
 
         val roomList = myRoom
-        val decSnap = roomList.decorationSnapshots?.get(0)
-        val sceneitem = decSnap?.itemsInScene?.get(0)
-        if (sceneitem?.id != "default"){
+        val default = ArrayList<Furniture>()
+        val recents = roomList.recentFurniture
 
-            val default = ArrayList<Furniture>()
-            val recents = roomList.recentFurniture
-            if (recents != null) {
-                for (item in recents) {
-                    default.add(Furniture(item, "default", "default"))
-                }
+        if (recents != null) {
+            for (item in recents) {
+                default.add(Furniture(item, "default", "default", "0"))
             }
-
-            roomList.decorationSnapshots?.add(0, DecorationSnapshot("default", myRoom.previewPhotoPath, default))
         }
+        roomList.decorationSnapshots?.add(0, DecorationSnapshot("default", myRoom.previewPhotoPath, default))
+
+
 
         Log.d("FYI", "list contains: ${roomList}")
 
