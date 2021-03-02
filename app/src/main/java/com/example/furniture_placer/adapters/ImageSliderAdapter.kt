@@ -25,14 +25,9 @@ import kotlinx.coroutines.launch
 
 
 class ImageSliderAdapter(
-    private val images: ArrayList<OneImage>,
     private val room: Room
 ): RecyclerView.Adapter<ImageSliderAdapter.MyViewHolder>() {
 
-    private var hasInitParentDimensions = false
-    private var maxImageWidth: Int = 0
-    private var maxImageHeight: Int = 0
-    private var maxImageAspectRatio: Float = 1f
     lateinit var recyclerView: RecyclerView
 
     override fun getItemViewType(position: Int): Int {
@@ -40,37 +35,35 @@ class ImageSliderAdapter(
     }
 
     override fun getItemCount(): Int {
-        return images.size
+        val count = room.decorationSnapshots?.size
+        if (count != null) {
+            return count
+        } else {
+            Log.d("FYI","slider creation failed")
+            return 0
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.slider_list_item, parent, false)
-
-        if (!hasInitParentDimensions) {
-            maxImageWidth = parent.width
-            maxImageHeight = parent.height
-            maxImageAspectRatio = maxImageWidth.toFloat() / maxImageHeight.toFloat()
-            hasInitParentDimensions = true
-        }
-
-
-
         return MyViewHolder(view)
     }
 
     override fun onBindViewHolder(vh: MyViewHolder, position: Int) {
 
-        val imagePath = images[position].image
-        Log.d("ROOM", imagePath)
-        GlobalScope.launch(Dispatchers.Main) {
-            try {
-                val imageData = loadImage(imagePath)
-                Log.d("ROOM", "loaded image")
-                Log.d("DATA", imageData.toString())
-                vh.itemView.sliderImage.setImageBitmap(imageData)
+        val imagePath = room.decorationSnapshots?.get(position)?.photoPath
+        if (imagePath != null) {
+            Log.d("ROOM", imagePath)
+            GlobalScope.launch(Dispatchers.Main) {
+                try {
+                    val imageData = loadImage(imagePath)
+                    Log.d("ROOM", "loaded image")
+                    Log.d("DATA", imageData.toString())
+                    vh.itemView.sliderImage.setImageBitmap(imageData)
 
-            }catch (e:Exception){
-                Log.d("ERROR", "image load failed, $e")
+                } catch (e: Exception) {
+                    Log.d("ERROR", "image load failed, $e")
+                }
             }
         }
         val items = room.decorationSnapshots?.get(position)?.itemsInScene
