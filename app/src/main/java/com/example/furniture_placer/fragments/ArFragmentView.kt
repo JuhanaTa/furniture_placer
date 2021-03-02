@@ -139,24 +139,24 @@ class ArFragmentView : AppCompatActivity(),
     }
 
      private fun setModel(){
-         Log.d("FYI", "setting Model ${uri}")
+         Log.d("FYI", "setting Model ${uri} and ${modelRenderable}")
         val renderableFuture = ModelRenderable.builder()
             .setSource(this, RenderableSource.builder().setSource(this,
                 uri, RenderableSource.SourceType.GLTF2)
                 .setScale(0.1f)// Scale the original to 20%
                 .setRecenterMode(RenderableSource.RecenterMode.ROOT)
                 .build())
-            .setRegistryId("id${id}").build()
-        renderableFuture.thenAccept { modelRenderable = it }
-         renderableFuture.thenAccept{Log.d("FYI", "model renderable changed")
+            .setRegistryId("id${id++}").build()
+         renderableFuture.thenAccept{
+             modelRenderable = it
+             Log.d("FYI", "model renderable changed")
 
              addModel.setOnClickListener {
                  Log.d("FYI", "new model added")
                  add3dObject()
              }
+             Log.d("MODEL", "model is now changed")
          }
-         id + 1
-         Log.d("MODEL", "model is now changed")
         renderableFuture.exceptionally {// something went wrong notify
             Log.e("FYI", "renderableFuture error: ${it.localizedMessage}")
             null

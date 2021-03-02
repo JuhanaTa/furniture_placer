@@ -14,15 +14,15 @@ import androidx.recyclerview.widget.SnapHelper
 import com.example.furniture_placer.OneImage
 import com.example.furniture_placer.R
 import com.example.furniture_placer.adapters.ImageSliderAdapter
+import com.example.furniture_placer.data_models.DecorationSnapshot
+import com.example.furniture_placer.data_models.Furniture
 import com.example.furniture_placer.data_models.Room
 import kotlinx.android.synthetic.main.fragment_room_detail.view.*
 
 
 class RoomDetailFragment(room: Room) : Fragment() {
 
-    lateinit var recyclerView: RecyclerView
     lateinit var recyclerViewSlider: RecyclerView
-    var listOfImages = ArrayList<OneImage>()
     var myRoom = room
     private var isOpen: Boolean = true
 
@@ -66,12 +66,25 @@ class RoomDetailFragment(room: Room) : Fragment() {
         recyclerViewSlider.setLayoutManager(layoutManagerSlider)
 
 
-        for (item in myRoom.decorationSnapshots!!){
-            listOfImages.add(OneImage(item.photoPath!!))
-            Log.d("ROOM", item.photoPath!!)
-        }
 
         val roomList = myRoom
+        val decSnap = roomList.decorationSnapshots?.get(0)
+        val sceneitem = decSnap?.itemsInScene?.get(0)
+        if (sceneitem?.id != "default"){
+
+            val default = ArrayList<Furniture>()
+            val recents = roomList.recentFurniture
+            if (recents != null) {
+                for (item in recents) {
+                    default.add(Furniture(item, "default", "default"))
+                }
+            }
+
+            roomList.decorationSnapshots?.add(0, DecorationSnapshot("default", myRoom.previewPhotoPath, default))
+        }
+
+        Log.d("FYI", "list contains: ${roomList}")
+
 
         //dot navigation menu setup
         val dots = view.dots_indicator
@@ -85,7 +98,7 @@ class RoomDetailFragment(room: Room) : Fragment() {
             recyclerViewSlider.smoothScrollToPosition(it)
         }
         //adapter setup
-        recyclerViewSlider.adapter =  ImageSliderAdapter(listOfImages, roomList)
+        recyclerViewSlider.adapter =  ImageSliderAdapter(roomList)
 
         //scroll listener
         //when user scrolls layoutmanager is used to check what item position is visible
