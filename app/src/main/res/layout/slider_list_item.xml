@@ -3,10 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="8dp"
-    android:background="#FFFFFF">
+    android:layout_margin="8dp">
 
 
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/roomCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="4dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
+            >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,7 +34,7 @@
                     tools:srcCompat="@tools:sample/avatars" />
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="5dp"
@@ -41,8 +49,10 @@
                     android:layout_height="200dp"
                     android:paddingStart="5dp" />
 
-        </LinearLayout>
 
+
+        </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
 
 

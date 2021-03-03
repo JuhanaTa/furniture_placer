@@ -47,6 +47,8 @@ class ArFragmentView : AppCompatActivity(),
     private val models = arrayListOf<Furniture>()
     var uri = Uri.parse("")
     private lateinit var editedRoom: Room
+    private lateinit var currentFurniture : Furniture
+    private var selectedFurnitures = ArrayList<Furniture>()
     var id = 0
     var selectedFurniture: Furniture? = null
     val addedItemsInScene : ArrayList<Furniture> = ArrayList<Furniture>()
@@ -126,6 +128,18 @@ class ArFragmentView : AppCompatActivity(),
                     FirebaseService().updateRoom(editedRoom)
                     Log.d("FYI", "saved image")
 
+                    for (furniture in selectedFurnitures){
+                        editedRoom.recentFurniture?.add(furniture.name)
+                    }
+                    FirebaseService().updateRoom(editedRoom)
+
+                    /*if(editedRoom.recentFurniture != null) {
+                        if (!editedRoom.recentFurniture?.contains(furniture.name)!!) {
+                            editedRoom.recentFurniture?.add(furniture.name)
+                            FirebaseService().updateRoom(editedRoom)
+                        }
+                    }*/
+
                 } else {
                     Log.d("FYI", "Pixel copy did not succeed")
                 }
@@ -197,10 +211,13 @@ class ArFragmentView : AppCompatActivity(),
                         Log.d("FYI", "Listener added")
 
                         deleteModelbtn.setOnClickListener {
-                            val itemType = selectedFurniture
-                            addedItemsInScene.remove(itemType)
+                            //val itemType = selectedFurniture
+                            //addedItemsInScene.remove(itemType)
+                            if (selectedFurnitures.contains(selectedFurniture)){
+                                selectedFurnitures.remove(selectedFurniture)
+                            }
                             removeAnchorNode(anchorNode)
-                            Log.d("FYI", "Model removed")
+                            Log.d("FYI", "Model removed ${selectedFurnitures}")
                             deleteModelbtn.visibility = View.GONE
                         }
                     }
@@ -247,12 +264,18 @@ class ArFragmentView : AppCompatActivity(),
             modelRenderable = null
             setModel()
         }
-        if(editedRoom.recentFurniture != null) {
+        if (!editedRoom.recentFurniture?.contains(furniture.name)!!){
+            if (editedRoom.recentFurniture != null){
+                selectedFurnitures.add(furniture)
+            }
+        }
+
+        /*if(editedRoom.recentFurniture != null) {
             if (!editedRoom.recentFurniture?.contains(furniture.name)!!) {
                 editedRoom.recentFurniture?.add(furniture.name)
                 FirebaseService().updateRoom(editedRoom)
             }
-        }
+        }*/
         selectedFurniture = furniture
     }
 

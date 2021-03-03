@@ -67,7 +67,11 @@ class ImageSliderAdapter(
             }
         }
         val items = room.decorationSnapshots?.get(position)?.itemsInScene
-
+        if (position == 0){
+            vh.description.text = "Whole Room contains these models"
+        } else {
+            vh.description.text = "Screenshot contains these models"
+        }
         recyclerView = vh.itemView.findViewById(R.id.rv_screenshotModels)
         recyclerView.layoutManager = LinearLayoutManager(vh.itemView.context)
         recyclerView.adapter = items?.let { ScreenshotModelAdapter(it) }
@@ -84,6 +88,7 @@ class ImageSliderAdapter(
 
         View.OnClickListener {
         val text: ImageView = itemView.findViewById(R.id.sliderImage)
+        val description: TextView = itemView.findViewById(R.id.description)
         init {
             itemView.setOnClickListener(this)
         }
