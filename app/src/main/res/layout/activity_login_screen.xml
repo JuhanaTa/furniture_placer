@@ -10,7 +10,7 @@
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="450dp"
-        android:background="@android:color/holo_orange_light"
+        android:background="@color/primaryVariant"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
@@ -19,7 +19,7 @@
         android:layout_height="500dp"
         android:layout_margin="30dp"
         android:background="#d3d3d3"
-        app:cardCornerRadius="30dp"
+        app:cardCornerRadius="15dp"
         app:cardElevation="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="@+id/view"
@@ -29,30 +29,29 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginTop="100dp">
+            android:layout_marginTop="50dp">
 
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                 />
+                app:srcCompat="@drawable/common_google_signin_btn_icon_light_normal" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Login with Google"
+                android:text="@string/appName"
                 android:textAlignment="center"
-                android:textSize="32sp" />
+                android:textSize="28sp" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="20dp"
+                app:cardCornerRadius="10dp"
                 app:cardElevation="30dp"
                 android:layout_gravity="center"
-                android:layout_margin="50dp"
+                android:layout_margin="40dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:id="@+id/Signin">
@@ -60,21 +59,21 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@android:color/black"
+                    android:background="@color/primary"
                     android:padding="10dp">
 
                     <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="start"
                         android:layout_marginEnd="5dp"
-                        app:srcCompat="@drawable/ic_baseline_login_24"/>
+                        app:srcCompat="@drawable/common_google_signin_btn_icon_light_normal" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Sign In"
+                        android:text="@string/loginText"
                         android:textAlignment="center"
                         android:textSize="16sp"
                         android:textColor="@android:color/white"/>

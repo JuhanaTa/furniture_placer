@@ -18,4 +18,8 @@
     <string name="createRoomBtnText">Create Room</string>
     <string name="cancelAction">cancel</string>
     <string name="screenshotFabText">Screenshot</string>
+    <string name="loginText">Sign In with Google</string>
+    <string name="appName">Furniture Placer</string>
+
+
 </resources>
