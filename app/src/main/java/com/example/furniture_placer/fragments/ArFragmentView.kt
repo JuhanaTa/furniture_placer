@@ -143,7 +143,7 @@ class ArFragmentView : AppCompatActivity(),
         val renderableFuture = ModelRenderable.builder()
             .setSource(this, RenderableSource.builder().setSource(this,
                 uri, RenderableSource.SourceType.GLTF2)
-                .setScale(0.1f)// Scale the original to 20%
+                .setScale(1f)// Scale the original to 20%
                 .setRecenterMode(RenderableSource.RecenterMode.ROOT)
                 .build())
             .setRegistryId("id${id++}").build()
