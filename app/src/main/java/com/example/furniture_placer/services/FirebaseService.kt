@@ -74,6 +74,21 @@ class FirebaseService {
             .addOnFailureListener { e -> Log.w(TAG, "Error updating room", e) }
     }
 
+    fun deleteRoom(room: Room) {
+        val user = firebaseAuth.currentUser ?: return
+        val uid = user.uid
+        val roomData = roomToHash(room)
+
+        db.collection("users").document(uid).collection("rooms").document("${room.id}")
+            .delete().addOnSuccessListener {
+                Log.d(
+                    TAG,
+                    "room updated successfully!"
+                )
+            }
+            .addOnFailureListener { e -> Log.w(TAG, "Error updating room", e) }
+    }
+
     fun getUserRoomsCollection(): CollectionReference? {
         val user = firebaseAuth.currentUser
             ?: return null

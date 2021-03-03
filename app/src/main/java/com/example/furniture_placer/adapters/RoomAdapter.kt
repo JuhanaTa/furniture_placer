@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -56,6 +57,7 @@ class RoomAdapter(
                     val imageData = loadImage(imagePath)
                     Log.d("asd", imageData.toString())
 
+
                     vh.text.roomName.text = "Room: ${room.name}"
                     vh.id.roomId.text = "id: ${room.id}"
                     vh.modelCount.text = "${room.recentFurniture?.size} models in this room."
@@ -66,7 +68,17 @@ class RoomAdapter(
                 }
 
             }
+            vh.deleteButton.setOnClickListener {
+                Log.w("StorageService", "path: ${FirebaseService().getCurrentUser()?.uid}/${room.name}")
+                StorageService().deleteFileSync("${FirebaseService().getCurrentUser()?.uid}/${room.name}/previewImage.jpg")
+                room.decorationSnapshots?.forEach{
+                    if(it.photoPath != null) {
+                        StorageService().deleteFileSync(it.photoPath!!)
+                    }
+                }
+                FirebaseService().deleteRoom(room)
 
+            }
         }
     }
 
@@ -90,6 +102,7 @@ class RoomAdapter(
         val image: ImageView = itemView.findViewById(R.id.roomImage)
         val modelCount: TextView = itemView.findViewById(R.id.modelCount)
         val id: TextView = itemView.findViewById(R.id.roomId)
+        val deleteButton: Button = itemView.findViewById(R.id.deleteBtn)
         init {
             itemView.setOnClickListener(this)
         }

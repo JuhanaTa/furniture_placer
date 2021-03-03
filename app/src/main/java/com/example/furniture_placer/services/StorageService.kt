@@ -59,6 +59,16 @@ class StorageService : AppCompatActivity() {
         return imageRef.getBytes(ONE_MEGABYTE).await()
     }
 
+    fun deleteFileSync(path:String){
+        val ref = storageRef.child(path)
+        // Delete the file
+        ref.delete().addOnSuccessListener {
+            Log.w("StorageService", "File deleted successfully")
+        }.addOnFailureListener {
+            Log.w("StorageService", " Uh-oh, an error occurred! during file deleting: ${it.message}")
+        }
+    }
+
     suspend fun loadModel(path:String,fileName: String,context: Context) : Uri{
 
         val filesDir = context.filesDir
