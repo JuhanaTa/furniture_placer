@@ -8,4 +8,13 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="lightgray">#7f7f80</color>
+
+    <color name="primary">#2e7d32</color>
+    <color name="primaryVariant">#60ad5e</color>
+    <color name="onPrimary">#005005</color>
+
+    <color name="secondary">#0d47a1</color>
+    <color name="secondaryVariant">#5472d3</color>
+    <color name="onSecondary">#002171</color>
+
 </resources>

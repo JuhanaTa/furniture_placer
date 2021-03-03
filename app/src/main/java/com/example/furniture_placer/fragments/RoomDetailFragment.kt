@@ -51,8 +51,10 @@ class RoomDetailFragment(room: Room) : Fragment() {
                 }
 
                 view.compareBtn.setOnClickListener{
+                    val roomToEdit: Room = myRoom
+                    roomToEdit.decorationSnapshots?.removeAt(0)
                     val intent = Intent(activity, DecorationSnapshotComparision::class.java).apply {
-                        putExtra("EDITED_ROOM",myRoom)
+                        putExtra("EDITED_ROOM",roomToEdit)
                     }
                     startActivity(intent)
                 }
