@@ -83,28 +83,28 @@ class RoomDetailFragment(room: Room) : Fragment() {
 
         //val roomList = myRoom
         val json = Gson().toJson(myRoom)
-        val roomList = Gson().fromJson(json, Room::class.java)
+        val newRoom = Gson().fromJson(json, Room::class.java)
 
         val default = ArrayList<Furniture>()
-        val recents = roomList.recentFurniture
-        if(roomList.decorationSnapshots?.get(0)?.itemsInScene?.get(0)?.id != "default") {
+        val recents = newRoom.recentFurniture
+        if(newRoom.decorationSnapshots?.get(0)?.itemsInScene?.get(0)?.id != "default") {
 
             if (recents != null) {
                 for (item in recents) {
                     default.add(Furniture(item, "default", "default", "0"))
                 }
             }
-            roomList.decorationSnapshots?.add(0, DecorationSnapshot("default", myRoom.previewPhotoPath, default))
+            newRoom.decorationSnapshots?.add(0, DecorationSnapshot("default", myRoom.previewPhotoPath, default))
         }
 
 
 
-        Log.d("FYI", "list contains: ${roomList}")
+        Log.d("FYI", "list contains: ${newRoom}")
 
 
         //dot navigation menu setup
         val dots = view.dots_indicator
-        dots.initDots(roomList.decorationSnapshots!!.size)
+        dots.initDots(newRoom.decorationSnapshots!!.size)
         dots.setDotSelection(0)
 
         //listener if user taps one of the dots
@@ -114,7 +114,7 @@ class RoomDetailFragment(room: Room) : Fragment() {
             recyclerViewSlider.smoothScrollToPosition(it)
         }
         //adapter setup
-        recyclerViewSlider.adapter =  ImageSliderAdapter(roomList)
+        recyclerViewSlider.adapter =  ImageSliderAdapter(newRoom)
 
         //scroll listener
         //when user scrolls layoutmanager is used to check what item position is visible
