@@ -18,6 +18,7 @@ import com.example.furniture_placer.adapters.ImageSliderAdapter
 import com.example.furniture_placer.data_models.DecorationSnapshot
 import com.example.furniture_placer.data_models.Furniture
 import com.example.furniture_placer.data_models.Room
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_room_detail.view.*
 
 
@@ -43,7 +44,7 @@ class RoomDetailFragment(room: Room) : Fragment() {
 
                 view.editRoomBtn.setOnClickListener {
                     val roomToEdit: Room = myRoom
-                    roomToEdit.decorationSnapshots?.removeAt(0)
+                    //roomToEdit.decorationSnapshots?.removeAt(0)
                     val intent = Intent(activity, ArFragmentView::class.java).apply {
                         putExtra("EDITED_ROOM",roomToEdit)
                     }
@@ -52,7 +53,7 @@ class RoomDetailFragment(room: Room) : Fragment() {
 
                 view.compareBtn.setOnClickListener{
                     val roomToEdit: Room = myRoom
-                    roomToEdit.decorationSnapshots?.removeAt(0)
+                    //roomToEdit.decorationSnapshots?.removeAt(0)
                     val intent = Intent(activity, DecorationSnapshotComparision::class.java).apply {
                         putExtra("EDITED_ROOM",roomToEdit)
                     }
@@ -80,16 +81,21 @@ class RoomDetailFragment(room: Room) : Fragment() {
 
 
 
-        val roomList = myRoom
+        //val roomList = myRoom
+        val json = Gson().toJson(myRoom)
+        val roomList = Gson().fromJson(json, Room::class.java)
+
         val default = ArrayList<Furniture>()
         val recents = roomList.recentFurniture
+        if(roomList.decorationSnapshots?.get(0)?.itemsInScene?.get(0)?.id != "default") {
 
-        if (recents != null) {
-            for (item in recents) {
-                default.add(Furniture(item, "default", "default", "0"))
+            if (recents != null) {
+                for (item in recents) {
+                    default.add(Furniture(item, "default", "default", "0"))
+                }
             }
+            roomList.decorationSnapshots?.add(0, DecorationSnapshot("default", myRoom.previewPhotoPath, default))
         }
-        roomList.decorationSnapshots?.add(0, DecorationSnapshot("default", myRoom.previewPhotoPath, default))
 
 
 
