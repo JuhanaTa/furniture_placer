@@ -1,15 +1,12 @@
 package com.example.furniture_placer
 
-import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
@@ -19,8 +16,6 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.lifecycle.lifecycleScope
-import com.example.camera.CameraService.StorageService
 import com.example.furniture_placer.adapters.RoomAdapter
 import com.example.furniture_placer.data_models.Room
 import com.example.furniture_placer.data_models.roomFromFirestore
@@ -29,8 +24,6 @@ import com.example.furniture_placer.fragments.MainPageFragment
 import com.example.furniture_placer.fragments.RoomDetailFragment
 import com.example.furniture_placer.interfaces.Communicator
 import com.example.furniture_placer.services.FirebaseService
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers

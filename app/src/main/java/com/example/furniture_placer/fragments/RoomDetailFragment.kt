@@ -12,12 +12,13 @@ import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 import com.example.furniture_placer.DecorationSnapshotComparision
-import com.example.furniture_placer.OneImage
 import com.example.furniture_placer.R
 import com.example.furniture_placer.adapters.ImageSliderAdapter
 import com.example.furniture_placer.data_models.DecorationSnapshot
 import com.example.furniture_placer.data_models.Furniture
 import com.example.furniture_placer.data_models.Room
+import com.example.furniture_placer.data_models.roomFromFirestore
+import com.example.furniture_placer.services.FirebaseService
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_room_detail.view.*
 
@@ -25,7 +26,7 @@ import kotlinx.android.synthetic.main.fragment_room_detail.view.*
 class RoomDetailFragment(room: Room) : Fragment() {
 
     lateinit var recyclerViewSlider: RecyclerView
-    private val myRoom = room
+    private var myRoom = room
     private var isOpen: Boolean = true
 
     override fun onCreateView(
@@ -34,8 +35,9 @@ class RoomDetailFragment(room: Room) : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_room_detail, container, false)
-
+        listenToRoom(view)
         view.roomMenuBtn.setOnClickListener {
+
             if (isOpen){
                 view.compareBtn.visibility = View.VISIBLE
                 view.compareText.visibility = View.VISIBLE
@@ -80,42 +82,6 @@ class RoomDetailFragment(room: Room) : Fragment() {
         recyclerViewSlider.setLayoutManager(layoutManagerSlider)
 
 
-
-        //val roomList = myRoom
-        val json = Gson().toJson(myRoom)
-        val newRoom = Gson().fromJson(json, Room::class.java)
-
-        val default = ArrayList<Furniture>()
-        val recents = newRoom.recentFurniture
-        if(newRoom.decorationSnapshots?.get(0)?.itemsInScene?.get(0)?.id != "default") {
-
-            if (recents != null) {
-                for (item in recents) {
-                    default.add(Furniture(item, "default", "default", "0"))
-                }
-            }
-            newRoom.decorationSnapshots?.add(0, DecorationSnapshot("default", myRoom.previewPhotoPath, default))
-        }
-
-
-
-        Log.d("FYI", "list contains: ${newRoom}")
-
-
-        //dot navigation menu setup
-        val dots = view.dots_indicator
-        dots.initDots(newRoom.decorationSnapshots!!.size)
-        dots.setDotSelection(0)
-
-        //listener if user taps one of the dots
-        //scrolls to right position
-        dots.onSelectListener = {
-            Log.d("FYI", "page $it selected")
-            recyclerViewSlider.smoothScrollToPosition(it)
-        }
-        //adapter setup
-        recyclerViewSlider.adapter =  ImageSliderAdapter(newRoom)
-
         //scroll listener
         //when user scrolls layoutmanager is used to check what item position is visible
         //dot position assigned with that position
@@ -124,7 +90,7 @@ class RoomDetailFragment(room: Room) : Fragment() {
                 super.onScrolled(recyclerView, dx, dy)
                 Log.d("FYI", "scrolled")
                 val pos = layoutManagerSlider.findFirstVisibleItemPosition()
-                dots.setDotSelection(pos)
+                view.dots_indicator.setDotSelection(pos)
             }
         })
 
@@ -146,6 +112,48 @@ class RoomDetailFragment(room: Room) : Fragment() {
                 detailList?.let { RoomDetailAdapter(it) }*/
 
         return view
+    }
+
+    private fun listenToRoom(view: View) {
+        FirebaseService().getUserRoomReference(myRoom)?.addSnapshotListener { value, e ->
+            if (e != null) {
+                Log.w("Firebase", "Listen failed.", e)
+                return@addSnapshotListener
+            }
+            if (value != null) {
+                myRoom = roomFromFirestore(value)
+                val json = Gson().toJson(myRoom)
+                val newRoom = Gson().fromJson(json, Room::class.java)
+
+                val default = ArrayList<Furniture>()
+                val recents = newRoom.recentFurniture
+                if(newRoom.decorationSnapshots?.get(0)?.itemsInScene?.get(0)?.id != "default") {
+
+                    if (recents != null) {
+                        for (item in recents) {
+                            default.add(Furniture(item, "default", "default", "0"))
+                        }
+                    }
+                    newRoom.decorationSnapshots?.add(0, DecorationSnapshot("default", myRoom.previewPhotoPath, default))
+
+                    //dot navigation menu setup
+                    val dots = view.dots_indicator
+                    dots.initDots(newRoom.decorationSnapshots!!.size)
+                    dots.setDotSelection(0)
+
+                    //listener if user taps one of the dots
+                    //scrolls to right position
+                    dots.onSelectListener = {
+                        Log.d("FYI", "page $it selected")
+                        recyclerViewSlider.smoothScrollToPosition(it)
+                    }
+                    //adapter setup
+                    recyclerViewSlider.adapter =  ImageSliderAdapter(newRoom)
+                }
+            }
+
+
+        }
     }
 
 }

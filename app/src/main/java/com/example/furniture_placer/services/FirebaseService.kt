@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
@@ -94,6 +95,13 @@ class FirebaseService {
             ?: return null
         val uid = user.uid
         return db.collection("users").document(uid).collection("rooms")
+    }
+
+    fun getUserRoomReference(room: Room): DocumentReference? {
+        val user = firebaseAuth.currentUser
+                ?: return null
+        val uid = user.uid
+        return room.id?.let { db.collection("users").document(uid).collection("rooms").document(it) }
     }
 
     suspend fun getFurnitures() :List<Furniture?>{

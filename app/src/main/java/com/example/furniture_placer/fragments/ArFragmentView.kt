@@ -29,6 +29,7 @@ import com.google.ar.sceneform.assets.RenderableSource
 import com.google.ar.sceneform.rendering.ModelRenderable
 import com.google.ar.sceneform.ux.ArFragment
 import com.google.ar.sceneform.ux.TransformableNode
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_ar_fragment_view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -211,8 +212,10 @@ class ArFragmentView : AppCompatActivity(),
                         Log.d("FYI", "Listener added")
 
                         deleteModelbtn.setOnClickListener {
-                            //val itemType = selectedFurniture
-                            //addedItemsInScene.remove(itemType)
+                            val itemType = selectedFurniture
+                            val json = Gson().toJson(selectedFurniture)
+                            val newFurniture = Gson().fromJson(json, Furniture::class.java)
+                            addedItemsInScene.remove(newFurniture)
                             if (selectedFurnitures.contains(selectedFurniture)){
                                 selectedFurnitures.remove(selectedFurniture)
                             }
