@@ -5,7 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.fragment.app.DialogFragment
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.furniture_placer.R
@@ -43,6 +45,7 @@ class NewModelDialog(modelList: ArrayList<Furniture>) : DialogFragment(), NewMod
         modelList.add(OneModel("sohva", 3))*/
         recyclerView.adapter =
             NewModelAdapter(models, this)
+        recyclerView.addItemDecoration(DividerItemDecoration(this.activity, LinearLayout.VERTICAL))
 
         return  view
     }

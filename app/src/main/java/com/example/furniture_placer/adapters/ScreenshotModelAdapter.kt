@@ -30,25 +30,26 @@ class ScreenshotModelAdapter(
 
     override fun onBindViewHolder(vh: MyViewHolder, position: Int) {
         val furnitureName: String = furnitures[position].name
-        if (furnitureName == "No furnitures added"){
+        if (furnitureName == "default"){
             vh.imageview.visibility = View.GONE
+            vh.modelText.visibility = View.GONE
         }
-
-        vh.view.modelName.text = "$furnitureName "
+        vh.view.modelName.text = furnitureName
+        vh.modelPrice.text = "${furnitures[position].price}€"
     }
-
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
             View.OnClickListener {
         val view: TextView = itemView.findViewById(R.id.modelName)
         val imageview: ImageView = itemView.findViewById(R.id.modelImage)
+        val modelText: TextView = itemView.findViewById(R.id.modelName)
+        val modelPrice: TextView = itemView.findViewById(R.id.modelPrice)
         init {
             itemView.setOnClickListener(this)
         }
 
         override fun onClick(v: View?) {
             Log.d("FYI", "item clicked")
-
         }
     }
 

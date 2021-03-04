@@ -11,15 +11,20 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/coordinatorLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.mazenrashed.dotsindicator.DotsIndicator
             android:id="@+id/dots_indicator"
-            android:paddingTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:paddingTop="10dp"
             app:dot_height="10dp"
             app:dot_width="10dp"
+            app:dots_count="1"
             app:first_dot_height="15dp"
             app:first_dot_width="15dp"
             app:first_selected_dot_resource="@drawable/ic_home_white_24dp"
@@ -56,10 +61,10 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
             android:layout_marginBottom="16dp"
-            android:backgroundTint="@color/design_default_color_primary"
+            android:backgroundTint="@color/primary"
             android:src="@drawable/ic_baseline_menu_24"
-            app:backgroundTint="@color/purple_500"
-            app:rippleColor="@color/design_default_color_primary_variant" />
+            app:backgroundTint="@color/primary"
+            app:rippleColor="@color/primary" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -68,10 +73,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="12dp"
-        android:backgroundTint="@color/purple_200"
+        android:backgroundTint="@color/primaryVariant"
         android:contentDescription="@string/searchNewModelFab"
         android:visibility="gone"
-        app:backgroundTint="@color/purple_200"
+        app:backgroundTint="@color/primaryVariant"
         app:layout_constraintBottom_toTopOf="@+id/editRoomBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_baseline_compare_24" />
@@ -101,9 +106,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        android:backgroundTint="@color/purple_200"
+        android:backgroundTint="@color/primaryVariant"
         android:visibility="gone"
-        app:backgroundTint="@color/purple_200"
+        app:backgroundTint="@color/primaryVariant"
         app:layout_constraintBottom_toTopOf="@+id/coordinatorLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_baseline_edit_24" />

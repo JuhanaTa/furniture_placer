@@ -46,6 +46,8 @@ class MainPageFragment(private val listener: RoomAdapter.OnItemClickListener) : 
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_main_page, container, false)
 
+
+
         view.menuBtn.setOnClickListener {
             Log.d("FYI", "menu button pressed")
             if (isOpen){
@@ -55,7 +57,6 @@ class MainPageFragment(private val listener: RoomAdapter.OnItemClickListener) : 
                 view.addNewRoomText.visibility = View.VISIBLE
 
                 view.addNewRoomBtn.setOnClickListener {
-
                         communicator.openDialog(null, "")
                 }
 
@@ -69,6 +70,10 @@ class MainPageFragment(private val listener: RoomAdapter.OnItemClickListener) : 
                 view.addNewRoomBtn.setOnClickListener(null)
                 isOpen = true
             }
+        }
+
+        view.secondAddNewRoomBtn.setOnClickListener {
+            communicator.openDialog(null, "")
         }
 
 
@@ -106,8 +111,15 @@ class MainPageFragment(private val listener: RoomAdapter.OnItemClickListener) : 
         val ump = ViewModelProviders.of(this).get(MainViewModel::class.java) //ViewModelProvider(this).get(MainViewModel::class.java)
         ump.listenToRooms()
         ump.getRooms().observe( this, Observer{
-            recyclerView.adapter =
-                RoomAdapter(it, listener)
+            recyclerView.adapter = RoomAdapter(it, listener)
+
+            if (it.isEmpty()){
+                noRoomsCard.visibility = View.VISIBLE
+                rv_rooms.visibility = View.GONE
+            } else {
+                noRoomsCard.visibility = View.GONE
+                rv_rooms.visibility = View.VISIBLE
+            }
         })
     }
 

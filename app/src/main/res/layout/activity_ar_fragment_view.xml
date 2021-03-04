@@ -34,16 +34,16 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
             android:layout_marginBottom="16dp"
-            android:backgroundTint="@color/design_default_color_primary"
+            android:backgroundTint="@color/primary"
             android:contentDescription="@string/openMenuDesc"
             android:src="@drawable/ic_baseline_archive_24"
-            app:backgroundTint="@color/purple_500"
+            app:backgroundTint="@color/primary"
             app:icon="@drawable/ic_baseline_archive_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:rippleColor="@color/design_default_color_primary_variant" />
+            app:rippleColor="@color/primary" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/addModel"
@@ -52,17 +52,17 @@
             android:layout_gravity="bottom|center"
             android:layout_margin="16dp"
             android:layout_marginBottom="16dp"
-            android:backgroundTint="@color/design_default_color_primary"
+            android:backgroundTint="@color/primary"
             android:contentDescription="@string/addModelFab"
             android:src="@drawable/ic_baseline_add_24"
             android:text="@string/addModelText"
-            app:backgroundTint="@color/purple_500"
+            app:backgroundTint="@color/primary"
             app:icon="@drawable/ic_baseline_add_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:rippleColor="@color/design_default_color_primary_variant" />
+            app:rippleColor="@color/primary" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/deleteModelbtn"
@@ -71,17 +71,17 @@
             android:layout_gravity="bottom|start"
             android:layout_margin="16dp"
             android:layout_marginBottom="16dp"
-            android:backgroundTint="@color/design_default_color_primary"
+            android:backgroundTint="@color/primary"
             android:contentDescription="@string/deleteModelFab"
             android:src="@drawable/ic_baseline_clear_24"
-            android:visibility="visible"
-            app:backgroundTint="@color/purple_500"
+            android:visibility="gone"
+            app:backgroundTint="@color/primary"
             app:icon="@drawable/ic_baseline_clear_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:rippleColor="@color/design_default_color_primary_variant" />
+            app:rippleColor="@color/primary" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
@@ -91,10 +91,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        android:backgroundTint="@color/purple_200"
+        android:backgroundTint="@color/primaryVariant"
         android:contentDescription="@string/searchHistoryModelFab"
         android:visibility="gone"
-        app:backgroundTint="@color/purple_200"
+        app:backgroundTint="@color/primaryVariant"
         app:layout_constraintBottom_toTopOf="@+id/coordinatorLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_baseline_history_24" />
@@ -123,10 +123,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="24dp"
-        android:backgroundTint="@color/purple_200"
+        android:backgroundTint="@color/primaryVariant"
         android:contentDescription="@string/searchNewModelFab"
         android:visibility="gone"
-        app:backgroundTint="@color/purple_200"
+        app:backgroundTint="@color/primaryVariant"
         app:layout_constraintBottom_toTopOf="@+id/historyModelBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_baseline_fiber_new_24" />
@@ -155,10 +155,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="24dp"
-        android:backgroundTint="@color/purple_200"
+        android:backgroundTint="@color/primaryVariant"
         android:contentDescription="@string/searchNewModelFab"
         android:visibility="gone"
-        app:backgroundTint="@color/purple_200"
+        app:backgroundTint="@color/primaryVariant"
         app:layout_constraintBottom_toTopOf="@+id/newModelBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_baseline_camera" />

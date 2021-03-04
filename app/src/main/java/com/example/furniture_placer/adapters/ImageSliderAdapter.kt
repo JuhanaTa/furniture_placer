@@ -9,7 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.camera.CameraService.StorageService
@@ -75,11 +77,6 @@ class ImageSliderAdapter(
         recyclerView = vh.itemView.findViewById(R.id.rv_screenshotModels)
         recyclerView.layoutManager = LinearLayoutManager(vh.itemView.context)
         recyclerView.adapter = items?.let { ScreenshotModelAdapter(it) }
-        //vh.view.roomName.text = "Room: ${room.name} and id of room:  ${room.id}"
-        //vh.view.roomId.text = "asdasdasda"
-        //vh.itemView.sliderImage.setImageResource(R.drawable.homer)
-        //Log.d("FYI", "${room.name}")
-
 
     }
 
@@ -103,8 +100,7 @@ class ImageSliderAdapter(
         val imageData = StorageService().loadPicture(path)
         Log.d("FYI", "image loaded")
         val bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.size)
-        //val bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.size)
-        //vh.view.roomImage.setImageBitmap(bitmap)
+
         return bitmap
     }
 

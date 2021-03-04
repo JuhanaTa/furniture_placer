@@ -31,7 +31,8 @@ class NewModelAdapter(
 
     override fun onBindViewHolder(vh: MyViewHolder, position: Int) {
         val model: Furniture = models[position]
-        vh.view.modelName.text = "${model.name}"
+        vh.view.modelName.text = model.name
+        vh.modelPrice.text = "${models[position].price}€"
     }
 
 
@@ -39,6 +40,7 @@ class NewModelAdapter(
 
         View.OnClickListener {
         val view: TextView = itemView.findViewById(R.id.modelName)
+        val modelPrice: TextView = itemView.findViewById(R.id.modelPrice)
         init {
             itemView.setOnClickListener(this)
         }

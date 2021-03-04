@@ -6,11 +6,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.LinearSnapHelper
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.SnapHelper
+import androidx.recyclerview.widget.*
 import com.example.furniture_placer.DecorationSnapshotComparision
 import com.example.furniture_placer.R
 import com.example.furniture_placer.adapters.ImageSliderAdapter
@@ -97,20 +95,6 @@ class RoomDetailFragment(room: Room) : Fragment() {
         val snapHelper: SnapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(recyclerViewSlider)
 
-
-
-        ///setup for model list
-
-       /* recyclerView = view.findViewById(R.id.rv_roomDetails)
-        recyclerView.layoutManager = LinearLayoutManager(view.context)
-
-        val detailList = myRoom.recentFurniture
-        if (detailList?.size == 0){
-            detailList.add("No furnitures added")
-        }
-        recyclerView.adapter =
-                detailList?.let { RoomDetailAdapter(it) }*/
-
         return view
     }
 
@@ -127,28 +111,34 @@ class RoomDetailFragment(room: Room) : Fragment() {
 
                 val default = ArrayList<Furniture>()
                 val recents = newRoom.recentFurniture
-                if(newRoom.decorationSnapshots?.get(0)?.itemsInScene?.get(0)?.id != "default") {
+                if (!newRoom.decorationSnapshots!!.isEmpty()) {
+                    if (newRoom.decorationSnapshots?.get(0)?.itemsInScene?.get(0)?.id != "default") {
 
-                    if (recents != null) {
-                        for (item in recents) {
-                            default.add(Furniture(item, "default", "default", "0"))
+                        if (recents != null) {
+                            for (item in recents) {
+                                default.add(Furniture(item, "default", "default", "0"))
+                            }
                         }
+                        newRoom.decorationSnapshots?.add(0, DecorationSnapshot("default", myRoom.previewPhotoPath, default))
+
+                        //dot navigation menu setup
+                        val dots = view.dots_indicator
+                        dots.initDots(newRoom.decorationSnapshots!!.size)
+                        dots.setDotSelection(0)
+
+                        //listener if user taps one of the dots
+                        //scrolls to right position
+                        dots.onSelectListener = {
+                            Log.d("FYI", "page $it selected")
+                            recyclerViewSlider.smoothScrollToPosition(it)
+                        }
+                        //adapter setup
+                        recyclerViewSlider.adapter = ImageSliderAdapter(newRoom)
                     }
+                } else {
+                    default.add(Furniture("default", "default", "default", "0"))
                     newRoom.decorationSnapshots?.add(0, DecorationSnapshot("default", myRoom.previewPhotoPath, default))
-
-                    //dot navigation menu setup
-                    val dots = view.dots_indicator
-                    dots.initDots(newRoom.decorationSnapshots!!.size)
-                    dots.setDotSelection(0)
-
-                    //listener if user taps one of the dots
-                    //scrolls to right position
-                    dots.onSelectListener = {
-                        Log.d("FYI", "page $it selected")
-                        recyclerViewSlider.smoothScrollToPosition(it)
-                    }
-                    //adapter setup
-                    recyclerViewSlider.adapter =  ImageSliderAdapter(newRoom)
+                    recyclerViewSlider.adapter = ImageSliderAdapter(newRoom)
                 }
             }
 

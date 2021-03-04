@@ -20,6 +20,9 @@
     <string name="screenshotFabText">Screenshot</string>
     <string name="loginText">Sign In with Google</string>
     <string name="appName">Furniture Placer</string>
+    <string name="Room_create">Create Room</string>
+    <string name="no_rooms_desc">There are no rooms right now</string>
+    <string name="model_select_desc">Select Model</string>
 
 
 </resources>

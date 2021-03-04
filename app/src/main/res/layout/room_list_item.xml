@@ -73,7 +73,8 @@
                             android:text="Delete"
                             android:textColor="@color/primary"
                             app:icon="@drawable/ic_baseline_delete_24"
-                            app:iconTint="@color/primary" />
+                            app:iconTint="@color/primary"
+                            app:strokeColor="@color/primary" />
                 </LinearLayout>
 
 
