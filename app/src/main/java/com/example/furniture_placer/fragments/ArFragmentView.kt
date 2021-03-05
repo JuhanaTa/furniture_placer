@@ -206,18 +206,22 @@ class ArFragmentView : AppCompatActivity(),
                     mNode.renderable = modelRenderable
                     mNode.select()
 
+                    //furniture data saved here
+                    //used in click listener to remove right model
+                    val selectedItem = selectedFurniture
                     mNode.setOnTapListener(){ hitTestResult: HitTestResult, motionEvent: MotionEvent ->
 
                         deleteModelbtn.visibility = View.VISIBLE
-                        Log.d("FYI", "Listener added")
+
+                        Log.d("FYI", "Listener added: $selectedItem")
 
                         deleteModelbtn.setOnClickListener {
-                            val itemType = selectedFurniture
-                            val json = Gson().toJson(selectedFurniture)
-                            val newFurniture = Gson().fromJson(json, Furniture::class.java)
-                            addedItemsInScene.remove(newFurniture)
-                            if (selectedFurnitures.contains(selectedFurniture)){
-                                selectedFurnitures.remove(selectedFurniture)
+                            //val itemType = selectedFurniture
+                            //val json = Gson().toJson(selectedFurniture)
+                            //val newFurniture = Gson().fromJson(json, Furniture::class.java)
+                            addedItemsInScene.remove(selectedItem)
+                            if (selectedFurnitures.contains(selectedItem)){
+                                selectedFurnitures.remove(selectedItem)
                             }
                             removeAnchorNode(anchorNode)
                             Log.d("FYI", "Model removed ${selectedFurnitures}")
