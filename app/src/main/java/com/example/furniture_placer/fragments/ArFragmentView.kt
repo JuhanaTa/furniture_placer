@@ -1,5 +1,6 @@
 package com.example.furniture_placer.fragments
 
+import android.app.AlertDialog
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Camera
@@ -13,7 +14,9 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.PixelCopy
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.net.toUri
 import androidx.fragment.app.FragmentActivity
 import com.example.camera.CameraService.StorageService
@@ -70,6 +73,18 @@ class ArFragmentView : AppCompatActivity(),
         setModel()
 
         arFrag = supportFragmentManager.findFragmentById(R.id.sceneform_fragment) as ArFragment
+
+        val builder = AlertDialog.Builder(this)
+
+        builder.apply {
+            setMessage("Here you can start decorating your room. By taking a screenshot you can save the session.")
+            setTitle("Info")
+            setPositiveButton("OK"){ dialog, which ->
+                //ActivityCompat.requestPermissions(this@ArFragmentView, arrayOf(permission),requestCode)
+            }
+            val dialog = builder.create()
+            dialog.show()
+        }
 
         openMenuBtn.setOnClickListener {
             Log.d("FYI", "menu button pressed")
@@ -141,6 +156,7 @@ class ArFragmentView : AppCompatActivity(),
                         }
                     }*/
 
+                    Toast.makeText(applicationContext, "Screenshot taken", Toast.LENGTH_SHORT).show()
                 } else {
                     Log.d("FYI", "Pixel copy did not succeed")
                 }
