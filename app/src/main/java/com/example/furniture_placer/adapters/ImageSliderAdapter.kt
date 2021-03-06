@@ -27,7 +27,8 @@ import kotlinx.coroutines.launch
 
 
 class ImageSliderAdapter(
-    private val room: Room
+    private val room: Room,
+    private val listener: OnImageClickListener
 ): RecyclerView.Adapter<ImageSliderAdapter.MyViewHolder>() {
 
     lateinit var recyclerView: RecyclerView
@@ -62,6 +63,9 @@ class ImageSliderAdapter(
                     Log.d("ROOM", "loaded image")
                     Log.d("DATA", imageData.toString())
                     vh.itemView.sliderImage.setImageBitmap(imageData)
+                    vh.itemView.sliderImage.setOnClickListener {
+                        listener.onImageClick(imageData)
+                    }
 
                 } catch (e: Exception) {
                     Log.d("ERROR", "image load failed, $e")
@@ -102,6 +106,10 @@ class ImageSliderAdapter(
         val bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.size)
 
         return bitmap
+    }
+
+    interface OnImageClickListener {
+        fun onImageClick(imageData: Bitmap)
     }
 
 

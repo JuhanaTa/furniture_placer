@@ -7,25 +7,25 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import com.example.furniture_placer.adapters.ImageSliderAdapter
 import com.example.furniture_placer.adapters.RoomAdapter
 import com.example.furniture_placer.data_models.Room
 import com.example.furniture_placer.data_models.roomFromFirestore
 import com.example.furniture_placer.fragments.CreateRoomFragment
+import com.example.furniture_placer.fragments.ImageFullscreenFragment
 import com.example.furniture_placer.fragments.MainPageFragment
 import com.example.furniture_placer.fragments.RoomDetailFragment
 import com.example.furniture_placer.interfaces.Communicator
 import com.example.furniture_placer.services.FirebaseService
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -33,7 +33,7 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 
 class MainActivity : AppCompatActivity(),
-    Communicator, RoomAdapter.OnItemClickListener {
+    Communicator, RoomAdapter.OnItemClickListener, ImageSliderAdapter.OnImageClickListener {
     val REQUEST_IMAGE_CAPTURE = 1
     var mCurrentPhotoPath: String = ""
     var roomName = ""
@@ -42,9 +42,7 @@ class MainActivity : AppCompatActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_main)
-
         checkPermissions(android.Manifest.permission.CAMERA, "camera", camera_RQ)
         listenToRooms()
         val mainPage = MainPageFragment(this)
@@ -110,7 +108,7 @@ class MainActivity : AppCompatActivity(),
     override fun onItemClick(position: Int) {
 
         val roomDetailFrag =
-                roomList?.get(position)?.let { RoomDetailFragment(it) }
+                roomList?.get(position)?.let { RoomDetailFragment(it, this) }
 
         supportFragmentManager.beginTransaction().apply {
             if (roomDetailFrag != null) {
@@ -133,8 +131,8 @@ private fun listenToRooms() {
      val rooms = ArrayList<Room>()
      value?.documents?.forEach{
          val room = roomFromFirestore(it)
-         room?.id = it.id
-         rooms.add(room!!)
+         room.id = it.id
+         rooms.add(room)
      }
 
      roomList = rooms
@@ -184,6 +182,17 @@ private fun listenToRooms() {
             }
             val dialog = builder.create()
             dialog.show()
+        }
+    }
+
+    override fun onImageClick(imageData: Bitmap) {
+
+        val imageFullScreenFrag = ImageFullscreenFragment(imageData)
+
+        supportFragmentManager.beginTransaction().apply {
+            add(R.id.fragment_container, imageFullScreenFrag)
+            addToBackStack(null)
+            commit()
         }
     }
 

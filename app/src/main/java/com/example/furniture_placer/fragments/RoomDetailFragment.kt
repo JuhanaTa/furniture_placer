@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.*
 import com.example.furniture_placer.DecorationSnapshotComparision
 import com.example.furniture_placer.R
 import com.example.furniture_placer.adapters.ImageSliderAdapter
+import com.example.furniture_placer.adapters.RoomAdapter
 import com.example.furniture_placer.data_models.DecorationSnapshot
 import com.example.furniture_placer.data_models.Furniture
 import com.example.furniture_placer.data_models.Room
@@ -21,7 +22,7 @@ import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_room_detail.view.*
 
 
-class RoomDetailFragment(room: Room) : Fragment() {
+class RoomDetailFragment(room: Room, private val imageListener: ImageSliderAdapter.OnImageClickListener) : Fragment() {
 
     lateinit var recyclerViewSlider: RecyclerView
     private var myRoom = room
@@ -133,12 +134,12 @@ class RoomDetailFragment(room: Room) : Fragment() {
                             recyclerViewSlider.smoothScrollToPosition(it)
                         }
                         //adapter setup
-                        recyclerViewSlider.adapter = ImageSliderAdapter(newRoom)
+                        recyclerViewSlider.adapter = ImageSliderAdapter(newRoom, imageListener)
                     }
                 } else {
                     default.add(Furniture("default", "default", "default", "0"))
                     newRoom.decorationSnapshots?.add(0, DecorationSnapshot("default", myRoom.previewPhotoPath, default))
-                    recyclerViewSlider.adapter = ImageSliderAdapter(newRoom)
+                    recyclerViewSlider.adapter = ImageSliderAdapter(newRoom, imageListener)
                 }
             }
 

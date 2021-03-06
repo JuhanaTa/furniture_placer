@@ -36,9 +36,8 @@ class NewModelAdapter(
     }
 
 
-    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
-        View.OnClickListener {
         val view: TextView = itemView.findViewById(R.id.modelName)
         val modelPrice: TextView = itemView.findViewById(R.id.modelPrice)
         init {
