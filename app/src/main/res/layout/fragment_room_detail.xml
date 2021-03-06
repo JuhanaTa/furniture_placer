@@ -64,7 +64,8 @@
             android:backgroundTint="@color/primary"
             android:src="@drawable/ic_baseline_menu_24"
             app:backgroundTint="@color/primary"
-            app:rippleColor="@color/primary" />
+            app:rippleColor="@color/primary"
+            android:contentDescription="@string/edit_roomBtn_contDesc" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -91,7 +92,7 @@
         android:paddingTop="8dp"
         android:paddingEnd="16dp"
         android:paddingBottom="8dp"
-        android:text="Compare"
+        android:text="@string/compare_text"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:visibility="gone"
@@ -111,7 +112,8 @@
         app:backgroundTint="@color/primaryVariant"
         app:layout_constraintBottom_toTopOf="@+id/coordinatorLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_baseline_edit_24" />
+        app:srcCompat="@drawable/ic_baseline_edit_24"
+        android:contentDescription="@string/edit_roomBtn_contDesc" />
 
     <TextView
         android:id="@+id/editRoomText"
@@ -123,7 +125,7 @@
         android:paddingTop="8dp"
         android:paddingEnd="8dp"
         android:paddingBottom="8dp"
-        android:text="Edit Room"
+        android:text="@string/edit_room"
         android:textAlignment="center"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/editRoomBtn"

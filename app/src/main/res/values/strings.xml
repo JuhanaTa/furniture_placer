@@ -23,6 +23,10 @@
     <string name="Room_create">Create Room</string>
     <string name="no_rooms_desc">There are no rooms right now</string>
     <string name="model_select_desc">Select Model</string>
+    <string name="compare_text">compare</string>
+    <string name="edit_room">Edit Room</string>
+    <string name="edit_roomBtn_contDesc">edit room</string>
+    <string name="room_menuBtn_contDesc">menu</string>
 
 
 </resources>
