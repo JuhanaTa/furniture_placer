@@ -138,8 +138,6 @@ class RoomDetailFragment(room: Room, private val imageListener: ImageSliderAdapt
                     recyclerViewSlider.adapter = ImageSliderAdapter(newRoom, imageListener)
                 }
             }
-
-
         }
     }
 

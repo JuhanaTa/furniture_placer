@@ -9,7 +9,7 @@ import kotlinx.android.parcel.RawValue
 @Parcelize
 data class Room (
         val name: String? = null,
-        val created: Timestamp = Timestamp.now(),
+        val created: Timestamp? = Timestamp.now(),
         var id: String? = null,
         var previewPhotoPath: String? = null,
         var decorationSnapshots: @RawValue ArrayList<DecorationSnapshot>? = ArrayList(),
@@ -30,7 +30,7 @@ fun roomFromFirestore(doc: DocumentSnapshot) : Room{
     val decorationSnapshotList: ArrayList<DecorationSnapshot> = ArrayList<DecorationSnapshot>()
     val recentFurnitureList : ArrayList<Furniture> = ArrayList<Furniture>()
     if (doc["decorationSnapshots"] != null) {
-        val decorationSnapshotHashMaps = doc["decorationSnapshots"] as ArrayList<Any?>
+        val decorationSnapshotHashMaps = doc["decorationSnapshots"] as ArrayList<*>
         decorationSnapshotHashMaps.forEach {
             val map = it as HashMap<String, Any?>
             decorationSnapshotList.add(decorationSnapshotFromHashMap(map))
@@ -38,7 +38,7 @@ fun roomFromFirestore(doc: DocumentSnapshot) : Room{
         }
     }
     if(doc["recentFurniture"] != null){
-        val recentFurnitureHashMaps = doc["recentFurniture"] as ArrayList<Any?>
+        val recentFurnitureHashMaps = doc["recentFurniture"] as ArrayList<*>
         recentFurnitureHashMaps.forEach{
             val map = it as HashMap<String,Any?>
             recentFurnitureList.add(furnitureFromHashMap(map))
@@ -47,7 +47,7 @@ fun roomFromFirestore(doc: DocumentSnapshot) : Room{
 
     return Room(
             name = doc["name"] as String?,
-            created = doc["created"] as Timestamp,
+            created = doc["created"] as Timestamp?,
             id = doc.id,
             previewPhotoPath = doc["previewPhotoPath"] as String?,
             recentFurniture = recentFurnitureList,
