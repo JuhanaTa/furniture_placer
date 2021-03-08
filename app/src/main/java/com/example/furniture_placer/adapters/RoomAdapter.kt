@@ -8,12 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.camera.CameraService.StorageService
 import com.example.furniture_placer.R
 import com.example.furniture_placer.data_models.Room
 import com.example.furniture_placer.services.FirebaseService
+import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.room_list_item.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -48,6 +50,7 @@ class RoomAdapter(
         if (room.name != null){
             //loader.loadRoomImage(room.name)
             Log.d("FYI", "called loader")
+
             val imagePath = "${FirebaseService().getCurrentUser()?.uid}/${room.name}/previewImage.jpg"
             Log.d("FYI", imagePath)
             GlobalScope.launch(Dispatchers.Main) {
@@ -103,6 +106,7 @@ class RoomAdapter(
         val modelCount: TextView = itemView.findViewById(R.id.modelCount)
         val id: TextView = itemView.findViewById(R.id.roomId)
         val deleteButton: Button = itemView.findViewById(R.id.deleteBtn)
+
         init {
             itemView.setOnClickListener(this)
         }
