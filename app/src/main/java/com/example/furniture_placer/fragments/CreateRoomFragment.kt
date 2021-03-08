@@ -41,9 +41,9 @@ class CreateRoomFragment : DialogFragment() {
 
         communicator = activity as Communicator
         rootView.roomPreviewImg.setOnClickListener {
-            val returnInt = checkSelfPermission(context!!, Manifest.permission.CAMERA)
+            val returnInt = checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
             Log.d("FYI", "permission: ${returnInt}")
-            if (checkSelfPermission(context!!, Manifest.permission.CAMERA) == 0){
+            if (checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == 0){
                 communicator.takePicture(roomTextFieldInput.text.toString())
                 dismiss()
             } else {
@@ -52,17 +52,16 @@ class CreateRoomFragment : DialogFragment() {
         }
 
         rootView.createRoomBtn.setOnClickListener {
-            val roomName = roomTextFieldInput.text
-            if (roomName.toString() != "" && image != null) {
+            val newRoomName = roomTextFieldInput.text
+            if (newRoomName.toString() != "" && image != null) {
                 GlobalScope.launch(Dispatchers.Main) {
-                    var room = Room()
                     //val
 
-                    val imagePath = "${FirebaseService().getCurrentUser()?.uid}/${roomName}/previewImage.jpg"
+                    val imagePath = "${FirebaseService().getCurrentUser()?.uid}/${newRoomName}/previewImage.jpg"
                     //image stored in firebase before creating room
                     StorageService().storePicture(BitmapFactory.decodeByteArray(image, 0, image.size), imagePath)
                     //room created after. If Room is created first Live data in MainPageFragment executes and does not find image.
-                    room = firebase.createRoom(roomName.toString())
+                    var room: Room = firebase.createRoom(newRoomName.toString())
                     Log.d("FYI", "room image stored")
                     room.previewPhotoPath = imagePath
                     firebase.updateRoom(room)

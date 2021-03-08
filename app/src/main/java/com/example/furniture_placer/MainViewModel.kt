@@ -26,8 +26,8 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
             val rooms = ArrayList<Room>()
             value?.documents?.forEach{
                 val room = roomFromFirestore(it)
-                room?.id = it.id
-                rooms.add(room!!)
+                room.id = it.id
+                rooms.add(room)
             }
 
             _roomsLiveData.value = rooms

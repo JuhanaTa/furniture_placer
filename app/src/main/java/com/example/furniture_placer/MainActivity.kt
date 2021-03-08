@@ -71,11 +71,11 @@ class MainActivity : AppCompatActivity(),
 
     }
 
-    override fun takePicture(name: String) {
-        roomName = name
+    override fun takePicture(roomName: String) {
+        this.roomName = roomName
         val fileName = "temp_photo"
         val imgPath = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        var imageFile: File? = null
+        val imageFile: File?
         imageFile = File.createTempFile(fileName, ".jpg", imgPath )
         mCurrentPhotoPath = imageFile!!.absolutePath
 
@@ -179,7 +179,7 @@ private fun listenToRooms() {
         builder.apply {
             setMessage("Permission to access $name is required in order to use this app")
             setTitle("Permission required")
-            setPositiveButton("OK"){ dialog, which ->
+            setPositiveButton("OK"){ _, _ ->
                 ActivityCompat.requestPermissions(this@MainActivity, arrayOf(permission),requestCode)
             }
             val dialog = builder.create()

@@ -2,12 +2,12 @@ package com.example.furniture_placer
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 
 object SavedPreference {
 
-    const val EMAIL= "email"
-    const val USERNAME="username"
+    private const val EMAIL= "email"
+    private const val USERNAME="username"
 
     private  fun getSharedPreference(ctx: Context?): SharedPreferences? {
         return PreferenceManager.getDefaultSharedPreferences(ctx)

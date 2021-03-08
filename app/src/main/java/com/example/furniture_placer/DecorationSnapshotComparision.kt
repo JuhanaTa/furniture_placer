@@ -34,7 +34,7 @@ class DecorationSnapshotComparision : AppCompatActivity() {
                 snapshot.itemsInScene?.forEach {price += it.price.toFloat()}
                 entries.add(BarEntry(price, index));
             }
-            room.decorationSnapshots?.forEachIndexed{index,snapshot ->
+            room.decorationSnapshots?.forEachIndexed{_,snapshot ->
                 var price: Float = 0F
                 snapshot.itemsInScene?.forEach {price += it.price.toFloat()}
                 labels.add(snapshot.name!!)

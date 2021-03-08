@@ -34,7 +34,7 @@ class LoginScreen : AppCompatActivity() {
             .build()// getting the value of gso inside the GoogleSigninClient
         mGoogleSignInClient= GoogleSignIn.getClient(this,gso)// initialize the firebaseAuth variable firebaseAuth= FirebaseAuth.getInstance()
 
-        Signin.setOnClickListener{ view: View? ->
+        Signin.setOnClickListener{ _: View? ->
             signInGoogle()
         }
     }

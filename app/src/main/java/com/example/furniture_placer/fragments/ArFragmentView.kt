@@ -277,23 +277,23 @@ class ArFragmentView : AppCompatActivity(),
         }
     }
 
-    override suspend fun changeModel(furniture: Furniture) {
-        val file = File("${applicationContext.filesDir}/models/${furniture.modelFiles?.get(0)}")
-        if (file.exists()) {
+    override suspend fun changeModel(file: Furniture) {
+        val furnitureFile = File("${applicationContext.filesDir}/models/${file.modelFiles?.get(0)}")
+        if (furnitureFile.exists()) {
             //file exists
-            uri = file.toUri()
+            uri = furnitureFile.toUri()
             modelRenderable = null
             setModel()
         }else{
-            val UriList = arrayListOf<Uri>()
-            furniture.modelFiles?.forEach { UriList.add(StorageService().loadModel(furniture.path, it,applicationContext)) }
-            uri = UriList[0]
+            val uriList = arrayListOf<Uri>()
+            file.modelFiles?.forEach { uriList.add(StorageService().loadModel(file.path, it,applicationContext)) }
+            uri = uriList[0]
             modelRenderable = null
             setModel()
         }
-        if (!editedRoom.recentFurniture?.contains(furniture)!!){
+        if (!editedRoom.recentFurniture?.contains(file)!!){
             if (editedRoom.recentFurniture != null){
-                selectedFurnitures.add(furniture)
+                selectedFurnitures.add(file)
             }
         }
 
@@ -303,7 +303,7 @@ class ArFragmentView : AppCompatActivity(),
                 FirebaseService().updateRoom(editedRoom)
             }
         }*/
-        selectedFurniture = furniture
+        selectedFurniture = file
     }
 
 }
