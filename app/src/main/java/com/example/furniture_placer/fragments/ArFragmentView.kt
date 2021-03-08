@@ -70,20 +70,14 @@ class ArFragmentView : AppCompatActivity(),
 
         setContentView(R.layout.activity_ar_fragment_view)
         listFiles()
-        setModel()
+        //setModel()
 
         arFrag = supportFragmentManager.findFragmentById(R.id.sceneform_fragment) as ArFragment
 
-        val builder = AlertDialog.Builder(this)
-
-        builder.apply {
-            setMessage("Here you can start decorating your room. By taking a screenshot you can save the session.")
-            setTitle("Info")
-            setPositiveButton("OK"){ dialog, which ->
-                //ActivityCompat.requestPermissions(this@ArFragmentView, arrayOf(permission),requestCode)
-            }
-            val dialog = builder.create()
-            dialog.show()
+        //user cant press add model button if model is not chosen
+        if (modelRenderable === null){
+            addModel.isEnabled = false
+            addModel.isClickable = false
         }
 
         openMenuBtn.setOnClickListener {
@@ -119,48 +113,63 @@ class ArFragmentView : AppCompatActivity(),
 
         //Screenshot button action, saves image to firebase and stores snapshot information to scene
         screenshotBtn.setOnClickListener {
-            Log.d("FYI", "screenshot of ar view")
-            var mCurrentPhotoPath: String = ""
+
+            val builder = AlertDialog.Builder(this)
             val view: ArSceneView = arFrag.arSceneView
             val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
-            PixelCopy.request(view, bitmap, { copyResult ->
-                if (copyResult == PixelCopy.SUCCESS) {
-                    //time stamp
-                    val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd_HH:mm:ss")
-                    val currentDateAndTime: String = simpleDateFormat.format(Date())
+            builder.setMessage("Do you want to take screenshot? This will save the screenshot and reset the ar view.")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes") { dialog, id ->
+                        PixelCopy.request(view, bitmap, { copyResult ->
+                            if (copyResult == PixelCopy.SUCCESS) {
+                                //time stamp
+                                val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd_HH:mm:ss")
+                                val currentDateAndTime: String = simpleDateFormat.format(Date())
 
-                    val imagePath = "${FirebaseService().getCurrentUser()?.uid}/${editedRoom.name}/${currentDateAndTime}.jpg"
-                    val baos = ByteArrayOutputStream()
-                    val resizedImage = Bitmap.createScaledBitmap(bitmap, 1080, 1920, false)
-                    resizedImage.compress(Bitmap.CompressFormat.JPEG, 50, baos)
-                    val data = baos.toByteArray()
+                                val imagePath = "${FirebaseService().getCurrentUser()?.uid}/${editedRoom.name}/${currentDateAndTime}.jpg"
+                                val baos = ByteArrayOutputStream()
+                                val resizedImage = Bitmap.createScaledBitmap(bitmap, 1080, 1920, false)
+                                resizedImage.compress(Bitmap.CompressFormat.JPEG, 50, baos)
+                                val data = baos.toByteArray()
 
-                    GlobalScope.launch(Dispatchers.Main) {
-                        StorageService().storePicture(BitmapFactory.decodeByteArray(data, 0, data.size), imagePath)
+                                GlobalScope.launch(Dispatchers.Main) {
+                                    StorageService().storePicture(BitmapFactory.decodeByteArray(data, 0, data.size), imagePath)
+                                }
+
+                                val furnitures = addedItemsInScene
+                                editedRoom.decorationSnapshots?.add(DecorationSnapshot(name = currentDateAndTime,photoPath = imagePath,itemsInScene = furnitures))
+                                FirebaseService().updateRoom(editedRoom)
+                                Log.d("FYI", "saved image")
+
+                                for (furniture in selectedFurnitures){
+                                    editedRoom.recentFurniture?.add(furniture.name)
+                                }
+                                FirebaseService().updateRoom(editedRoom)
+
+                                //ar view reset after screenshot
+                                finish()
+                                overridePendingTransition(0, 0)
+                                startActivity(getIntent())
+                                overridePendingTransition(0, 0)
+
+                                Toast.makeText(applicationContext, "Screenshot taken", Toast.LENGTH_SHORT).show()
+
+
+                            } else {
+                                Log.d("FYI", "Pixel copy did not succeed")
+                            }
+                        }, Handler(Looper.getMainLooper()))
                     }
-
-                    val furnitures = addedItemsInScene
-                    editedRoom.decorationSnapshots?.add(DecorationSnapshot(name = currentDateAndTime,photoPath = imagePath,itemsInScene = furnitures))
-                    FirebaseService().updateRoom(editedRoom)
-                    Log.d("FYI", "saved image")
-
-                    for (furniture in selectedFurnitures){
-                        editedRoom.recentFurniture?.add(furniture)
+                    .setNegativeButton("No") { dialog, id ->
+                        // Dismiss the dialog
+                        dialog.dismiss()
                     }
-                    FirebaseService().updateRoom(editedRoom)
+            val alert = builder.create()
+            alert.show()
 
-                    /*if(editedRoom.recentFurniture != null) {
-                        if (!editedRoom.recentFurniture?.contains(furniture.name)!!) {
-                            editedRoom.recentFurniture?.add(furniture.name)
-                            FirebaseService().updateRoom(editedRoom)
-                        }
-                    }*/
+            var mCurrentPhotoPath: String = ""
 
-                    Toast.makeText(applicationContext, "Screenshot taken", Toast.LENGTH_SHORT).show()
-                } else {
-                    Log.d("FYI", "Pixel copy did not succeed")
-                }
-            }, Handler(Looper.getMainLooper()))
+
         }
 
 
@@ -187,6 +196,8 @@ class ArFragmentView : AppCompatActivity(),
                  add3dObject()
              }
              Log.d("MODEL", "model is now changed")
+             addModel.isEnabled = true
+             addModel.isClickable = true
          }
         renderableFuture.exceptionally {// something went wrong notify
             Log.e("FYI", "renderableFuture error: ${it.localizedMessage}")
