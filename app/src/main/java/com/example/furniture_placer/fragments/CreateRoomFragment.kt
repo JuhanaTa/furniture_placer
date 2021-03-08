@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.fragment.app.DialogFragment
-import com.example.camera.CameraService.StorageService
+import com.example.furniture_placer.services.StorageService
 import com.example.furniture_placer.R
 import com.example.furniture_placer.data_models.Room
 import com.example.furniture_placer.interfaces.Communicator
@@ -21,7 +21,6 @@ import kotlinx.android.synthetic.main.fragment_create_room_dialog.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.io.Serializable
 
 class CreateRoomFragment : DialogFragment() {
     private lateinit var communicator: Communicator

@@ -1,4 +1,4 @@
-package com.example.camera.CameraService
+package com.example.furniture_placer.services
 
 import android.content.ContentValues
 import android.content.Context
@@ -12,12 +12,11 @@ import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.tasks.await
 import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.FileReader
 
 
 class StorageService : AppCompatActivity() {
-    val storage = Firebase.storage
-    val storageRef = storage.reference
+    private val storage = Firebase.storage
+    private val storageRef = storage.reference
 
     suspend fun storePicture(bitmap: Bitmap, path: String) {
         val userPictureRef = storageRef.child(path)
@@ -26,7 +25,7 @@ class StorageService : AppCompatActivity() {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
         val data = baos.toByteArray()
 
-        val uploadTask = userPictureRef.putBytes(data).await()
+        userPictureRef.putBytes(data).await()
 
     }
 
@@ -40,7 +39,7 @@ class StorageService : AppCompatActivity() {
         val uploadTask = userPictureRef.putBytes(data)
         uploadTask.addOnFailureListener {
             // Handle unsuccessful uploads
-        }.addOnSuccessListener { taskSnapshot ->
+        }.addOnSuccessListener {
             Log.w(ContentValues.TAG, "image uploaded ${uploadTask.isComplete}")
             userPictureRef.downloadUrl.addOnCanceledListener {  }
             Log.w("StorageService", "downloadURl: ${userPictureRef.downloadUrl}")
@@ -55,8 +54,8 @@ class StorageService : AppCompatActivity() {
     suspend fun loadPicture(path: String): ByteArray {
         val imageRef = storageRef.child(path)
 
-        val ONE_MEGABYTE: Long = 1024 * 1024
-        return imageRef.getBytes(ONE_MEGABYTE).await()
+        val oneMegabyte: Long = 1024 * 1024
+        return imageRef.getBytes(oneMegabyte).await()
     }
 
     fun deleteFileSync(path:String){
@@ -78,10 +77,10 @@ class StorageService : AppCompatActivity() {
         savingFolder.mkdir()
 
         val assetRef = storageRef.child("$path$fileName")
-        val localFile = File(savingFolder.absolutePath,"$fileName")
+        val localFile = File(savingFolder.absolutePath, fileName)
 
 
-        val getFileResult = assetRef.getFile(localFile).await()
+        assetRef.getFile(localFile).await()
         return localFile.toUri()
     }
 }

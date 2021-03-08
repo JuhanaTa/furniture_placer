@@ -26,13 +26,13 @@ fun decorationSnapshotFromFirestore(doc: DocumentSnapshot) : DecorationSnapshot{
             //itemsInScene = furnitureFromFirestore() as ArrayList<Furniture>?
     )
 }
-
+@Suppress("UNCHECKED_CAST")
 fun decorationSnapshotFromHashMap(map: HashMap<String,Any?>) : DecorationSnapshot{
     val itemMaps = map["itemsInScene"] as ArrayList<Any?>
     val itemsInScene: ArrayList<Furniture>? = ArrayList<Furniture>()
     itemMaps.forEach{
-        val map = it as HashMap<String,Any?>
-        itemsInScene?.add(furnitureFromHashMap(map))
+        val itemMap = it as HashMap<String,Any?>
+        itemsInScene?.add(furnitureFromHashMap(itemMap))
     }
     return DecorationSnapshot(
             name = map["name"] as String?,

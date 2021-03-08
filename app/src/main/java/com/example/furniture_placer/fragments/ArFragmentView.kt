@@ -8,7 +8,6 @@ import android.graphics.Point
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
-import android.os.HandlerThread
 import android.os.Looper
 import android.util.Log
 import android.view.MotionEvent
@@ -16,10 +15,8 @@ import android.view.PixelCopy
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.net.toUri
-import androidx.fragment.app.FragmentActivity
-import com.example.camera.CameraService.StorageService
+import com.example.furniture_placer.services.StorageService
 import com.example.furniture_placer.R
 import com.example.furniture_placer.data_models.DecorationSnapshot
 import com.example.furniture_placer.data_models.Furniture
@@ -32,7 +29,6 @@ import com.google.ar.sceneform.assets.RenderableSource
 import com.google.ar.sceneform.rendering.ModelRenderable
 import com.google.ar.sceneform.ux.ArFragment
 import com.google.ar.sceneform.ux.TransformableNode
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_ar_fragment_view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -119,7 +115,7 @@ class ArFragmentView : AppCompatActivity(),
             val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
             builder.setMessage("Do you want to take screenshot? This will save the screenshot and reset the ar view.")
                     .setCancelable(false)
-                    .setPositiveButton("Yes") { dialog, id ->
+                    .setPositiveButton("Yes") { _, _ ->
                         PixelCopy.request(view, bitmap, { copyResult ->
                             if (copyResult == PixelCopy.SUCCESS) {
                                 //time stamp
@@ -160,15 +156,12 @@ class ArFragmentView : AppCompatActivity(),
                             }
                         }, Handler(Looper.getMainLooper()))
                     }
-                    .setNegativeButton("No") { dialog, id ->
+                    .setNegativeButton("No") { dialog, _ ->
                         // Dismiss the dialog
                         dialog.dismiss()
                     }
             val alert = builder.create()
             alert.show()
-
-            var mCurrentPhotoPath: String = ""
-
 
         }
 
@@ -236,7 +229,7 @@ class ArFragmentView : AppCompatActivity(),
                     //furniture data saved here
                     //used in click listener to remove right model
                     val selectedItem = selectedFurniture
-                    mNode.setOnTapListener(){ hitTestResult: HitTestResult, motionEvent: MotionEvent ->
+                    mNode.setOnTapListener(){ _: HitTestResult, _: MotionEvent ->
 
                         deleteModelbtn.visibility = View.VISIBLE
 

@@ -7,7 +7,6 @@ import com.example.furniture_placer.data_models.Room
 import com.example.furniture_placer.data_models.roomToHash
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.ktx.firestore
@@ -78,7 +77,7 @@ class FirebaseService {
     fun deleteRoom(room: Room) {
         val user = firebaseAuth.currentUser ?: return
         val uid = user.uid
-        val roomData = roomToHash(room)
+        roomToHash(room)
 
         db.collection("users").document(uid).collection("rooms").document("${room.id}")
             .delete().addOnSuccessListener {
@@ -104,9 +103,10 @@ class FirebaseService {
         return room.id?.let { db.collection("users").document(uid).collection("rooms").document(it) }
     }
 
+    @Suppress("UNCHECKED_CAST")
     suspend fun getFurnitures() :List<Furniture?>{
         val query = db.collection("furnitures").get().await()
-        val furnitures =  query.documents.map{doc ->
+        return query.documents.map { doc ->
             Furniture(
                 name = doc["name"] as String,
                 id = doc.id,
@@ -115,8 +115,6 @@ class FirebaseService {
                 price = doc["price"] as String,
                 previewImagePath = doc["previewImagePath"] as String?
             )}
-
-        return furnitures
     }
 
     fun getCurrentUser(): FirebaseUser? {

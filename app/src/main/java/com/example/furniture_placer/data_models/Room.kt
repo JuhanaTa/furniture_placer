@@ -25,7 +25,7 @@ fun roomToHash(room: Room): HashMap<String, Any?> {
         "decorationSnapshots" to room.decorationSnapshots
     )
 }
-
+@Suppress("UNCHECKED_CAST")
 fun roomFromFirestore(doc: DocumentSnapshot) : Room{
     val decorationSnapshotList: ArrayList<DecorationSnapshot> = ArrayList<DecorationSnapshot>()
     val recentFurnitureList : ArrayList<Furniture> = ArrayList<Furniture>()

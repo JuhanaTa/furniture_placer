@@ -25,7 +25,7 @@ fun furnitureToHash(furniture: Furniture) : HashMap<String, Any?>{
             "modelFiles" to furniture.modelFiles
     )
 }
-
+@Suppress("UNCHECKED_CAST")
 fun furnitureFromFirestore(doc: DocumentSnapshot) : Furniture{
     return Furniture(
             name = doc["name"] as String,
@@ -37,7 +37,7 @@ fun furnitureFromFirestore(doc: DocumentSnapshot) : Furniture{
     )
 }
 
-
+@Suppress("UNCHECKED_CAST")
 fun furnitureFromHashMap(map: HashMap<String, Any?>) : Furniture{
     return Furniture(
             name = map["name"] as String,

@@ -3,23 +3,17 @@ package com.example.furniture_placer.adapters
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.camera.CameraService.StorageService
-import com.example.furniture_placer.OneImage
+import com.example.furniture_placer.services.StorageService
 import com.example.furniture_placer.R
 import com.example.furniture_placer.data_models.Room
-import com.example.furniture_placer.services.FirebaseService
-import kotlinx.android.synthetic.main.room_list_item.view.*
 import kotlinx.android.synthetic.main.slider_list_item.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope

@@ -11,7 +11,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.camera.CameraService.StorageService
+import com.example.furniture_placer.services.StorageService
 import com.example.furniture_placer.R
 import com.example.furniture_placer.data_models.Room
 import com.example.furniture_placer.services.FirebaseService
