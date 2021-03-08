@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity(),
 
         val myIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (myIntent.resolveActivity(packageManager) != null) {
-            myIntent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            myIntent.flags = Intent.FLAG_GRANT_WRITE_URI_PERMISSION
             myIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
             startActivityForResult(myIntent, REQUEST_IMAGE_CAPTURE)
         }
@@ -162,7 +162,7 @@ private fun listenToRooms() {
         }
     }
 
-    fun checkPermissions(permission: String, name: String, requestCode: Int){
+    private fun checkPermissions(permission: String, name: String, requestCode: Int){
         when{
             ContextCompat.checkSelfPermission(applicationContext, permission) == PackageManager.PERMISSION_GRANTED -> {
                 Toast.makeText(applicationContext, "$name permission granted", Toast.LENGTH_SHORT).show()

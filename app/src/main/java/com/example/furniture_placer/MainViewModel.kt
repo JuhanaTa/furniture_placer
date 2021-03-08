@@ -33,7 +33,7 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
             _roomsLiveData.value = rooms
         }
     }
-    internal var roomsLiveData: MutableLiveData<ArrayList<Room>>
+    private var roomsLiveData: MutableLiveData<ArrayList<Room>>
         get() {return _roomsLiveData}
         set(value) {_roomsLiveData = value}
 }
