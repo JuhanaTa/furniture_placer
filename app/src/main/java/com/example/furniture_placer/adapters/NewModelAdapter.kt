@@ -32,7 +32,7 @@ class NewModelAdapter(
     override fun onBindViewHolder(vh: MyViewHolder, position: Int) {
         val model: Furniture = models[position]
         vh.view.modelName.text = model.name
-        vh.modelPrice.text = "${models[position].price}€"
+        vh.modelPrice.text = vh.itemView.context.getString(R.string.price, models[position].price)
     }
 
 

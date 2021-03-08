@@ -1,6 +1,7 @@
 package com.example.furniture_placer.adapters
 
 
+
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
@@ -11,7 +12,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.furniture_placer.services.StorageService
+import com.example.camera.CameraService.StorageService
 import com.example.furniture_placer.R
 import com.example.furniture_placer.data_models.Room
 import kotlinx.android.synthetic.main.slider_list_item.view.*
@@ -25,7 +26,7 @@ class ImageSliderAdapter(
     private val listener: OnImageClickListener
 ): RecyclerView.Adapter<ImageSliderAdapter.MyViewHolder>() {
 
-    lateinit var recyclerView: RecyclerView
+    private lateinit var recyclerView: RecyclerView
 
     override fun getItemViewType(position: Int): Int {
         return R.layout.slider_list_item
@@ -33,11 +34,11 @@ class ImageSliderAdapter(
 
     override fun getItemCount(): Int {
         val count = room.decorationSnapshots?.size
-        if (count != null) {
-            return count
+        return if (count != null) {
+            count
         } else {
             Log.d("FYI","slider creation failed")
-            return 0
+            0
         }
     }
 
@@ -46,7 +47,7 @@ class ImageSliderAdapter(
         return MyViewHolder(view)
     }
 
-    override fun onBindViewHolder(vh: MyViewHolder, position: Int) {
+    override fun onBindViewHolder(vh:MyViewHolder, position:Int) {
 
         val imagePath = room.decorationSnapshots?.get(position)?.photoPath
         if (imagePath != null) {
@@ -68,11 +69,11 @@ class ImageSliderAdapter(
         }
         val items = room.decorationSnapshots?.get(position)?.itemsInScene
         if (position == 0){
-            vh.description.text = "Whole Room contains these models"
-            vh.hoverText.text = "Room: ${room.name}"
+            vh.description.text = vh.itemView.context.getString(R.string.room_slider_type_first)
+            vh.hoverText.text = vh.itemView.context.getString(R.string.room, room.name)
         } else {
-            vh.hoverText.text = "Screenshot $position"
-            vh.description.text = "Screenshot contains these models"
+            vh.hoverText.text = vh.itemView.context.getString(R.string.screenshot, position)
+            vh.description.text = vh.itemView.context.getString(R.string.room_slider_type_second)
         }
         recyclerView = vh.itemView.findViewById(R.id.rv_screenshotModels)
         recyclerView.layoutManager = LinearLayoutManager(vh.itemView.context)
@@ -100,9 +101,8 @@ class ImageSliderAdapter(
         Log.d("ROOM", "loading image")
         val imageData = StorageService().loadPicture(path)
         Log.d("FYI", "image loaded")
-        val bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.size)
 
-        return bitmap
+        return BitmapFactory.decodeByteArray(imageData, 0, imageData.size)
     }
 
     interface OnImageClickListener {

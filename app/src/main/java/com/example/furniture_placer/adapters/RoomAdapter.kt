@@ -8,14 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.furniture_placer.services.StorageService
 import com.example.furniture_placer.R
 import com.example.furniture_placer.data_models.Room
 import com.example.furniture_placer.services.FirebaseService
-import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.room_list_item.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -43,9 +41,7 @@ class RoomAdapter(
 
     override fun onBindViewHolder(vh: MyViewHolder, position: Int) {
         val room: Room = rooms[position]
-        //vh.view.roomName.text = "Room: ${room.name} and id of room:  ${room.id}"
-        //vh.view.roomId.text = "asdasdasda"
-        //val imageview = vh.view.roomImage
+
         Log.d("FYI", "${room.name}")
         if (room.name != null){
             //loader.loadRoomImage(room.name)
@@ -61,11 +57,11 @@ class RoomAdapter(
                     Log.d("asd", imageData.toString())
 
 
-                    vh.text.roomName.text = "Room: ${room.name}"
-                    vh.id.roomId.text = "id: ${room.id}"
-                    vh.modelCount.text = "${room.recentFurniture?.size} models in this room."
-
+                    vh.text.roomName.text = vh.itemView.context.getString(R.string.room, room.name)
+                    vh.id.roomId.text = vh.itemView.context.getString(R.string.id, room.id)
+                    vh.modelCount.text = vh.itemView.context.getString(R.string.model_count, room.recentFurniture?.size)
                     vh.image.roomImage.setImageBitmap(imageData)
+
                 }catch (e:Exception){
                     Log.d("ERROR", "image load failed, $e")
                 }
@@ -89,10 +85,9 @@ class RoomAdapter(
         Log.d("FYI", path)
         val imageData = StorageService().loadPicture(path)
         Log.d("FYI", "image loaded")
-        val bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.size)
         //val bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.size)
         //vh.view.roomImage.setImageBitmap(bitmap)
-        return bitmap
+        return BitmapFactory.decodeByteArray(imageData, 0, imageData.size)
     }
 
 

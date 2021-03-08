@@ -35,7 +35,7 @@ class ScreenshotModelAdapter(
             vh.modelText.visibility = View.GONE
         }
         vh.view.modelName.text = furnitureName
-        vh.modelPrice.text = "${furnitures[position].price}€"
+        vh.modelPrice.text = vh.itemView.context.getString(R.string.price, furnitures[position].price)
     }
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
