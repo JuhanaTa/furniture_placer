@@ -145,7 +145,7 @@ class ArFragmentView : AppCompatActivity(),
                     Log.d("FYI", "saved image")
 
                     for (furniture in selectedFurnitures){
-                        editedRoom.recentFurniture?.add(furniture.name)
+                        editedRoom.recentFurniture?.add(furniture)
                     }
                     FirebaseService().updateRoom(editedRoom)
 
@@ -287,7 +287,7 @@ class ArFragmentView : AppCompatActivity(),
             modelRenderable = null
             setModel()
         }
-        if (!editedRoom.recentFurniture?.contains(furniture.name)!!){
+        if (!editedRoom.recentFurniture?.contains(furniture)!!){
             if (editedRoom.recentFurniture != null){
                 selectedFurnitures.add(furniture)
             }

@@ -13,7 +13,7 @@ data class Room (
         var id: String? = null,
         var previewPhotoPath: String? = null,
         var decorationSnapshots: @RawValue ArrayList<DecorationSnapshot>? = ArrayList(),
-        var recentFurniture: ArrayList<String>? = ArrayList()) : Parcelable
+        var recentFurniture: ArrayList<Furniture>? = ArrayList()): Parcelable
 
 
 fun roomToHash(room: Room): HashMap<String, Any?> {
@@ -27,19 +27,30 @@ fun roomToHash(room: Room): HashMap<String, Any?> {
 }
 
 fun roomFromFirestore(doc: DocumentSnapshot) : Room{
-    val decorationSnapshotHashMaps = doc["decorationSnapshots"] as ArrayList<Any?>
-    val decorationSnapshotList : ArrayList<DecorationSnapshot> = ArrayList<DecorationSnapshot>()
-    decorationSnapshotHashMaps.forEach{
-        val map = it as HashMap<String,Any?>
-                decorationSnapshotList.add(decorationSnapshotFromHashMap(map))
+    val decorationSnapshotList: ArrayList<DecorationSnapshot> = ArrayList<DecorationSnapshot>()
+    val recentFurnitureList : ArrayList<Furniture> = ArrayList<Furniture>()
+    if (doc["decorationSnapshots"] != null) {
+        val decorationSnapshotHashMaps = doc["decorationSnapshots"] as ArrayList<Any?>
+        decorationSnapshotHashMaps.forEach {
+            val map = it as HashMap<String, Any?>
+            decorationSnapshotList.add(decorationSnapshotFromHashMap(map))
 
+        }
     }
+    if(doc["recentFurniture"] != null){
+        val recentFurnitureHashMaps = doc["recentFurniture"] as ArrayList<Any?>
+        recentFurnitureHashMaps.forEach{
+            val map = it as HashMap<String,Any?>
+            recentFurnitureList.add(furnitureFromHashMap(map))
+        }
+    }
+
     return Room(
             name = doc["name"] as String?,
             created = doc["created"] as Timestamp,
             id = doc.id,
             previewPhotoPath = doc["previewPhotoPath"] as String?,
-            recentFurniture = doc["recentFurniture"] as ArrayList<String>?,
+            recentFurniture = recentFurnitureList,
             decorationSnapshots = decorationSnapshotList
     )
 }

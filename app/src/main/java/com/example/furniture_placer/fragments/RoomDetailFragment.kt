@@ -110,16 +110,10 @@ class RoomDetailFragment(room: Room, private val imageListener: ImageSliderAdapt
                 val json = Gson().toJson(myRoom)
                 val newRoom = Gson().fromJson(json, Room::class.java)
 
-                val default = ArrayList<Furniture>()
-                val recents = newRoom.recentFurniture
+                val default = newRoom.recentFurniture
                 if (!newRoom.decorationSnapshots!!.isEmpty()) {
                     if (newRoom.decorationSnapshots?.get(0)?.itemsInScene?.get(0)?.id != "default") {
 
-                        if (recents != null) {
-                            for (item in recents) {
-                                default.add(Furniture(item, "default", "default", "0"))
-                            }
-                        }
                         newRoom.decorationSnapshots?.add(0, DecorationSnapshot("default", myRoom.previewPhotoPath, default))
 
                         //dot navigation menu setup
@@ -137,7 +131,9 @@ class RoomDetailFragment(room: Room, private val imageListener: ImageSliderAdapt
                         recyclerViewSlider.adapter = ImageSliderAdapter(newRoom, imageListener)
                     }
                 } else {
-                    default.add(Furniture("default", "default", "default", "0"))
+                    if (default != null) {
+                        default.add(Furniture("default", "default", "default", "0"))
+                    }
                     newRoom.decorationSnapshots?.add(0, DecorationSnapshot("default", myRoom.previewPhotoPath, default))
                     recyclerViewSlider.adapter = ImageSliderAdapter(newRoom, imageListener)
                 }

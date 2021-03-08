@@ -130,9 +130,11 @@ private fun listenToRooms() {
 
      val rooms = ArrayList<Room>()
      value?.documents?.forEach{
-         val room = roomFromFirestore(it)
-         room.id = it.id
-         rooms.add(room)
+         if(it != null){
+             val room = roomFromFirestore(it)
+             room.id = it.id
+             rooms.add(room)
+         }
      }
 
      roomList = rooms
