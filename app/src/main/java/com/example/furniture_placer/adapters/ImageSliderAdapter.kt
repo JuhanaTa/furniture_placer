@@ -12,9 +12,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.camera.CameraService.StorageService
 import com.example.furniture_placer.R
 import com.example.furniture_placer.data_models.Room
+import com.example.furniture_placer.services.StorageService
 import kotlinx.android.synthetic.main.slider_list_item.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
