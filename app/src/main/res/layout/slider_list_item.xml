@@ -9,7 +9,7 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/roomCard"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             app:cardElevation="4dp"
             android:layout_marginStart="4dp"
             android:layout_marginEnd="4dp"
@@ -17,21 +17,42 @@
             >
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#FFFFFF"
             android:orientation="vertical"
-            >
+            android:weightSum="2">
+
+                <RelativeLayout
+                    android:id="@+id/relativelayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2">
 
 
                 <ImageView
                     android:id="@+id/sliderImage"
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:scaleType="centerCrop"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    android:layout_centerInParent="true"
+                    tools:srcCompat="@tools:sample/avatars"
+                />
+
+                        <TextView
+                            android:id="@+id/imageHoverTxt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center_horizontal"
+                            android:background="#AA000000"
+                            android:padding="12dip"
+                            android:textAlignment="center"
+                            android:textColor="#ffffffff" />
+
+
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/description"

@@ -29,7 +29,7 @@ class CreateRoomFragment : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        var rootView: View = inflater.inflate(R.layout.fragment_create_room_dialog, container, false)
+        val rootView: View = inflater.inflate(R.layout.fragment_create_room_dialog, container, false)
         val firebase = FirebaseService()
         val image = arguments?.getByteArray("imageByteArray")
         val roomName = arguments?.getString("roomName")
@@ -54,21 +54,21 @@ class CreateRoomFragment : DialogFragment() {
 
         rootView.createRoomBtn.setOnClickListener {
             val roomName = roomTextFieldInput.text
-            if (roomName.toString() != "") {
+            if (roomName.toString() != "" && image != null) {
                 GlobalScope.launch(Dispatchers.Main) {
                     var room = Room()
                     //val
-                    if (image != null) {
-                        val imagePath = "${FirebaseService().getCurrentUser()?.uid}/${roomName}/previewImage.jpg"
-                        //image stored in firebase before creating room
-                        StorageService().storePicture(BitmapFactory.decodeByteArray(image, 0, image.size), imagePath)
-                        //room created after. If Room is created first Live data in MainPageFragment executes and does not find image.
-                        room = firebase.createRoom(roomName.toString())
-                        Log.d("FYI", "room image stored")
-                        room.previewPhotoPath = imagePath
-                        firebase.updateRoom(room)
 
-                    }
+                    val imagePath = "${FirebaseService().getCurrentUser()?.uid}/${roomName}/previewImage.jpg"
+                    //image stored in firebase before creating room
+                    StorageService().storePicture(BitmapFactory.decodeByteArray(image, 0, image.size), imagePath)
+                    //room created after. If Room is created first Live data in MainPageFragment executes and does not find image.
+                    room = firebase.createRoom(roomName.toString())
+                    Log.d("FYI", "room image stored")
+                    room.previewPhotoPath = imagePath
+                    firebase.updateRoom(room)
+
+
                     val intent = Intent(activity, ArFragmentView::class.java).apply {
                         putExtra("EDITED_ROOM",room)
                     }
@@ -76,6 +76,7 @@ class CreateRoomFragment : DialogFragment() {
                     dismiss()
                 }
             } else {
+                Toast.makeText(context, "Room name and image needed", Toast.LENGTH_SHORT).show()
                 Log.d("FYI", "empty field")
             }
         }
