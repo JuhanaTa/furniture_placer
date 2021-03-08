@@ -142,7 +142,7 @@ class ArFragmentView : AppCompatActivity(),
                                 Log.d("FYI", "saved image")
 
                                 for (furniture in selectedFurnitures){
-                                    editedRoom.recentFurniture?.add(furniture.name)
+                                    editedRoom.recentFurniture?.add(furniture)
                                 }
                                 FirebaseService().updateRoom(editedRoom)
 
