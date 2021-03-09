@@ -17,9 +17,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo_icon_1028_horizontal"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ar_design_launch_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.Furniture_placer">
         <activity android:name=".DecorationSnapshotComparision"></activity>
