@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,79 +7,79 @@
     android:layout_margin="8dp">
 
 
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/roomCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:cardElevation="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/roomCard"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
-            app:cardElevation="4dp"
-            android:visibility="visible">
-
-                <LinearLayout
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-                        <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/roomCardImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginStart="4dp"
-                    app:cardElevation="4dp">
+
+            <ImageView
+                android:id="@+id/roomImage"
+                android:layout_width="120dp"
+                android:layout_height="160dp"
+                android:layout_weight="1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/pholder34" />
 
 
-                        <ImageView
-                            android:id="@+id/roomImage"
-                            android:layout_width="120dp"
-                            android:layout_height="160dp"
-                            android:layout_weight="1"
-                            app:srcCompat="@drawable/pholder34" />
+            <TextView
+                android:id="@+id/roomName"
+                android:layout_width="wrap_content"
+                android:maxWidth="200dp"
+                android:layout_height="wrap_content"
 
-                </com.google.android.material.card.MaterialCardView>
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="16dp"
+                android:text="asdas"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/deleteBtn"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/roomImage"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:paddingLeft="5dp">
+            <Button
+                android:id="@+id/deleteBtn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:textColor="@color/primary"
+                app:icon="@drawable/ic_baseline_delete_24"
+                app:iconTint="@color/primary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="@color/primary" />
 
-                        <TextView
-                            android:id="@+id/roomName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:id="@+id/roomId"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-
-                        <TextView
-                            android:id="@+id/modelCount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                        <Button
-                            android:id="@+id/deleteBtn"
-                            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:text="Delete"
-                            android:textColor="@color/primary"
-                            app:icon="@drawable/ic_baseline_delete_24"
-                            app:iconTint="@color/primary"
-                            app:strokeColor="@color/primary" />
-                </LinearLayout>
+            <TextView
+                android:id="@+id/modelCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="4dp"
+                android:text="asdas"
+                app:layout_constraintEnd_toStartOf="@+id/deleteBtn"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/roomImage"
+                app:layout_constraintTop_toBottomOf="@+id/roomName" />
 
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </com.google.android.material.card.MaterialCardView>
+    </com.google.android.material.card.MaterialCardView>
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

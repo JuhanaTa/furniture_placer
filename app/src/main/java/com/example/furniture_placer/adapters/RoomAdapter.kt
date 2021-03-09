@@ -58,7 +58,6 @@ class RoomAdapter(
 
 
                     vh.text.roomName.text = vh.itemView.context.getString(R.string.room, room.name)
-                    vh.id.roomId.text = vh.itemView.context.getString(R.string.id, room.id)
                     vh.modelCount.text = vh.itemView.context.getString(R.string.model_count, room.recentFurniture?.size)
                     vh.image.roomImage.setImageBitmap(imageData)
 
@@ -99,7 +98,6 @@ class RoomAdapter(
         val text: TextView = itemView.findViewById(R.id.roomName)
         val image: ImageView = itemView.findViewById(R.id.roomImage)
         val modelCount: TextView = itemView.findViewById(R.id.modelCount)
-        val id: TextView = itemView.findViewById(R.id.roomId)
         val deleteButton: Button = itemView.findViewById(R.id.deleteBtn)
 
         init {
