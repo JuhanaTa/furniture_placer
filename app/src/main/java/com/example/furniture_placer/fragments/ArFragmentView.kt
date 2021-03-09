@@ -93,6 +93,19 @@ class ArFragmentView : AppCompatActivity(),
                         )
                     dialog.show(supportFragmentManager, "chooseModelDialog")
                 }
+                historyModelBtn.setOnClickListener {
+                    val furnitureHistory = editedRoom.recentFurniture
+                    if(furnitureHistory != null) {
+                        val safeRecentFurniture : ArrayList<Furniture> = furnitureHistory
+                        if (safeRecentFurniture.size < 1){
+                            Toast.makeText(applicationContext, getString(R.string.noHistoryToast), Toast.LENGTH_SHORT).show()
+                        }
+                        else{
+                            val dialog = NewModelDialog(safeRecentFurniture)
+                            dialog.show(supportFragmentManager, "chooseModelDialog")
+                        }
+                    }
+                }
                 isOpen = false
             } else {
                 historyModelBtn.visibility = View.GONE
@@ -103,6 +116,7 @@ class ArFragmentView : AppCompatActivity(),
                 screenshotTxt.visibility = View.GONE
 
                 newModelBtn.setOnClickListener(null)
+                historyModelBtn.setOnClickListener(null)
                 isOpen = true
             }
         }
@@ -219,7 +233,7 @@ class ArFragmentView : AppCompatActivity(),
                 val trackable = hit.trackable
                 if (trackable is Plane) {
                     val anchor = hit!!.createAnchor()
-                    var anchorNode = AnchorNode(anchor)
+                    val anchorNode = AnchorNode(anchor)
                     anchorNode.setParent(arFrag.arSceneView.scene)
                     val mNode = TransformableNode(arFrag.transformationSystem)
                     mNode.setParent(anchorNode)

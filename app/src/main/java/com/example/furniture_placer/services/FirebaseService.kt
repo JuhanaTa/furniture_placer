@@ -14,10 +14,16 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 import java.sql.Timestamp
 
+/**
+ * This class is used to communicate with the firestore database. This is used to access users data
+ */
 class FirebaseService {
     val db = Firebase.firestore
     private val firebaseAuth = FirebaseAuth.getInstance()
 
+    /**
+     * Creates a firebase document for the given [FirebaseUser]. This function checks if the user already has a document.
+     */
     fun createPersonalStorage(user: FirebaseUser) {
         db.collection("users").document(user.uid).get()
             .addOnSuccessListener { document ->
@@ -49,6 +55,9 @@ class FirebaseService {
             }
     }
 
+    /**
+     * Creates a new room for the user with given name [String]. returns the room that was created [Room]
+     */
     suspend fun createRoom(name: String): Room {
         val user = firebaseAuth.currentUser
             ?: return Room(name = name)
@@ -59,6 +68,9 @@ class FirebaseService {
         return Room(name = name, id = doc.id)
     }
 
+    /**
+     * Updates the [Room] that is given to the function. Function requires user to be signed in to work
+     */
     fun updateRoom(room: Room) {
         val user = firebaseAuth.currentUser ?: return
         val uid = user.uid
@@ -74,6 +86,9 @@ class FirebaseService {
             .addOnFailureListener { e -> Log.w(TAG, "Error updating room", e) }
     }
 
+    /**
+     * Deletes the given [Room] from users room collection. Function requires user to be signed in to work
+     */
     fun deleteRoom(room: Room) {
         val user = firebaseAuth.currentUser ?: return
         val uid = user.uid
@@ -103,6 +118,9 @@ class FirebaseService {
         return room.id?.let { db.collection("users").document(uid).collection("rooms").document(it) }
     }
 
+    /**
+     * Gets all the available [Furniture] list from firestore, this is used to download the  models from storage
+     */
     @Suppress("UNCHECKED_CAST")
     suspend fun getFurnitures() :List<Furniture?>{
         val query = db.collection("furnitures").get().await()

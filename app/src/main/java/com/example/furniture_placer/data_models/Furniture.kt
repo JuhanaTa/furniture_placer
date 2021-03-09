@@ -1,10 +1,12 @@
 package com.example.furniture_placer.data_models
 
 import android.os.Parcelable
-import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
 import kotlinx.android.parcel.Parcelize
 
+/**
+ * Used to store all the information of the spawnable models in the ArFragmentView. Also uses [Parcelable]
+ */
 @Parcelize
 data class Furniture (
         val name: String,
@@ -15,6 +17,9 @@ data class Furniture (
         var modelFiles: ArrayList<String>? = null
 ): Parcelable
 
+/**
+ * For making a [Furniture] class to [HashMap]. This is used if you want to save this class to firestore.
+ */
 fun furnitureToHash(furniture: Furniture) : HashMap<String, Any?>{
     return hashMapOf(
             "name" to furniture.name,
@@ -25,6 +30,9 @@ fun furnitureToHash(furniture: Furniture) : HashMap<String, Any?>{
             "modelFiles" to furniture.modelFiles
     )
 }
+/**
+ * Returns a [Furniture] class from firestore [DocumentSnapshot]. This is used to parse firestore maps
+ */
 @Suppress("UNCHECKED_CAST")
 fun furnitureFromFirestore(doc: DocumentSnapshot) : Furniture{
     return Furniture(
@@ -37,6 +45,9 @@ fun furnitureFromFirestore(doc: DocumentSnapshot) : Furniture{
     )
 }
 
+/**
+ * Returns a [Furniture] class from [HashMap]. This is usually used when parsing [Furniture] class out from [DecorationSnapshot] class
+ */
 @Suppress("UNCHECKED_CAST")
 fun furnitureFromHashMap(map: HashMap<String, Any?>) : Furniture{
     return Furniture(
@@ -45,6 +56,6 @@ fun furnitureFromHashMap(map: HashMap<String, Any?>) : Furniture{
             price = map["price"] as String,
             id = map["id"] as String,
             previewImagePath = map["previewImagePath"] as String?,
-            modelFiles = map["recentFurniture"] as ArrayList<String>?
+            modelFiles = map["modelFiles"] as ArrayList<String>?
     )
 }

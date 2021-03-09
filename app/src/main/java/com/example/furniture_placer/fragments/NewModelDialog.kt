@@ -39,10 +39,6 @@ class NewModelDialog(modelList: ArrayList<Furniture>) : DialogFragment(), NewMod
 
         recyclerView = view.findViewById(R.id.rv_models)
         recyclerView.layoutManager = LinearLayoutManager(view.context)
-        /*modelList.add(OneModel("Tuoli asdasdasdsadsad", 0))
-        modelList.add(OneModel("pöytä", 1))
-        modelList.add(OneModel("kello", 2))
-        modelList.add(OneModel("sohva", 3))*/
         recyclerView.adapter =
             NewModelAdapter(models, this)
         recyclerView.addItemDecoration(DividerItemDecoration(this.activity, LinearLayout.VERTICAL))

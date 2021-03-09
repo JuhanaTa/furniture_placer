@@ -13,11 +13,16 @@ import kotlinx.coroutines.tasks.await
 import java.io.ByteArrayOutputStream
 import java.io.File
 
-
+/**
+ * This class is used to communicate with the firebase storage. You can use this to access all the images and files in the firebase
+ */
 class StorageService : AppCompatActivity() {
     private val storage = Firebase.storage
     private val storageRef = storage.reference
 
+    /**
+     * Takes a image as [Bitmap] and path as [String] to the firebase storage. for example the path is 'folder/file.jpg'
+     */
     suspend fun storePicture(bitmap: Bitmap, path: String) {
         val userPictureRef = storageRef.child(path)
 
@@ -29,6 +34,9 @@ class StorageService : AppCompatActivity() {
 
     }
 
+    /**
+     * This function can be called anywhere, see[storePicture] for async option. Takes a image as [Bitmap] and path as [String] to the firebase storage. for example the path is 'folder/file.jpg'
+     */
     fun storePictureSync(bitmap: Bitmap, path: String) {
         val userPictureRef = storageRef.child(path)
 
@@ -51,6 +59,9 @@ class StorageService : AppCompatActivity() {
         }
     }
 
+    /**
+     * Loads an image from given path, and returns it as [ByteArray]. Example path is in 'folder/file.jpg'
+     */
     suspend fun loadPicture(path: String): ByteArray {
         val imageRef = storageRef.child(path)
 
@@ -58,6 +69,9 @@ class StorageService : AppCompatActivity() {
         return imageRef.getBytes(oneMegabyte).await()
     }
 
+    /**
+     * Deletes the file with given path. This function is run synchronously. Example path is in 'folder/file.jpg'
+     */
     fun deleteFileSync(path:String){
         val ref = storageRef.child(path)
         // Delete the file
@@ -68,6 +82,9 @@ class StorageService : AppCompatActivity() {
         }
     }
 
+    /**
+     * Loads a model from firebase storage with [String] path and filename separately. This is because the saving is done using just the filename. Returns an [Uri] to model file
+     */
     suspend fun loadModel(path:String,fileName: String,context: Context) : Uri{
 
         val filesDir = context.filesDir
