@@ -75,9 +75,19 @@ class ImageSliderAdapter(
             vh.hoverText.text = vh.itemView.context.getString(R.string.screenshot, position)
             vh.description.text = vh.itemView.context.getString(R.string.room_slider_type_second)
         }
+        val modelImageList = ArrayList<String>()
+        if (room.decorationSnapshots != null) {
+            if (room.decorationSnapshots!![position].itemsInScene != null){
+                for (path in room.decorationSnapshots!![position].itemsInScene!!) {
+                    Log.d("FYI", "model image path: " + path.previewImagePath)
+                    path.previewImagePath?.let { modelImageList.add(it) }
+                }
+            }
+        }
+        Log.d("FYI", "model list: "+modelImageList.toString())
         recyclerView = vh.itemView.findViewById(R.id.rv_screenshotModels)
         recyclerView.layoutManager = LinearLayoutManager(vh.itemView.context)
-        recyclerView.adapter = items?.let { ScreenshotModelAdapter(it) }
+        recyclerView.adapter = items?.let { ScreenshotModelAdapter(it, modelImageList) }
 
     }
 
