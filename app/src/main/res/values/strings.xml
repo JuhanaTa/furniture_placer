@@ -27,7 +27,7 @@
     <string name="edit_room">Edit Room</string>
     <string name="edit_roomBtn_contDesc">edit room</string>
     <string name="room_menuBtn_contDesc">menu</string>
-    <string name="room_slider_type_first">Whole Room contains these models</string>
+    <string name="room_slider_type_first">Room contains these models</string>
     <string name="room_slider_type_second">Screenshot contains these models</string>
     <string name="screenshot">"Screenshot %1$d"</string>
     <string name="room">"Room: %1$s"</string>
