@@ -9,7 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.furniture_placer.R
@@ -85,6 +87,7 @@ class ImageSliderAdapter(
             }
         }
         Log.d("FYI", "model list: "+modelImageList.toString())
+
         recyclerView = vh.itemView.findViewById(R.id.rv_screenshotModels)
         recyclerView.layoutManager = LinearLayoutManager(vh.itemView.context)
         recyclerView.adapter = items?.let { ScreenshotModelAdapter(it, modelImageList) }
@@ -98,6 +101,7 @@ class ImageSliderAdapter(
         val text: ImageView = itemView.findViewById(R.id.sliderImage)
         val description: TextView = itemView.findViewById(R.id.description)
         val hoverText: TextView = itemView.findViewById(R.id.imageHoverTxt)
+
         init {
             itemView.setOnClickListener(this)
         }

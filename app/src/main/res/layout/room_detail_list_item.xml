@@ -25,7 +25,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:paddingLeft="5dp">
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp">
 
             <TextView
                 android:id="@+id/modelName"
