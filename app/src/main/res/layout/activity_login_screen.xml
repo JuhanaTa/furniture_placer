@@ -35,7 +35,9 @@
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/logo_icon_1028" />
+                app:srcCompat="@drawable/logo_icon_1028"
+                android:contentDescription="@string/app_logo"
+                />
 
 
             <androidx.cardview.widget.CardView
@@ -56,6 +58,7 @@
                     android:padding="10dp">
 
                     <ImageView
+                        android:contentDescription="@string/google_logo"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="start"

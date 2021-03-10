@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#B5B5B5"
+    android:background="#D3D3D3"
     tools:context=".fragments.RoomDetailFragment">
 
 
@@ -22,17 +22,17 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:paddingTop="10dp"
-            app:dot_height="10dp"
-            app:dot_width="10dp"
+            app:dot_height="12dp"
+            app:dot_width="12dp"
             app:dots_count="1"
-            app:first_dot_height="15dp"
-            app:first_dot_width="15dp"
+            app:first_dot_height="17dp"
+            app:first_dot_width="17dp"
             app:first_selected_dot_resource="@drawable/ic_home_white_24dp"
             app:first_unselected_dot_resource="@drawable/ic_home_gray_24dp"
             app:margins_between_dots="17dp"
             app:selected_dot_resource="@drawable/circle_white"
             app:selected_dot_scale_factor="1.4"
-            app:unselected_dot_resource="@drawable/circle_gray">
+            app:unselected_dot_resource="@drawable/circle_white">
 
         </com.mazenrashed.dotsindicator.DotsIndicator>
 
@@ -65,7 +65,7 @@
             android:src="@drawable/ic_baseline_menu_24"
             app:backgroundTint="@color/primary"
             app:rippleColor="@color/primary"
-            android:contentDescription="@string/edit_roomBtn_contDesc" />
+            android:contentDescription="@string/room_menuBtn_contDesc" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -74,12 +74,13 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="12dp"
-        android:backgroundTint="@color/primaryVariant"
-        android:contentDescription="@string/searchNewModelFab"
+        android:backgroundTint="@color/primary"
+        android:contentDescription="@string/compare_rooms"
         android:visibility="gone"
-        app:backgroundTint="@color/primaryVariant"
+        app:backgroundTint="@color/primary"
         app:layout_constraintBottom_toTopOf="@+id/editRoomBtn"
         app:layout_constraintEnd_toEndOf="parent"
+        app:rippleColor="@color/primary"
         app:srcCompat="@drawable/ic_baseline_compare_24" />
 
     <TextView
@@ -95,6 +96,7 @@
         android:text="@string/compare_text"
         android:textAlignment="center"
         android:textAllCaps="false"
+        android:textColor="@color/black"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/compareBtn"
         app:layout_constraintEnd_toStartOf="@+id/compareBtn"
@@ -107,13 +109,14 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        android:backgroundTint="@color/primaryVariant"
+        android:backgroundTint="@color/primary"
+        android:contentDescription="@string/edit_roomBtn_contDesc"
         android:visibility="gone"
-        app:backgroundTint="@color/primaryVariant"
+        app:backgroundTint="@color/primary"
         app:layout_constraintBottom_toTopOf="@+id/coordinatorLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_baseline_edit_24"
-        android:contentDescription="@string/edit_roomBtn_contDesc" />
+        app:rippleColor="@color/primary"
+        app:srcCompat="@drawable/ic_baseline_edit_24" />
 
     <TextView
         android:id="@+id/editRoomText"
@@ -127,6 +130,7 @@
         android:paddingBottom="8dp"
         android:text="@string/edit_room"
         android:textAlignment="center"
+        android:textColor="@color/black"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/editRoomBtn"
         app:layout_constraintEnd_toStartOf="@+id/editRoomBtn"

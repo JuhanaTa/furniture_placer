@@ -34,6 +34,7 @@
                     android:id="@+id/sliderImage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/room_image"
                     android:scaleType="centerCrop"
                     android:layout_centerInParent="true"
                     tools:srcCompat="@tools:sample/avatars"
@@ -59,7 +60,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="Models inside image"
+                    android:text="@string/models_inside_image"
                     android:textAlignment="center"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -69,15 +70,13 @@
                     android:id="@+id/rv_screenshotModels"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:paddingStart="5dp" />
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"/>
 
 
 
         </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
-
-
-
 
 
 </FrameLayout>

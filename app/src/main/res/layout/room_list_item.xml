@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp">
@@ -29,6 +28,7 @@
                 android:layout_width="120dp"
                 android:layout_height="160dp"
                 android:layout_weight="1"
+                android:contentDescription="@string/room_image"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -40,10 +40,9 @@
                 android:layout_width="wrap_content"
                 android:maxWidth="200dp"
                 android:layout_height="wrap_content"
-
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="16dp"
-                android:text="asdas"
+                android:text="@string/default_text"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/deleteBtn"
@@ -54,6 +53,7 @@
             <Button
                 android:id="@+id/deleteBtn"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+                android:contentDescription="@string/delete_room"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="16dp"
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="4dp"
-                android:text="asdas"
+                android:text="@string/default_text"
                 app:layout_constraintEnd_toStartOf="@+id/deleteBtn"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/roomImage"

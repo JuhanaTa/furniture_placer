@@ -91,12 +91,13 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        android:backgroundTint="@color/primaryVariant"
+        android:backgroundTint="@color/primary"
         android:contentDescription="@string/searchHistoryModelFab"
         android:visibility="gone"
-        app:backgroundTint="@color/primaryVariant"
+        app:backgroundTint="@color/primary"
         app:layout_constraintBottom_toTopOf="@+id/coordinatorLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:rippleColor="@color/primary"
         app:srcCompat="@drawable/ic_baseline_history_24" />
 
     <TextView
@@ -111,6 +112,7 @@
         android:paddingBottom="8dp"
         android:text="@string/historyFabText"
         android:textAlignment="center"
+        android:textColor="@color/black"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/historyModelBtn"
         app:layout_constraintEnd_toStartOf="@+id/historyModelBtn"
@@ -123,12 +125,13 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="24dp"
-        android:backgroundTint="@color/primaryVariant"
+        android:backgroundTint="@color/primary"
         android:contentDescription="@string/searchNewModelFab"
         android:visibility="gone"
-        app:backgroundTint="@color/primaryVariant"
+        app:backgroundTint="@color/primary"
         app:layout_constraintBottom_toTopOf="@+id/historyModelBtn"
         app:layout_constraintEnd_toEndOf="parent"
+        app:rippleColor="@color/primary"
         app:srcCompat="@drawable/ic_baseline_fiber_new_24" />
 
     <TextView
@@ -144,6 +147,7 @@
         android:text="@string/newModelFabText"
         android:textAlignment="center"
         android:textAllCaps="false"
+        android:textColor="@color/black"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/newModelBtn"
         app:layout_constraintEnd_toStartOf="@+id/newModelBtn"
@@ -155,12 +159,13 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="24dp"
-        android:backgroundTint="@color/primaryVariant"
-        android:contentDescription="@string/searchNewModelFab"
+        android:backgroundTint="@color/primary"
+        android:contentDescription="@string/screenshotFabDesc"
         android:visibility="gone"
-        app:backgroundTint="@color/primaryVariant"
+        app:backgroundTint="@color/primary"
         app:layout_constraintBottom_toTopOf="@+id/newModelBtn"
         app:layout_constraintEnd_toEndOf="parent"
+        app:rippleColor="@color/primary"
         app:srcCompat="@drawable/ic_baseline_camera" />
 
     <TextView
@@ -176,6 +181,7 @@
         android:text="@string/screenshotFabText"
         android:textAlignment="center"
         android:textAllCaps="false"
+        android:textColor="@color/black"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/screenshotBtn"
         app:layout_constraintEnd_toStartOf="@+id/screenshotBtn"

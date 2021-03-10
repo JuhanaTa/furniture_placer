@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="20dp">
@@ -27,19 +26,22 @@
             android:layout_marginBottom="20dp"
             android:layout_gravity="center">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/roomTextField"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|center"
-            android:hint="@string/roomNameField">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/roomTextField"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|center"
+                android:hint="@string/roomNameField"
+                android:textColorHint="@color/primary"
+                app:boxBackgroundColor="@color/white"
+                app:boxStrokeColor="@color/primary">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/roomTextFieldInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/roomTextFieldInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -80,6 +82,7 @@
             android:adjustViewBounds="true"
             android:padding="20dp"
             android:scaleType="centerCrop"
+            android:contentDescription="@string/room_image_capture"
             app:srcCompat="@drawable/ic_baseline_camera_alt_24" />
 
     </LinearLayout>

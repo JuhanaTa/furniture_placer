@@ -4,22 +4,24 @@
     <string name="ar_view">AR view</string>
     <string name="addModelText">add model</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="newRoomDesc">add new room</string>
     <string name="logOutDesc">logout</string>
-    <string name="newModelFabText">new</string>
+    <string name="newModelFabText">New</string>
     <string name="historyFabText">History</string>
     <string name="searchNewModelFab">search new model</string>
     <string name="deleteModelFab">delete model</string>
     <string name="addModelFab">add model</string>
-    <string name="openMenuDesc">open model menu</string>
+    <string name="openMenuDesc">open menu</string>
     <string name="searchHistoryModelFab">search new model from history</string>
     <string name="roomNameField">Room</string>
     <string name="createRoomBtnText">Create Room</string>
+    <string name="createRoomBtnDesc">Create Room button</string>
     <string name="cancelAction">Cancel</string>
     <string name="screenshotFabText">Screenshot</string>
+    <string name="screenshotFabDesc">Take screenshot</string>
     <string name="loginText">Sign In with Google</string>
-    <string name="appName">Furniture Placer</string>
+    <string name="appName" translatable="false">Furniture Placer</string>
     <string name="noHistoryToast">You do not have any models in history</string>
     <string name="Room_create">Create Room</string>
     <string name="no_rooms_desc">There are no rooms right now</string>
@@ -32,8 +34,19 @@
     <string name="room_slider_type_second">Screenshot contains these models</string>
     <string name="screenshot">"Screenshot %1$d"</string>
     <string name="room">"Room: %1$s"</string>
-    <string name="price">"%1$s€"</string>
-    <string name="id">"id: %1$s"</string>
+    <string name="price" translatable="false">"%1$s€"</string>
+    <string name="id" translatable="false">"id: %1$s"</string>
     <string name="model_count">"%1$d model(s) in this room"</string>
     <string name="no_models">No models</string>
+    <string name="create_room">Create Room</string>
+    <string name="your_rooms">Your rooms</string>
+    <string name="delete_room">delete room</string>
+    <string name="default_text">default</string>
+    <string name="room_image">image of room</string>
+    <string name="models_inside_image">Models inside image</string>
+    <string name="room_image_capture">Capture room image</string>
+    <string name="compare_rooms">Compare rooms</string>
+    <string name="model_image">Model image</string>
+    <string name="google_logo">Google logo</string>
+    <string name="app_logo">App logo</string>
 </resources>
