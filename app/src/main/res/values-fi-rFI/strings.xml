@@ -28,8 +28,8 @@
     <string name="edit_room">Muokkaa Huonetta</string>
     <string name="edit_roomBtn_contDesc">muokkaa huonetta</string>
     <string name="room_menuBtn_contDesc">valikko</string>
-    <string name="room_slider_type_first">Huone sisältää nämä</string>
-    <string name="room_slider_type_second">Kuvakaappaus sisältää nämä</string>
+    <string name="room_slider_type_first">Huoneesen sisältyy nämä</string>
+    <string name="room_slider_type_second">Kuvakaappaukseen sisältyy nämä</string>
     <string name="screenshot">Kuvakaappaus %1$d</string>
     <string name="room">Huone: %1$s</string>
     <string name="model_count">%1$d mallia tässä huoneessa</string>
