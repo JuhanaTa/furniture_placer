@@ -4,14 +4,13 @@ import android.app.Application
 import android.content.ContentValues
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.furniture_placer.data_models.Room
 import com.example.furniture_placer.data_models.roomFromFirestore
 import com.example.furniture_placer.services.FirebaseService
 
 class MainViewModel(application: Application): AndroidViewModel(application) {
-    private  var _roomsLiveData: MutableLiveData<ArrayList<Room>> = MutableLiveData<ArrayList<Room>>()
+    private  var _roomsLiveData: MutableLiveData<ArrayList<Room>> = MutableLiveData()
     private val rooms: MutableLiveData<ArrayList<Room>> = roomsLiveData
 
     fun getRooms() = rooms

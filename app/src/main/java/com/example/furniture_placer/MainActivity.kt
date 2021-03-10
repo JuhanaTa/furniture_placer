@@ -34,11 +34,11 @@ import java.io.File
 
 class MainActivity : AppCompatActivity(),
     Communicator, RoomAdapter.OnItemClickListener, ImageSliderAdapter.OnImageClickListener {
-    val REQUEST_IMAGE_CAPTURE = 1
-    var mCurrentPhotoPath: String = ""
-    var roomName = ""
-    var roomList : ArrayList<Room>? = null
-    val camera_RQ = 102
+    private val REQUEST_IMAGE_CAPTURE = 1
+    private var mCurrentPhotoPath: String = ""
+    private var roomName = ""
+    private var roomList : ArrayList<Room>? = null
+    private val camera_RQ = 102
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,18 +48,8 @@ class MainActivity : AppCompatActivity(),
         val mainPage = MainPageFragment(this)
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, mainPage).commit()
 
-        //checkPermissions(android.Manifest.permission.CAMERA, "camera", camera_RQ)
-
     }
 
-    /*override fun nextFragment() {
-        val transaction = this.supportFragmentManager.beginTransaction()
-        val createRoomFrag = CreateRoomFragment()
-        transaction.replace(R.id.fragment_container, createRoomFrag)
-        transaction.addToBackStack(null)
-        transaction.commit()
-
-    }*/
 
     override fun openDialog(image: ByteArray?, name: String) {
         val bundle = Bundle()

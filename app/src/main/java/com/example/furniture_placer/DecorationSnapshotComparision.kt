@@ -1,6 +1,5 @@
 package com.example.furniture_placer
 
-import android.R.attr
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.furniture_placer.data_models.Room
@@ -30,12 +29,12 @@ class DecorationSnapshotComparision : AppCompatActivity() {
         val labels = ArrayList<String>()
         if (room != null) {
             room.decorationSnapshots?.forEachIndexed{index,snapshot ->
-                var price: Float = 0F
+                var price = 0F
                 snapshot.itemsInScene?.forEach {price += it.price.toFloat()}
-                entries.add(BarEntry(price, index));
+                entries.add(BarEntry(price, index))
             }
             room.decorationSnapshots?.forEachIndexed{_,snapshot ->
-                var price: Float = 0F
+                var price = 0F
                 snapshot.itemsInScene?.forEach {price += it.price.toFloat()}
                 labels.add(snapshot.name!!)
             }
@@ -46,9 +45,9 @@ class DecorationSnapshotComparision : AppCompatActivity() {
 
 
         val data = BarData(labels, bardataset)
-        barChart.setData(data); // set the data and list of labels into chart
-        barChart.setDescription("Set Bar Chart Description Here");  // set the description
-        bardataset.setColors(ColorTemplate.COLORFUL_COLORS);
-        barChart.animateY(400);
+        barChart.data = data // set the data and list of labels into chart
+        barChart.setDescription("Set Bar Chart Description Here")  // set the description
+        bardataset.setColors(ColorTemplate.COLORFUL_COLORS)
+        barChart.animateY(400)
     }
 }
