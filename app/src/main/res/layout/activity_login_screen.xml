@@ -35,15 +35,8 @@
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/common_google_signin_btn_icon_light_normal" />
+                app:srcCompat="@drawable/logo_icon_1028" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/appName"
-                android:textAlignment="center"
-                android:textSize="28sp" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
