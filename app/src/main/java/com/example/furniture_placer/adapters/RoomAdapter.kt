@@ -44,21 +44,16 @@ class RoomAdapter(
 
         Log.d("FYI", "${room.name}")
         if (room.name != null){
-            //loader.loadRoomImage(room.name)
-            Log.d("FYI", "called loader")
-
+            //image path from firebase service
             val imagePath = "${FirebaseService().getCurrentUser()?.uid}/${room.name}/previewImage.jpg"
             Log.d("FYI", imagePath)
+            //coroutine for loading the image
             GlobalScope.launch(Dispatchers.Main) {
-                //val imageData = StorageService().loadPicture(imagePath)
-                //Log.d("FYI", "image loaded")
+
                 try {
-                    val imageData = loadImage(imagePath)
-                    Log.d("asd", imageData.toString())
-
-
                     vh.text.roomName.text = vh.itemView.context.getString(R.string.room, room.name)
                     vh.modelCount.text = vh.itemView.context.getString(R.string.model_count, room.recentFurniture?.size)
+                    val imageData = loadImage(imagePath)
                     vh.image.roomImage.setImageBitmap(imageData)
 
                 }catch (e:Exception){
@@ -79,17 +74,12 @@ class RoomAdapter(
             }
         }
     }
-
+    //suspended function that loads and returns image
+    //returns bitmap
     private suspend fun loadImage(path: String): Bitmap{
-        Log.d("FYI", path)
         val imageData = StorageService().loadPicture(path)
-        Log.d("FYI", "image loaded")
-        //val bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.size)
-        //vh.view.roomImage.setImageBitmap(bitmap)
         return BitmapFactory.decodeByteArray(imageData, 0, imageData.size)
     }
-
-
 
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),

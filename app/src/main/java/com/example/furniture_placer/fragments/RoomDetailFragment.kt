@@ -6,13 +6,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.*
 import com.example.furniture_placer.DecorationSnapshotComparision
 import com.example.furniture_placer.R
 import com.example.furniture_placer.adapters.ImageSliderAdapter
-import com.example.furniture_placer.adapters.RoomAdapter
 import com.example.furniture_placer.data_models.DecorationSnapshot
 import com.example.furniture_placer.data_models.Furniture
 import com.example.furniture_placer.data_models.Room
@@ -87,7 +85,6 @@ class RoomDetailFragment(room: Room, private val imageListener: ImageSliderAdapt
         recyclerViewSlider.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                Log.d("FYI", "scrolled")
                 val pos = layoutManagerSlider.findFirstVisibleItemPosition()
                 view.dots_indicator.setDotSelection(pos)
             }

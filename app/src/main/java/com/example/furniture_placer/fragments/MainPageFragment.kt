@@ -2,7 +2,6 @@ package com.example.furniture_placer.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,22 +18,17 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.activity_ar_fragment_view.*
 import kotlinx.android.synthetic.main.fragment_main_page.*
 import kotlinx.android.synthetic.main.fragment_main_page.view.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+
 
 
 class MainPageFragment(private val listener: RoomAdapter.OnItemClickListener) : Fragment() {
 
-    lateinit var mGoogleSignInClient: GoogleSignInClient
-    lateinit var recyclerView: RecyclerView
+    private lateinit var mGoogleSignInClient: GoogleSignInClient
+    private lateinit var recyclerView: RecyclerView
     private lateinit var communicator: Communicator
     private var isOpen: Boolean = true
-    val camera_RQ = 102
-    //private  var _roomsLiveData: MutableLiveData<ArrayList<Room>> = MutableLiveData<ArrayList<Room>>()
     private val auth by lazy {
         FirebaseAuth.getInstance()
     }
@@ -47,7 +41,6 @@ class MainPageFragment(private val listener: RoomAdapter.OnItemClickListener) : 
         val view = inflater.inflate(R.layout.fragment_main_page, container, false)
 
         view.menuBtn.setOnClickListener {
-            Log.d("FYI", "menu button pressed")
             if (isOpen){
                 view.logOutBtn.visibility = View.VISIBLE
                 view.logOutText.visibility = View.VISIBLE
@@ -57,8 +50,8 @@ class MainPageFragment(private val listener: RoomAdapter.OnItemClickListener) : 
                 view.addNewRoomBtn.setOnClickListener {
                         communicator.openDialog(null, "")
                 }
-
                 isOpen = false
+
             } else {
                 view.logOutBtn.visibility = View.GONE
                 view.logOutText.visibility = View.GONE
@@ -83,8 +76,6 @@ class MainPageFragment(private val listener: RoomAdapter.OnItemClickListener) : 
         recyclerView.adapter =
             RoomAdapter(roomList, listener)
 
-        //_roomsLiveData.observe(this, Observer { recyclerView.adapter = RoomAdapter(it) })
-
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.request_id_token))
             .requestEmail()
@@ -106,7 +97,7 @@ class MainPageFragment(private val listener: RoomAdapter.OnItemClickListener) : 
         super.onActivityCreated(savedInstanceState)
         val ump = ViewModelProviders.of(this).get(MainViewModel::class.java) //ViewModelProvider(this).get(MainViewModel::class.java)
         ump.listenToRooms()
-        ump.getRooms().observe( this, Observer{
+        ump.getRooms().observe( viewLifecycleOwner, Observer{
 
             recyclerView.adapter = RoomAdapter(it, listener)
 
@@ -122,27 +113,4 @@ class MainPageFragment(private val listener: RoomAdapter.OnItemClickListener) : 
         })
     }
 
-
-
-   /* private fun listenToRooms() {
-        FirebaseService().getUserRoomsCollection()?.addSnapshotListener { value, e ->
-            if (e != null) {
-                Log.w(ContentValues.TAG, "Listen failed.", e)
-                return@addSnapshotListener
-            }
-
-            val rooms = ArrayList<Room>()
-            value?.documents?.forEach{
-                val room = it.toObject(Room::class.java)
-                room?.id = it.id
-                rooms.add(room!!)
-            }
-
-           _roomsLiveData.value = rooms
-        }
-    }
-
-    internal var roomsLiveData:MutableLiveData<ArrayList<Room>>
-        get() {return _roomsLiveData}
-        set(value) {_roomsLiveData = value}*/
 }

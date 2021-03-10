@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowInsetsController
 import android.widget.ImageView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.furniture_placer.R
@@ -24,10 +22,9 @@ class ImageFullscreenFragment(imageData: Bitmap) : Fragment() {
         val view = inflater.inflate(R.layout.fragment_image_fullscreen, container, false)
         view.findViewById<ImageView>(R.id.imageView).setImageBitmap(image)
 
-        WindowInsetsController.BEHAVIOR_SHOW_BARS_BY_SWIPE
         view.imageView.setOnClickListener {
-            val fm: FragmentManager? = fragmentManager
-
+            val fm: FragmentManager? = parentFragmentManager
+            //returns back to previous fragment when image tapped
             fm?.popBackStack()
         }
         return view

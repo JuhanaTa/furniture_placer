@@ -34,5 +34,6 @@
     <string name="room">"Room: %1$s"</string>
     <string name="price">"%1$s€"</string>
     <string name="id">"id: %1$s"</string>
-    <string name="model_count">"%1$d models in this room"</string>
+    <string name="model_count">"%1$d model(s) in this room"</string>
+    <string name="no_models">No models</string>
 </resources>

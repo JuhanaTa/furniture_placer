@@ -45,14 +45,13 @@ class ArFragmentView : AppCompatActivity(),
     private lateinit var arFrag: ArFragment
     private var modelRenderable: ModelRenderable? = null
     private val models = arrayListOf<Furniture>()
-    var uri = Uri.parse("")
+    private var uri = Uri.parse("")
     private lateinit var editedRoom: Room
-    private lateinit var currentFurniture : Furniture
     private var selectedFurnitures = ArrayList<Furniture>()
-    var id = 0
-    var selectedFurniture: Furniture? = null
-    val addedItemsInScene : ArrayList<Furniture> = ArrayList<Furniture>()
-    //private var communicator: Communicator
+    private var id = 0
+    private var selectedFurniture: Furniture? = null
+    private val addedItemsInScene : ArrayList<Furniture> = ArrayList()
+
 
     private var isOpen: Boolean = true
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,10 +62,8 @@ class ArFragmentView : AppCompatActivity(),
             editedRoom = room
         }
 
-
         setContentView(R.layout.activity_ar_fragment_view)
         listFiles()
-        //setModel()
 
         arFrag = supportFragmentManager.findFragmentById(R.id.sceneform_fragment) as ArFragment
 
@@ -159,7 +156,7 @@ class ArFragmentView : AppCompatActivity(),
                                 //ar view reset after screenshot
                                 finish()
                                 overridePendingTransition(0, 0)
-                                startActivity(getIntent())
+                                startActivity(intent)
                                 overridePendingTransition(0, 0)
 
                                 Toast.makeText(applicationContext, "Screenshot taken", Toast.LENGTH_SHORT).show()
@@ -186,7 +183,7 @@ class ArFragmentView : AppCompatActivity(),
     }
 
      private fun setModel(){
-         Log.d("FYI", "setting Model ${uri} and ${modelRenderable}")
+         Log.d("FYI", "setting Model $uri and $modelRenderable")
         val renderableFuture = ModelRenderable.builder()
             .setSource(this, RenderableSource.builder().setSource(this,
                 uri, RenderableSource.SourceType.GLTF2)
@@ -243,22 +240,17 @@ class ArFragmentView : AppCompatActivity(),
                     //furniture data saved here
                     //used in click listener to remove right model
                     val selectedItem = selectedFurniture
-                    mNode.setOnTapListener(){ _: HitTestResult, _: MotionEvent ->
+                    mNode.setOnTapListener { _: HitTestResult, _: MotionEvent ->
 
                         deleteModelbtn.visibility = View.VISIBLE
 
-                        Log.d("FYI", "Listener added: $selectedItem")
-
                         deleteModelbtn.setOnClickListener {
-                            //val itemType = selectedFurniture
-                            //val json = Gson().toJson(selectedFurniture)
-                            //val newFurniture = Gson().fromJson(json, Furniture::class.java)
                             addedItemsInScene.remove(selectedItem)
                             if (selectedFurnitures.contains(selectedItem)){
                                 selectedFurnitures.remove(selectedItem)
                             }
                             removeAnchorNode(anchorNode)
-                            Log.d("FYI", "Model removed ${selectedFurnitures}")
+                            Log.d("FYI", "Model removed $selectedFurnitures")
                             deleteModelbtn.visibility = View.GONE
                         }
                     }
@@ -311,12 +303,6 @@ class ArFragmentView : AppCompatActivity(),
             }
         }
 
-        /*if(editedRoom.recentFurniture != null) {
-            if (!editedRoom.recentFurniture?.contains(furniture.name)!!) {
-                editedRoom.recentFurniture?.add(furniture.name)
-                FirebaseService().updateRoom(editedRoom)
-            }
-        }*/
         selectedFurniture = file
     }
 

@@ -12,8 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.furniture_placer.R
 import com.example.furniture_placer.data_models.Furniture
 import com.example.furniture_placer.services.StorageService
-import kotlinx.android.synthetic.main.room_detail_list_item.view.*
-import kotlinx.android.synthetic.main.slider_list_item.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -38,16 +36,26 @@ class ScreenshotModelAdapter(
 
     override fun onBindViewHolder(vh: MyViewHolder, position: Int) {
         val furnitureName: String = furnitures[position].name
+
+        //first furniture is always default and that we don't want to show
         if (furnitureName == "default"){
             vh.imageview.visibility = View.GONE
-            vh.modelText.visibility = View.GONE
             vh.modelPrice.visibility = View.GONE
+        } else {
+            vh.modelPrice.text = vh.itemView.context.getString(R.string.price, furnitures[position].price)
         }
 
+        //If there is no furniture images then only "no models" string will be displayed
+        if (furnitureImages.isEmpty()){
+            vh.modelText.text = vh.itemView.context.getString(R.string.no_models)
+        } else{
+            vh.modelText.text = furnitureName
+        }
+
+        // image loaded in coroutine
         GlobalScope.launch(Dispatchers.Main) {
             try {
                 val imageData = loadImage(furnitureImages[position])
-                Log.d("ROOM", "loaded image")
                 Log.d("DATA", imageData.toString())
                 vh.imageview.setImageBitmap(imageData)
 
@@ -55,8 +63,7 @@ class ScreenshotModelAdapter(
                 Log.d("ERROR", "image load failed, $e")
             }
         }
-        vh.view.modelName.text = furnitureName
-        vh.modelPrice.text = vh.itemView.context.getString(R.string.price, furnitures[position].price)
+
     }
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
@@ -74,11 +81,10 @@ class ScreenshotModelAdapter(
         }
     }
 
+    //suspended function for loading the image
+    //parameter path passed and bitmap returned
     private suspend fun loadImage(path: String): Bitmap {
-        Log.d("ROOM", "loading image")
         val imageData = StorageService().loadPicture(path)
-        Log.d("FYI", "image loaded")
-
         return BitmapFactory.decodeByteArray(imageData, 0, imageData.size)
     }
 

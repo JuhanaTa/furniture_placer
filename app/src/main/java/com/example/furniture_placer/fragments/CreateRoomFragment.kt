@@ -56,7 +56,7 @@ class CreateRoomFragment : DialogFragment() {
             if (newRoomName.toString() != "" && image != null) {
                 GlobalScope.launch(Dispatchers.Main) {
                     //val
-
+                    rootView.createRoomBtn.setOnClickListener(null)
                     val imagePath = "${FirebaseService().getCurrentUser()?.uid}/${newRoomName}/previewImage.jpg"
                     //image stored in firebase before creating room
                     StorageService().storePicture(BitmapFactory.decodeByteArray(image, 0, image.size), imagePath)
