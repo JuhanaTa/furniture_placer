@@ -33,20 +33,22 @@ class DecorationSnapshotComparision : AppCompatActivity() {
                 snapshot.itemsInScene?.forEach {price += it.price.toFloat()}
                 entries.add(BarEntry(price, index))
             }
+            var count = 1
             room.decorationSnapshots?.forEachIndexed{_,snapshot ->
                 var price = 0F
                 snapshot.itemsInScene?.forEach {price += it.price.toFloat()}
-                labels.add(snapshot.name!!)
+                labels.add(getString(R.string.screenshot, count))
+                count++
             }
         }
 
-        val bardataset = BarDataSet(entries, "Cells")
+        val bardataset = BarDataSet(entries, "Screenshots")
 
 
 
         val data = BarData(labels, bardataset)
         barChart.data = data // set the data and list of labels into chart
-        barChart.setDescription("Set Bar Chart Description Here")  // set the description
+        barChart.setDescription("Price sums of each screenshots ")  // set the description
         bardataset.setColors(ColorTemplate.COLORFUL_COLORS)
         barChart.animateY(400)
     }
