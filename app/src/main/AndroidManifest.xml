@@ -22,7 +22,7 @@
         android:roundIcon="@mipmap/ar_design_launch_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.Furniture_placer">
-        <activity android:name=".DecorationSnapshotComparision"></activity>
+        <activity android:name=".DecorationSnapshotComparision" />
 
         <meta-data
             android:name="com.google.ar.core"
@@ -35,7 +35,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths" />
         </provider>
 
         <activity
