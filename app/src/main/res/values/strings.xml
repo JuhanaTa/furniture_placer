@@ -58,4 +58,6 @@
     <string name="permission_denied">%1$s permission refused</string>
     <string name="camera_permission_denied">Permission to use camera is not granted.</string>
     <string name="create_room_empty_check">Room name and image needed.</string>
+    <string name="compare_price_desc">Price sum for each screenshot</string>
+    <string name="screenshots">Screenshots</string>
 </resources>

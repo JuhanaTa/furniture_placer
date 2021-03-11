@@ -54,4 +54,6 @@
     <string name="permission_denied">%1$s lupa evätty</string>
     <string name="camera_permission_denied">Kameran käyttölupaa ei ole annettu.</string>
     <string name="create_room_empty_check">Tarvitaan huoneen nimi ja kuva.</string>
+    <string name="compare_price_desc">Kuvakaappauksien hinnat</string>
+    <string name="screenshots">Kuvakaappaukset</string>
 </resources>

@@ -42,13 +42,13 @@ class DecorationSnapshotComparision : AppCompatActivity() {
             }
         }
 
-        val bardataset = BarDataSet(entries, "Screenshots")
+        val bardataset = BarDataSet(entries, getString(R.string.screenshots))
 
 
 
         val data = BarData(labels, bardataset)
         barChart.data = data // set the data and list of labels into chart
-        barChart.setDescription("Price sums of each screenshots ")  // set the description
+        barChart.setDescription(getString(R.string.compare_price_desc))  // set the description
         bardataset.setColors(ColorTemplate.COLORFUL_COLORS)
         barChart.animateY(400)
     }
