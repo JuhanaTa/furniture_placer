@@ -7,6 +7,20 @@
 ## Features
 - This project provides many examples on how to code android application with kotlin.
 - We feature components listed below:
+
+## Installation
+- **Note** this project **requires two files to work** that you need to get on your own.
+	- Create your own firebase project [here](https://firebase.google.com/)
+	- Create **google authentication api** key and **google-services.json** with this [tutorial](https://firebase.google.com/docs/android/setup)
+	- Add **google-services.json** file to `project_root/app/` directory
+	- And create new file called **secrets.xml** to following directory `project_root/app/src/main/res/values`
+	- Add following code with **your own API key**
+```
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="request_id_token">YOUR-API-KEY</string>
+</resources>
+```
  
 ## Components of this project
  
