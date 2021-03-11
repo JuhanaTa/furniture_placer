@@ -1,5 +1,6 @@
 package com.example.furniture_placer.fragments
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -54,6 +55,7 @@ class ArFragmentView : AppCompatActivity(),
 
 
     private var isOpen: Boolean = true
+    @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -175,10 +177,6 @@ class ArFragmentView : AppCompatActivity(),
             alert.show()
 
         }
-
-
-        //val uri = Uri.parse("file:///android_asset/models/ikea_stool.gltf")
-        //https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/Duck/glTF/Duck.gltf
 
     }
 

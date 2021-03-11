@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_room_detail.view.*
 
 class RoomDetailFragment(room: Room, private val imageListener: ImageSliderAdapter.OnImageClickListener) : Fragment() {
 
-    lateinit var recyclerViewSlider: RecyclerView
+    private lateinit var recyclerViewSlider: RecyclerView
     private var myRoom = room
     private var isOpen: Boolean = true
 

@@ -25,7 +25,7 @@ class NewModelDialog(modelList: ArrayList<Furniture>) : DialogFragment(), NewMod
 
     private val models = modelList
     private lateinit var communicator: ModelChangeCommunicator
-    lateinit var recyclerView: RecyclerView
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
