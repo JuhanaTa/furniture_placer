@@ -108,26 +108,32 @@ class RoomDetailFragment(room: Room, private val imageListener: ImageSliderAdapt
                 val newRoom = Gson().fromJson(json, Room::class.java)
 
                 val default = newRoom.recentFurniture
-                if (!newRoom.decorationSnapshots!!.isEmpty()) {
-                    if (newRoom.decorationSnapshots?.get(0)?.itemsInScene?.get(0)?.id != "default") {
+                if (newRoom.decorationSnapshots!!.isNotEmpty()) {
+                    if (newRoom.decorationSnapshots!![0].itemsInScene?.isNotEmpty()!!) {
+                        if (newRoom.decorationSnapshots?.get(0)?.itemsInScene?.get(0)?.id != "default") {
 
-                        newRoom.decorationSnapshots?.add(0, DecorationSnapshot("default", myRoom.previewPhotoPath, default))
+                            newRoom.decorationSnapshots?.add(
+                                0,
+                                DecorationSnapshot("default", myRoom.previewPhotoPath, default)
+                            )
 
-                        //dot navigation menu setup
-                        val dots = view.dots_indicator
-                        dots.initDots(newRoom.decorationSnapshots!!.size)
-                        dots.setDotSelection(0)
+                            //dot navigation menu setup
+                            val dots = view.dots_indicator
+                            dots.initDots(newRoom.decorationSnapshots!!.size)
+                            dots.setDotSelection(0)
 
-                        //listener if user taps one of the dots
-                        //scrolls to right position
-                        dots.onSelectListener = {
-                            Log.d("FYI", "page $it selected")
-                            recyclerViewSlider.smoothScrollToPosition(it)
+                            //listener if user taps one of the dots
+                            //scrolls to right position
+                            dots.onSelectListener = {
+                                Log.d("FYI", "page $it selected")
+                                recyclerViewSlider.smoothScrollToPosition(it)
+                            }
+                            //adapter setup
+                            recyclerViewSlider.adapter = ImageSliderAdapter(newRoom, imageListener)
                         }
-                        //adapter setup
-                        recyclerViewSlider.adapter = ImageSliderAdapter(newRoom, imageListener)
                     }
                 } else {
+                    Log.d("FYI", "decorationSnapshots was empty")
                     if (default != null) {
                         default.add(Furniture("default", "default", "default", "0"))
                     }

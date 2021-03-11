@@ -48,7 +48,6 @@ class ArFragmentView : AppCompatActivity(),
     private val models = arrayListOf<Furniture>()
     private var uri = Uri.parse("")
     private lateinit var editedRoom: Room
-    private var selectedFurnitures = ArrayList<Furniture>()
     private var id = 0
     private var selectedFurniture: Furniture? = null
     private val addedItemsInScene : ArrayList<Furniture> = ArrayList()
@@ -126,48 +125,76 @@ class ArFragmentView : AppCompatActivity(),
             val builder = AlertDialog.Builder(this)
             val view: ArSceneView = arFrag.arSceneView
             val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
-            builder.setMessage("Do you want to take screenshot? This will save the screenshot and reset the ar view.")
+            builder.setMessage(getString(R.string.screenshot_question))
                     .setCancelable(false)
                     .setPositiveButton("Yes") { _, _ ->
-                        PixelCopy.request(view, bitmap, { copyResult ->
-                            if (copyResult == PixelCopy.SUCCESS) {
-                                //time stamp
-                                val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd_HH:mm:ss")
-                                val currentDateAndTime: String = simpleDateFormat.format(Date())
+                        if (addedItemsInScene.isNotEmpty()) {
+                            PixelCopy.request(view, bitmap, { copyResult ->
+                                if (copyResult == PixelCopy.SUCCESS) {
+                                    //time stamp
+                                    val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd_HH:mm:ss")
+                                    val currentDateAndTime: String = simpleDateFormat.format(Date())
 
-                                val imagePath = "${FirebaseService().getCurrentUser()?.uid}/${editedRoom.name}/${currentDateAndTime}.jpg"
-                                val baos = ByteArrayOutputStream()
-                                val resizedImage = Bitmap.createScaledBitmap(bitmap, 1080, 1920, false)
-                                resizedImage.compress(Bitmap.CompressFormat.JPEG, 50, baos)
-                                val data = baos.toByteArray()
+                                    val imagePath =
+                                        "${FirebaseService().getCurrentUser()?.uid}/${editedRoom.name}/${currentDateAndTime}.jpg"
+                                    val baos = ByteArrayOutputStream()
+                                    val resizedImage =
+                                        Bitmap.createScaledBitmap(bitmap, 1080, 1920, false)
+                                    resizedImage.compress(Bitmap.CompressFormat.JPEG, 50, baos)
+                                    val data = baos.toByteArray()
 
-                                GlobalScope.launch(Dispatchers.Main) {
-                                    StorageService().storePicture(BitmapFactory.decodeByteArray(data, 0, data.size), imagePath)
+                                    GlobalScope.launch(Dispatchers.Main) {
+                                        StorageService().storePicture(
+                                            BitmapFactory.decodeByteArray(
+                                                data,
+                                                0,
+                                                data.size
+                                            ), imagePath
+                                        )
+                                    }
+
+                                    val furnitures = addedItemsInScene
+                                    editedRoom.decorationSnapshots?.add(
+                                        DecorationSnapshot(
+                                            name = currentDateAndTime,
+                                            photoPath = imagePath,
+                                            itemsInScene = furnitures
+                                        )
+                                    )
+                                    //FirebaseService().updateRoom(editedRoom)
+                                    Log.d("FYI", "saved image")
+
+                                    for (furniture in furnitures) {
+                                        if (!editedRoom.recentFurniture?.contains(furniture)!!) {
+                                            editedRoom.recentFurniture?.add(furniture)
+                                        }
+                                    }
+                                    FirebaseService().updateRoom(editedRoom)
+
+                                    //ar view reset after screenshot
+                                    finish()
+                                    overridePendingTransition(0, 0)
+                                    startActivity(intent)
+                                    overridePendingTransition(0, 0)
+
+                                    Toast.makeText(
+                                        applicationContext,
+                                        getString(R.string.screenshot_success),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+
+
+                                } else {
+                                    Log.d("FYI", "Pixel copy did not succeed")
                                 }
-
-                                val furnitures = addedItemsInScene
-                                editedRoom.decorationSnapshots?.add(DecorationSnapshot(name = currentDateAndTime,photoPath = imagePath,itemsInScene = furnitures))
-                                FirebaseService().updateRoom(editedRoom)
-                                Log.d("FYI", "saved image")
-
-                                for (furniture in selectedFurnitures){
-                                    editedRoom.recentFurniture?.add(furniture)
-                                }
-                                FirebaseService().updateRoom(editedRoom)
-
-                                //ar view reset after screenshot
-                                finish()
-                                overridePendingTransition(0, 0)
-                                startActivity(intent)
-                                overridePendingTransition(0, 0)
-
-                                Toast.makeText(applicationContext, "Screenshot taken", Toast.LENGTH_SHORT).show()
-
-
-                            } else {
-                                Log.d("FYI", "Pixel copy did not succeed")
-                            }
-                        }, Handler(Looper.getMainLooper()))
+                            }, Handler(Looper.getMainLooper()))
+                        }else{
+                            Toast.makeText(
+                                applicationContext,
+                                getString(R.string.screenshot_empty),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
                     }
                     .setNegativeButton("No") { dialog, _ ->
                         // Dismiss the dialog
@@ -191,13 +218,11 @@ class ArFragmentView : AppCompatActivity(),
             .setRegistryId("id${id++}").build()
          renderableFuture.thenAccept{
              modelRenderable = it
-             Log.d("FYI", "model renderable changed")
 
              addModel.setOnClickListener {
                  Log.d("FYI", "new model added")
                  add3dObject()
              }
-             Log.d("MODEL", "model is now changed")
              addModel.isEnabled = true
              addModel.isClickable = true
          }
@@ -244,11 +269,7 @@ class ArFragmentView : AppCompatActivity(),
 
                         deleteModelbtn.setOnClickListener {
                             addedItemsInScene.remove(selectedItem)
-                            if (selectedFurnitures.contains(selectedItem)){
-                                selectedFurnitures.remove(selectedItem)
-                            }
                             removeAnchorNode(anchorNode)
-                            Log.d("FYI", "Model removed $selectedFurnitures")
                             deleteModelbtn.visibility = View.GONE
                         }
                     }
@@ -294,11 +315,6 @@ class ArFragmentView : AppCompatActivity(),
             uri = uriList[0]
             modelRenderable = null
             setModel()
-        }
-        if (!editedRoom.recentFurniture?.contains(file)!!){
-            if (editedRoom.recentFurniture != null){
-                selectedFurnitures.add(file)
-            }
         }
 
         selectedFurniture = file

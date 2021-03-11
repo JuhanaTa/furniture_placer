@@ -141,10 +141,10 @@ private fun listenToRooms() {
 
 
             if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(applicationContext, "$name permission refused", Toast.LENGTH_SHORT)
+                Toast.makeText(applicationContext, getString(R.string.permission_denied, name), Toast.LENGTH_SHORT)
                     .show()
             } else {
-                Toast.makeText(applicationContext, "$name permission granted", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, getString(R.string.permission_success, name), Toast.LENGTH_SHORT).show()
             }
         }
         when (requestCode){
@@ -155,7 +155,7 @@ private fun listenToRooms() {
     private fun checkPermissions(permission: String, name: String, requestCode: Int){
         when{
             ContextCompat.checkSelfPermission(applicationContext, permission) == PackageManager.PERMISSION_GRANTED -> {
-                Toast.makeText(applicationContext, "$name permission granted", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, getString(R.string.permission_success, name), Toast.LENGTH_SHORT).show()
             }
             shouldShowRequestPermissionRationale(permission) -> showPermissionDialogDialog(permission,name, requestCode)
 
@@ -167,8 +167,8 @@ private fun listenToRooms() {
         val builder = AlertDialog.Builder(this)
 
         builder.apply {
-            setMessage("Permission to access $name is required in order to use this app")
-            setTitle("Permission required")
+            setMessage(getString(R.string.permission_message, name))
+            setTitle(getString(R.string.permission_required))
             setPositiveButton("OK"){ _, _ ->
                 ActivityCompat.requestPermissions(this@MainActivity, arrayOf(permission),requestCode)
             }

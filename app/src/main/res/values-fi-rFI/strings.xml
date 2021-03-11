@@ -45,4 +45,13 @@
     <string name="model_image">Malli kuva</string>
     <string name="google_logo">Google logo</string>
     <string name="app_logo">Sovellus logo</string>
+    <string name="screenshot_question">Haluatko ottaa kuvakaappauksen? Tämä tallentaa kuvan ja resetoi Ar näkymän.</string>
+    <string name="screenshot_success">Kuvakaappaus otettu</string>
+    <string name="screenshot_empty">Et ole lisännyt yhtään malleja. Kuvakaappausta ei otettu.</string>
+    <string name="permission_required">Tarvitaan lupa</string>
+    <string name="permission_message">Lupa %1$s hallintaan tarvitaan jotta sovellusta voidaan käyttää.</string>
+    <string name="permission_success">%1$s lupa myönnetty</string>
+    <string name="permission_denied">%1$s lupa evätty</string>
+    <string name="camera_permission_denied">Kameran käyttölupaa ei ole annettu.</string>
+    <string name="create_room_empty_check">Tarvitaan huoneen nimi ja kuva.</string>
 </resources>

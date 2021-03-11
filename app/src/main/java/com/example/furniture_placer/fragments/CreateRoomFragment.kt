@@ -47,7 +47,7 @@ class CreateRoomFragment : DialogFragment() {
                 communicator.takePicture(roomTextFieldInput.text.toString())
                 dismiss()
             } else {
-                Toast.makeText(context, "Permission to use camera is not granted", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.camera_permission_denied), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -74,7 +74,7 @@ class CreateRoomFragment : DialogFragment() {
                     dismiss()
                 }
             } else {
-                Toast.makeText(context, "Room name and image needed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.create_room_empty_check), Toast.LENGTH_SHORT).show()
                 Log.d("FYI", "empty field")
             }
         }
