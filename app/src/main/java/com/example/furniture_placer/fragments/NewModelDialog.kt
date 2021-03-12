@@ -41,6 +41,7 @@ class NewModelDialog(modelList: ArrayList<Furniture>) : DialogFragment(), NewMod
         recyclerView.layoutManager = LinearLayoutManager(view.context)
         recyclerView.adapter =
             NewModelAdapter(models, this)
+        //lines between elements in recyclerview
         recyclerView.addItemDecoration(DividerItemDecoration(this.activity, LinearLayout.VERTICAL))
 
         return  view
@@ -49,6 +50,8 @@ class NewModelDialog(modelList: ArrayList<Furniture>) : DialogFragment(), NewMod
     override fun onItemClick(position: Int) {
         GlobalScope.launch(Dispatchers.Main) {
             val clickedItem: Furniture = models[position]
+            //changeModel function in ArFragmentView
+            //used in ArFragmentView by overriding it
             communicator.changeModel(clickedItem)
             Log.d("FYI", clickedItem.name)
             dismiss()

@@ -102,7 +102,8 @@ class RoomAdapter(
             }
         }
     }
-
+    //OnItemClickListener used in MainActivity
+    //used by overriding it
     interface OnItemClickListener {
         fun onItemClick(position: Int)
     }

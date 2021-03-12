@@ -43,7 +43,7 @@ class RoomDetailFragment(room: Room, private val imageListener: ImageSliderAdapt
 
                 view.editRoomBtn.setOnClickListener {
                     val roomToEdit: Room = myRoom
-                    //roomToEdit.decorationSnapshots?.removeAt(0)
+                    //new intent for ar view
                     val intent = Intent(activity, ArFragmentView::class.java).apply {
                         putExtra("EDITED_ROOM",roomToEdit)
                     }
@@ -52,7 +52,7 @@ class RoomDetailFragment(room: Room, private val imageListener: ImageSliderAdapt
 
                 view.compareBtn.setOnClickListener{
                     val roomToEdit: Room = myRoom
-                    //roomToEdit.decorationSnapshots?.removeAt(0)
+                    //new intent for compare view
                     val intent = Intent(activity, DecorationSnapshotComparision::class.java).apply {
                         putExtra("EDITED_ROOM",roomToEdit)
                     }

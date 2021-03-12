@@ -41,6 +41,9 @@ class CreateRoomFragment : DialogFragment() {
 
         communicator = activity as Communicator
         rootView.roomPreviewImg.setOnClickListener {
+
+            //check if user has given permission to use camera
+            //denies acces to camera if not given
             val returnInt = checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
             Log.d("FYI", "permission: $returnInt")
             if (checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == 0){
@@ -55,7 +58,7 @@ class CreateRoomFragment : DialogFragment() {
             val newRoomName = roomTextFieldInput.text
             if (newRoomName.toString() != "" && image != null) {
                 GlobalScope.launch(Dispatchers.Main) {
-                    //val
+
                     rootView.createRoomBtn.setOnClickListener(null)
                     val imagePath = "${FirebaseService().getCurrentUser()?.uid}/${newRoomName}/previewImage.jpg"
                     //image stored in firebase before creating room
@@ -66,7 +69,7 @@ class CreateRoomFragment : DialogFragment() {
                     room.previewPhotoPath = imagePath
                     firebase.updateRoom(room)
 
-
+                    //new intent for Ar view created
                     val intent = Intent(activity, ArFragmentView::class.java).apply {
                         putExtra("EDITED_ROOM",room)
                     }

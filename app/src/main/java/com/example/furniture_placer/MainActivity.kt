@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity(),
             }
         }
     }
-
+    //opens roomDetailFragment
     override fun onItemClick(position: Int) {
 
         val roomDetailFrag =
@@ -110,7 +110,7 @@ class MainActivity : AppCompatActivity(),
     }
 
 
-
+//room listener
 private fun listenToRooms() {
  FirebaseService().getUserRoomsCollection()?.addSnapshotListener { value, e ->
      if (e != null) {
@@ -176,7 +176,7 @@ private fun listenToRooms() {
             dialog.show()
         }
     }
-
+    //opens imageFullScreenFragment
     override fun onImageClick(imageData: Bitmap) {
 
         val imageFullScreenFrag = ImageFullscreenFragment(imageData)

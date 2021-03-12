@@ -41,6 +41,7 @@ class MainPageFragment(private val listener: RoomAdapter.OnItemClickListener) : 
         val view = inflater.inflate(R.layout.fragment_main_page, container, false)
 
         view.menuBtn.setOnClickListener {
+            //menu visible or gone logic
             if (isOpen){
                 view.logOutBtn.visibility = View.VISIBLE
                 view.logOutText.visibility = View.VISIBLE
@@ -70,12 +71,14 @@ class MainPageFragment(private val listener: RoomAdapter.OnItemClickListener) : 
 
         communicator = activity as Communicator
 
+        //Room data passed to RoomAdapter
         recyclerView = view.findViewById(R.id.rv_rooms)
         recyclerView.layoutManager = LinearLayoutManager(view.context)
         val roomList = ArrayList<Room>()
         recyclerView.adapter =
             RoomAdapter(roomList, listener)
 
+        //request id token passed
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.request_id_token))
             .requestEmail()

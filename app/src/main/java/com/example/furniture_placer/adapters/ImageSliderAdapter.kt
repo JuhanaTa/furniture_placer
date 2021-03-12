@@ -52,6 +52,8 @@ class ImageSliderAdapter(
         val imagePath = room.decorationSnapshots?.get(position)?.photoPath
         if (imagePath != null) {
             Log.d("ROOM", imagePath)
+
+            //Room image/screenshot loaded in coroutine
             GlobalScope.launch(Dispatchers.Main) {
                 try {
                     val imageData = loadImage(imagePath)
@@ -59,6 +61,8 @@ class ImageSliderAdapter(
                     Log.d("DATA", imageData.toString())
                     vh.itemView.sliderImage.setImageBitmap(imageData)
                     vh.itemView.sliderImage.setOnClickListener {
+                        //onImageCLick is overriden in MainActivity
+                        //opens fragment which shows iamge in fullscreen
                         listener.onImageClick(imageData)
                     }
 
@@ -76,6 +80,8 @@ class ImageSliderAdapter(
             vh.description.text = vh.itemView.context.getString(R.string.room_slider_type_second)
         }
         val modelImageList = ArrayList<String>()
+
+        //model previewimage paths stored in modelImageList
         if (room.decorationSnapshots != null) {
             if (room.decorationSnapshots!![position].itemsInScene != null){
                 for (path in room.decorationSnapshots!![position].itemsInScene!!) {
@@ -86,6 +92,7 @@ class ImageSliderAdapter(
         }
         Log.d("FYI", "model list: "+modelImageList.toString())
 
+        //room data and image paths passed with adapter
         recyclerView = vh.itemView.findViewById(R.id.rv_screenshotModels)
         recyclerView.layoutManager = LinearLayoutManager(vh.itemView.context)
         recyclerView.adapter = items?.let { ScreenshotModelAdapter(it, modelImageList) }
@@ -110,13 +117,13 @@ class ImageSliderAdapter(
     }
 
     private suspend fun loadImage(path: String): Bitmap {
-        Log.d("ROOM", "loading image")
+        //image loaded
         val imageData = StorageService().loadPicture(path)
         Log.d("FYI", "image loaded")
-
+        //returns bitmap
         return BitmapFactory.decodeByteArray(imageData, 0, imageData.size)
     }
-
+    //onImageClick used in MainActivity where it is used by overriding it
     interface OnImageClickListener {
         fun onImageClick(imageData: Bitmap)
     }

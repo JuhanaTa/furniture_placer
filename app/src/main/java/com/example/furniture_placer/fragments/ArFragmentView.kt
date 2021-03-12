@@ -76,6 +76,9 @@ class ArFragmentView : AppCompatActivity(),
 
         openMenuBtn.setOnClickListener {
             Log.d("FYI", "menu button pressed")
+
+            //menu buttons either gone or visible
+            //when they are visible clicklisteners are set
             if (isOpen){
                 historyModelBtn.visibility = View.VISIBLE
                 newModelBtn.visibility = View.VISIBLE
@@ -129,6 +132,7 @@ class ArFragmentView : AppCompatActivity(),
                     .setCancelable(false)
                     .setPositiveButton("Yes") { _, _ ->
                         if (addedItemsInScene.isNotEmpty()) {
+                            //screenshot taken with PixelCopy
                             PixelCopy.request(view, bitmap, { copyResult ->
                                 if (copyResult == PixelCopy.SUCCESS) {
                                     //time stamp
@@ -138,6 +142,7 @@ class ArFragmentView : AppCompatActivity(),
                                     val imagePath =
                                         "${FirebaseService().getCurrentUser()?.uid}/${editedRoom.name}/${currentDateAndTime}.jpg"
                                     val baos = ByteArrayOutputStream()
+                                    //image resized and compressed to optimize the size of file
                                     val resizedImage =
                                         Bitmap.createScaledBitmap(bitmap, 1080, 1920, false)
                                     resizedImage.compress(Bitmap.CompressFormat.JPEG, 50, baos)
@@ -161,9 +166,10 @@ class ArFragmentView : AppCompatActivity(),
                                             itemsInScene = furnitures
                                         )
                                     )
-                                    //FirebaseService().updateRoom(editedRoom)
                                     Log.d("FYI", "saved image")
 
+                                    //recent furniture updated
+                                    //checked that there are no duplicate mdoels
                                     for (furniture in furnitures) {
                                         if (!editedRoom.recentFurniture?.contains(furniture)!!) {
                                             editedRoom.recentFurniture?.add(furniture)
@@ -208,11 +214,11 @@ class ArFragmentView : AppCompatActivity(),
     }
 
      private fun setModel(){
-         Log.d("FYI", "setting Model $uri and $modelRenderable")
+
         val renderableFuture = ModelRenderable.builder()
             .setSource(this, RenderableSource.builder().setSource(this,
                 uri, RenderableSource.SourceType.GLTF2)
-                .setScale(1f)// Scale the original to 20%
+                .setScale(1f)
                 .setRecenterMode(RenderableSource.RecenterMode.ROOT)
                 .build())
             .setRegistryId("id${id++}").build()
@@ -233,7 +239,7 @@ class ArFragmentView : AppCompatActivity(),
     }
 
 
-
+    //screen center calculated in order to put model in center of screen
     private fun getScreenCenter(): Point {
         val vw = findViewById<View>(android.R.id.content)
 
@@ -263,10 +269,11 @@ class ArFragmentView : AppCompatActivity(),
                     //furniture data saved here
                     //used in click listener to remove right model
                     val selectedItem = selectedFurniture
+                    //tap listener to activate delete button
                     mNode.setOnTapListener { _: HitTestResult, _: MotionEvent ->
 
                         deleteModelbtn.visibility = View.VISIBLE
-
+                        //delete buttonlistener which removes anchor and item from addedItemsInScene
                         deleteModelbtn.setOnClickListener {
                             addedItemsInScene.remove(selectedItem)
                             removeAnchorNode(anchorNode)
@@ -301,7 +308,9 @@ class ArFragmentView : AppCompatActivity(),
             }
         }
     }
-
+    //model change logic
+    //if model already downloaded same model will be used
+    //if not model is loaded from firebase
     override suspend fun changeModel(file: Furniture) {
         val furnitureFile = File("${applicationContext.filesDir}/models/${file.modelFiles?.get(0)}")
         if (furnitureFile.exists()) {

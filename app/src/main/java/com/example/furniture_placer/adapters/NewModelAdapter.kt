@@ -30,6 +30,7 @@ class NewModelAdapter(
     }
 
     override fun onBindViewHolder(vh: MyViewHolder, position: Int) {
+        //data to be shown on UI
         val model: Furniture = models[position]
         vh.view.modelName.text = model.name
         vh.modelPrice.text = vh.itemView.context.getString(R.string.price, models[position].price)
@@ -37,7 +38,6 @@ class NewModelAdapter(
 
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-
         val view: TextView = itemView.findViewById(R.id.modelName)
         val modelPrice: TextView = itemView.findViewById(R.id.modelPrice)
         init {
@@ -51,7 +51,8 @@ class NewModelAdapter(
             }
         }
     }
-
+    //OnItemClickListener used in ArFragmentView
+    //used by overriding it
     interface OnItemClickListener {
         fun onItemClick(position: Int)
     }
